@@ -85,7 +85,7 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 
 .logo-cobim {
   width: clamp(72px, 14vw, 116px);
-  margin-bottom: 20px;
+  margin-bottom: 6px;
   /* se a logo tiver fundo branco, screen remove o branco em fundo escuro */
   mix-blend-mode: screen;
 }
@@ -93,15 +93,16 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 .hero-title-img {
   width: clamp(240px, 68vw, 560px);
   margin-bottom: 0;
+  margin-top: -4px;
   filter: drop-shadow(0 4px 28px rgba(0,0,0,0.8));
   /* logo_evento.png tem fundo branco — esconde com mix-blend-mode */
   mix-blend-mode: multiply;
 }
 
 .hero-dates-img {
-  width: clamp(180px, 48vw, 420px);
-  margin-bottom: 20px;
-  margin-top: -8px;
+  width: clamp(160px, 42vw, 360px);
+  margin-bottom: 16px;
+  margin-top: -20px;
   filter: drop-shadow(0 2px 14px rgba(0,0,0,0.9));
 }
 
@@ -415,7 +416,7 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 /* ─── VERSE ─── */
 .verse-wrap {
   background: var(--bg-surface);
-  padding: 72px 24px;
+  padding: 36px 24px;
   text-align: center;
   position: relative;
   overflow: hidden;
