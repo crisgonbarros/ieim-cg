@@ -85,23 +85,29 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 
 .logo-cobim {
   width: clamp(72px, 14vw, 116px);
-  margin-bottom: -14px; /* cancela borda transparente inferior do PNG */
-  mix-blend-mode: screen;
+  margin-bottom: -14px;
+  /* remove fundo branco/cinza da logo em fundo escuro */
+  mix-blend-mode: multiply;
+  filter: drop-shadow(0 0 0 transparent); /* força repaint do blend */
 }
 
 .hero-title-img {
   width: clamp(240px, 68vw, 560px);
   margin-bottom: 0;
-  margin-top: -14px;  /* cancela borda transparente superior do PNG */
+  margin-top: -14px;
   filter: drop-shadow(0 4px 28px rgba(0,0,0,0.8));
   mix-blend-mode: multiply;
+  position: relative;
+  z-index: 1;
 }
 
 .hero-dates-img {
   width: clamp(160px, 42vw, 360px);
   margin-bottom: 12px;
-  margin-top: -36px;  /* sobrepõe bastante para cancelar transparência do título e das datas */
+  margin-top: -20px; /* reduzido: ainda colado mas sem cobrir texto do título */
   filter: drop-shadow(0 2px 14px rgba(0,0,0,0.9));
+  position: relative;
+  z-index: 2; /* fica na frente do título */
 }
 
 /* ─── COUNTDOWN ─── */
@@ -798,7 +804,7 @@ footer {
 
   <div class="hero-content">
     <img
-      src="https://raw.githubusercontent.com/crisgonbarros/ieim-cg/main/img/logo_cobim.png"
+      src="https://raw.githubusercontent.com/crisgonbarros/ieim-cg/main/img/logo_cobim_2.png"
       alt="COBIM Regional MS"
       class="logo-cobim"
       onerror="this.style.display='none'"
