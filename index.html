@@ -83,17 +83,26 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
   line-height: 0;
 }
 
+.logo-cobim-wrap {
+  background: #fff;
+  border-radius: 10px;
+  padding: 10px 16px;
+  margin-bottom: 24px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.5);
+}
+
 .logo-cobim {
-  width: clamp(100px, 18vw, 150px);
-  margin-bottom: 20px; /* espaço real abaixo da logo antes do título */
-  mix-blend-mode: screen; /* screen funciona melhor para logo clara em fundo escuro */
-  filter: drop-shadow(0 2px 12px rgba(0,0,0,0.6));
+  width: clamp(90px, 16vw, 130px);
+  display: block;
 }
 
 .hero-title-img {
   width: clamp(240px, 68vw, 560px);
   margin-bottom: 0;
-  margin-top: 0; /* sem transpassar — logo tem espaço próprio acima */
+  margin-top: 0;
   filter: drop-shadow(0 4px 28px rgba(0,0,0,0.8));
   mix-blend-mode: multiply;
   position: relative;
@@ -816,12 +825,14 @@ footer {
   <div class="hero-overlay"></div>
 
   <div class="hero-content">
-    <img
-      src="https://raw.githubusercontent.com/crisgonbarros/ieim-cg/main/img/logo_cobim_2.png"
-      alt="COBIM Regional MS"
-      class="logo-cobim"
-      onerror="this.style.display='none'"
-    >
+    <div class="logo-cobim-wrap">
+      <img
+        src="https://raw.githubusercontent.com/crisgonbarros/ieim-cg/main/img/logo_cobim.png"
+        alt="COBIM Regional MS"
+        class="logo-cobim"
+        onerror="this.parentElement.style.display='none'"
+      >
+    </div>
 
     <img
       src="https://raw.githubusercontent.com/crisgonbarros/ieim-cg/main/img/logo_evento.png"
