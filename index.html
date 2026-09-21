@@ -44,7 +44,7 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
   align-items: center;
   justify-content: center;
   overflow: hidden;
-  padding: 80px 24px 64px;
+  padding: 60px 24px 48px;
 }
 
 .hero-bg {
@@ -79,30 +79,37 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
   flex-direction: column;
   align-items: center;
   gap: 0;
+  /* remove espaço extra que imagens com fundo transparente geram */
+  line-height: 0;
 }
 
 .logo-cobim {
   width: clamp(72px, 14vw, 116px);
-  margin-bottom: 28px;
-  filter: brightness(0) invert(1) drop-shadow(0 0 20px rgba(255,255,255,0.2));
+  margin-bottom: 20px;
+  /* se a logo tiver fundo branco, screen remove o branco em fundo escuro */
+  mix-blend-mode: screen;
 }
 
 .hero-title-img {
-  width: clamp(240px, 68vw, 580px);
-  margin-bottom: 18px;
+  width: clamp(240px, 68vw, 560px);
+  margin-bottom: 0;
   filter: drop-shadow(0 4px 28px rgba(0,0,0,0.8));
+  /* logo_evento.png tem fundo branco — esconde com mix-blend-mode */
+  mix-blend-mode: multiply;
 }
 
 .hero-dates-img {
-  width: clamp(200px, 52vw, 460px);
-  margin-bottom: 40px;
+  width: clamp(180px, 48vw, 420px);
+  margin-bottom: 20px;
+  margin-top: -8px;
   filter: drop-shadow(0 2px 14px rgba(0,0,0,0.9));
 }
 
 /* ─── COUNTDOWN ─── */
 .countdown-wrap {
-  margin-bottom: 44px;
+  margin-bottom: 28px;
   width: 100%;
+  line-height: 1.4;
 }
 
 .cd-label {
@@ -795,12 +802,14 @@ footer {
       src="https://raw.githubusercontent.com/crisgonbarros/ieim-cg/main/img/logo_cobim.png"
       alt="COBIM Regional MS"
       class="logo-cobim"
+      onerror="this.style.display='none'"
     >
 
     <img
       src="https://raw.githubusercontent.com/crisgonbarros/ieim-cg/main/img/logo_evento.png"
       alt="Retiro de Homens — Juntos Somos Mais Fortes"
       class="hero-title-img"
+      onerror="this.style.display='none'"
     >
 
     <img
