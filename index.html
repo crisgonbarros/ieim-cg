@@ -152,6 +152,43 @@ body::after {
   text-wrap: balance;
 }
 
+/* ─── 500 ANOS ─── */
+.quinhentos-wrap {
+  width: 100%;
+  max-width: 480px;
+  background: rgba(255,255,255,0.55);
+  border: 1.5px solid rgba(126,200,227,0.45);
+  border-radius: 16px;
+  padding: 20px 24px;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  text-align: center;
+}
+.quinhentos-lines {
+  font-family: "Nunito", sans-serif;
+  font-size: clamp(0.9rem, 2.4vw, 1.05rem);
+  font-weight: 600;
+  color: var(--text-mid);
+  line-height: 2;
+  margin: 0;
+}
+.quinhentos-lines em {
+  font-style: normal;
+  font-weight: 800;
+  color: var(--blue-dark);
+}
+.quinhentos-highlight {
+  display: block;
+  font-family: "Nunito", sans-serif;
+  font-size: clamp(0.75rem, 2vw, 0.85rem);
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--green-dark);
+  margin-top: 10px;
+  opacity: 0.85;
+}
+
 /* badge */
 .badge-wrap {
   display: flex;
@@ -438,9 +475,18 @@ body::after {
     <h1 class="hero-big">Em<br>Construção</h1>
     <div class="badge-wrap">
       <span class="badge-dot"></span>
-      <span class="badge-text">Em breve um novo canal da nossa igreja</span>
+      <span class="badge-text">Site em construção</span>
     </div>
-    <p class="hero-sub-line">Estamos preparando algo especial para você.<br>Enquanto isso, nos acompanhe pelas redes.</p>
+    <div class="quinhentos-wrap">
+      <p class="quinhentos-lines">
+        Novos canais…<br>
+        Uma nova aparência…<br>
+        Um novo símbolo…<br>
+        Mas o mesmo propósito que nos move<br>
+        <em>a mais de 500 anos!</em>
+      </p>
+      <span class="quinhentos-highlight">500 anos do movimento menonita no mundo</span>
+    </div>
   </div>
 
   <!-- REDES SOCIAIS -->
