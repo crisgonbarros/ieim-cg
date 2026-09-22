@@ -1058,15 +1058,18 @@ footer {
 </div>
 
 <script>
-const SCRIPT_URL   = 'https://script.google.com/macros/s/AKfycbxDFTybZqwSPsCzdRl9DdtreDVox37RuwN8Dzgv2FZo-QkgtX337JIAdMcVSgge_lL5/exec';
-const CHECKOUT_L1  = 'https://checkout.infinitepay.io/mkdigitalms/0KeX04nN4z';
-const CHECKOUT_L2  = 'https://checkout.infinitepay.io/mkdigitalms/0KeX04nN4z'; // atualizar em out/26
-const FIM_LOTE1    = new Date('2026-10-15T23:59:59-04:00');
-const INICIO       = new Date('2026-11-14T08:00:00-04:00');
-const FIM          = new Date('2026-11-15T22:00:00-04:00');
+const SCRIPT_URL      = 'https://script.google.com/macros/s/AKfycbxDFTybZqwSPsCzdRl9DdtreDVox37RuwN8Dzgv2FZo-QkgtX337JIAdMcVSgge_lL5/exec';
+const INFINITEPAY_API = 'https://api.checkout.infinitepay.io/links';
+const HANDLE          = 'mkdigitalms';
+const REDIRECT_URL    = 'https://crisgonbarros.github.io/ieim-cg/obrigado.html';
+const WEBHOOK_URL     = SCRIPT_URL;
+const FIM_LOTE1       = new Date('2026-10-15T23:59:59-04:00');
+const INICIO          = new Date('2026-11-14T08:00:00-04:00');
+const FIM             = new Date('2026-11-15T22:00:00-04:00');
 
 function lote() { return new Date() <= FIM_LOTE1 ? 1 : 2; }
-function checkout() { return lote() === 1 ? CHECKOUT_L1 : CHECKOUT_L2; }
+function preco() { return lote() === 1 ? 19000 : 20000; } // centavos
+function descLote() { return lote() === 1 ? '1º Lote - R$190' : '2º Lote - R$200'; }
 
 /* Parallax */
 window.addEventListener('scroll', () => {
@@ -1159,20 +1162,55 @@ document.getElementById('regForm').addEventListener('submit', async e => {
   msg.textContent = '';
 
   try {
-    await fetch(SCRIPT_URL, {
+    // 1. Salva na planilha (Pendentes)
+    fetch(SCRIPT_URL, {
       method: 'POST',
       mode: 'no-cors',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ Nome: nome, E_mail: email, Telefone: tel, Cidade: cid, Igreja: igr })
     });
+
+    // 2. Gera link dinâmico na InfinityPay com order_nsu = email
+    const payload = {
+      handle: HANDLE,
+      items: [{
+        quantity: 1,
+        price: preco(),
+        description: 'Retiro de Homens COBIM MS 2026 — ' + descLote()
+      }],
+      order_nsu: email,
+      redirect_url: REDIRECT_URL,
+      webhook_url: WEBHOOK_URL,
+      customer: {
+        name: nome,
+        email: email,
+        phone_number: '+55' + tel.replace(/\D/g, '')
+      }
+    };
+
+    const res = await fetch(INFINITEPAY_API, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+
+    if (!res.ok) throw new Error('InfinityPay status ' + res.status);
+
+    const data = await res.json();
+    const linkPagamento = data.payment_url || data.url || data.link || data.checkout_url;
+
+    if (!linkPagamento) throw new Error('Link não retornado');
+
     msg.className = 'form-msg ok';
-    msg.textContent = '✅ Dados salvos! Redirecionando...';
-    setTimeout(() => { window.location.href = checkout(); }, 1100);
+    msg.textContent = '✅ Redirecionando para pagamento...';
+    setTimeout(() => { window.location.href = linkPagamento; }, 900);
+
   } catch (err) {
     btn.disabled = false;
     btn.textContent = 'Continuar para pagamento →';
     msg.className = 'form-msg err';
-    msg.textContent = 'Erro ao enviar. Tente novamente ou fale pelo WhatsApp.';
+    msg.textContent = 'Erro ao processar. Tente novamente ou fale pelo WhatsApp.';
+    console.error(err);
   }
 });
 </script>
