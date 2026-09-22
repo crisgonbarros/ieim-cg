@@ -824,11 +824,17 @@ footer {
   text-align: center;
 }
 
+.footer-logo-wrap {
+  background: #fff;
+  border-radius: 6px;
+  padding: 5px 10px;
+  display: inline-flex;
+  margin-bottom: 16px;
+  opacity: 0.75;
+}
 .footer-logo {
-  width: 72px;
-  margin: 0 auto 16px;
-  mix-blend-mode: screen;
-  opacity: 0.55;
+  width: 64px;
+  display: block;
 }
 
 .footer-text {
@@ -1054,11 +1060,14 @@ footer {
 
 <!-- ══════════════════════ FOOTER ══════════════════════ -->
 <footer>
-  <img
-    src="https://raw.githubusercontent.com/crisgonbarros/ieim-cg/main/img/logo_cobim_2.png"
-    alt="COBIM MS"
-    class="footer-logo"
-  >
+  <div class="footer-logo-wrap">
+    <img
+      src="https://raw.githubusercontent.com/crisgonbarros/ieim-cg/main/img/logo_cobim.png"
+      alt="COBIM MS"
+      class="footer-logo"
+      onerror="this.parentElement.style.display='none'"
+    >
+  </div>
   <p class="footer-text">
     COBIM Regional MS — Retiro de Homens 2026 · Campo Grande, MS<br>
     Dúvidas? <a href="https://wa.me/5541999981359?text=Quero%20saber%20mais%20informa%C3%A7%C3%B5es%20sobre%20o%20Retiro%20de%20Homens%20da%20Regional%20MS!" class="footer-link" target="_blank" rel="noopener">Falar com o Pastor Leandro</a>
