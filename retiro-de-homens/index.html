@@ -117,7 +117,7 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
   .logo-cobim-wrap { margin-bottom: 16px; padding: 7px 12px; }
   .countdown-wrap { margin-bottom: 18px; }
   .hero-title-img { width: clamp(200px, 80vw, 320px); }
-  .hero-dates-img { width: clamp(130px, 50vw, 220px); }
+  .hero-dates-img { width: clamp(130px, 50vw, 220px); margin-top: 4px; }
 }
 
 .logo-cobim {
@@ -358,42 +358,43 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
   margin: 0 auto;
 }
 
-/* ─── INFO CARDS ─── */
-.info-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 1px;
-  background: var(--dim);
+/* ─── INFO ROWS ─── */
+.info-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
   border: 1px solid var(--dim);
   border-radius: 6px;
   overflow: hidden;
   margin-bottom: 60px;
 }
 
-.info-card {
+.info-row {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  padding: 14px 20px;
   background: var(--bg-surface);
-  padding: 28px 22px;
-  text-align: center;
-  transition: background 0.2s;
+  border-bottom: 1px solid var(--dim);
 }
-.info-card:hover { background: rgba(255,255,255,0.03); }
+.info-row:last-child { border-bottom: none; }
 
-.info-icon { font-size: 1.4rem; margin-bottom: 10px; display: block; }
-
-.info-title {
+.info-label {
   font-size: 0.62rem;
   font-weight: 600;
-  letter-spacing: 0.18em;
+  letter-spacing: 0.16em;
   text-transform: uppercase;
   color: var(--muted);
-  margin-bottom: 6px;
+  flex-shrink: 0;
+  width: 64px;
 }
 
-.info-body {
+.info-value {
   font-size: 0.88rem;
   color: var(--off-white);
-  line-height: 1.45;
+  line-height: 1.4;
 }
+.info-value strong { color: var(--white); font-weight: 600; }
 
 /* ─── PRICING ─── */
 .pricing {
@@ -989,26 +990,22 @@ footer {
   <p class="sec-eyebrow">O Evento</p>
   <h2 class="sec-title">Um fim de semana que vai<br>marcar a vida dos homens</h2>
 
-  <div class="info-grid">
-    <div class="info-card">
-      <span class="info-icon">📅</span>
-      <div class="info-title">Data</div>
-      <div class="info-body">14 e 15 de Novembro<br><strong style="color:var(--white)">de 2026</strong></div>
+  <div class="info-list">
+    <div class="info-row">
+      <span class="info-label">Data</span>
+      <span class="info-value"><strong>14 e 15 de Novembro</strong> de 2026</span>
     </div>
-    <div class="info-card">
-      <span class="info-icon">📍</span>
-      <div class="info-title">Local</div>
-      <div class="info-body"><strong style="color:var(--white)">Chácara Alvorada</strong><br>Dourados, MS</div>
+    <div class="info-row">
+      <span class="info-label">Local</span>
+      <span class="info-value"><strong>Chácara Alvorada</strong> — Dourados, MS</span>
     </div>
-    <div class="info-card">
-      <span class="info-icon">🙏</span>
-      <div class="info-title">Público</div>
-      <div class="info-body"><strong style="color:var(--white)">Homens</strong> das igrejas<br>COBIM da Regional MS</div>
+    <div class="info-row">
+      <span class="info-label">Público</span>
+      <span class="info-value"><strong>Homens</strong> das igrejas COBIM da Regional MS</span>
     </div>
-    <div class="info-card">
-      <span class="info-icon">✉️</span>
-      <div class="info-title">Contato</div>
-      <div class="info-body"><a href="https://wa.me/5541999981359?text=Quero%20saber%20mais%20informa%C3%A7%C3%B5es%20sobre%20o%20Retiro%20de%20Homens%20da%20Regional%20MS!" target="_blank" rel="noopener" style="color:var(--white);font-weight:600">WhatsApp</a><br><span style="font-size:0.78rem">Fale conosco</span></div>
+    <div class="info-row">
+      <span class="info-label">Contato</span>
+      <span class="info-value"><a href="https://wa.me/5541999981359?text=Quero%20saber%20mais%20informa%C3%A7%C3%B5es%20sobre%20o%20Retiro%20de%20Homens%20da%20Regional%20MS!" target="_blank" rel="noopener" style="color:var(--white);font-weight:600;text-decoration:underline;text-underline-offset:3px">WhatsApp</a></span>
     </div>
   </div>
 
