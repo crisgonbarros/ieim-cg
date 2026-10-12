@@ -274,19 +274,11 @@
   .quem h2 { font-size: clamp(1.8rem, 4.4vw, 3rem); }
   .quem h2 span { color: #9a9a9a; }
   .quem p { color: var(--cinza); font-size: 1.08rem; margin: 22px 0 32px; max-width: 40ch; }
-  .metal { position: relative; width: 100%; max-width: 440px; justify-self: center; animation: flutuar 7s ease-in-out infinite; }
-  .metal img { width: 100%; filter: drop-shadow(0 22px 22px rgba(0,0,0,.14)); }
-  .metal-brilho { display: none; }
-  @supports ((-webkit-mask-image: url("x.webp")) or (mask-image: url("x.webp"))) {
-    .metal-brilho {
-      display: block; position: absolute; inset: 0; pointer-events: none; mix-blend-mode: overlay;
-      -webkit-mask: url(/img/logo_ieim_simbolo_aluminio_escovado.webp) center / 100% 100% no-repeat;
-      mask: url(/img/logo_ieim_simbolo_aluminio_escovado.webp) center / 100% 100% no-repeat;
-      background: linear-gradient(105deg, transparent 35%, rgba(255,255,255,.95) 50%, transparent 65%) no-repeat;
-      background-size: 300% 100%; background-position: 130% 0;
-      animation: reflexo 6s ease-in-out .8s infinite;
-    }
-  }
+  .metal { position: relative; width: 100%; max-width: 400px; justify-self: center; }
+  .metal img { animation: flutuar 7s ease-in-out infinite; }
+  .metal img { width: 100%; }
+  .metal-sombra { display: block; width: 70%; height: 18px; margin: 34px auto 0; border-radius: 50%; background: radial-gradient(closest-side, rgba(0,0,0,.16), transparent); animation: sombra 7s ease-in-out infinite; }
+  @keyframes sombra { 0%, 100% { transform: scaleX(1); opacity: 1; } 50% { transform: scaleX(.82); opacity: .6; } }
   @keyframes flutuar { 0%, 100% { transform: translateY(0) rotate(-1deg); } 50% { transform: translateY(-14px) rotate(1deg); } }
 
   /* ── Ministérios (mapa mental) ── */
@@ -441,30 +433,63 @@
   .rodape p { color: #b5b5b5; font-size: .85rem; line-height: 1.7; }
 
   /* ── Tablet e celular ── */
+  .roda, .roda-info { display: none; }
   @media (max-width: 1020px) {
-    .mapa { grid-template-columns: 1fr; row-gap: 0; }
-    .mapa-linhas { display: none; }
-    .nucleo { justify-self: center; width: 136px; height: 136px; padding: 18px; margin-bottom: 36px; order: -1; }
-    .nucleo.mostrando .nucleo-padrao { opacity: 1; transform: none; }
-    .nucleo-padrao img { width: 70px; }
-    .nucleo-padrao span, .nucleo-info { display: none; }
-    .lado-mapa { gap: 0; }
-    .lado-esq, .lado-dir { display: contents; }
-    .ramo { flex-direction: column !important; align-items: stretch; gap: 14px; padding: 0 0 30px 26px; position: relative; }
-    .ramo::before { content: ""; position: absolute; left: 6px; top: 0; bottom: 0; width: 1px; background: linear-gradient(rgba(255,255,255,.3), rgba(255,255,255,.12)); }
-    .ramo::after { content: ""; position: absolute; left: 1px; top: 15px; width: 11px; height: 11px; border-radius: 50%; background: #fff; box-shadow: 0 0 12px rgba(255,255,255,.8); }
-    .ramo:nth-child(n) { order: var(--ordem); }
-    .ramo-no { width: auto; text-align: left; align-self: flex-start; padding: 9px 14px; }
-    .chips, .lado-esq .chips { display: flex; flex-wrap: wrap; gap: 8px; justify-content: flex-start; }
-    .painel-celular {
-      display: grid; gap: 6px; flex-basis: 100%; margin-top: 4px; padding: 16px 18px; border-radius: 18px;
-      background: color-mix(in srgb, var(--cor-nucleo, #fff) 12%, rgba(255,255,255,.04));
-      border: 1px solid var(--cor-nucleo, rgba(255,255,255,.2));
-      -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px);
-      animation: abrir .45s var(--curva);
+    .mapa { display: block; }
+    .js .mapa-linhas, .js .lado-mapa, .js .mapa > .nucleo { display: none; }
+    html:not(.js) .lado-mapa { display: grid; gap: 24px; margin-top: 24px; } html:not(.js) .ramo { flex-direction: column !important; align-items: flex-start; gap: 10px; } html:not(.js) .chips { display: flex; flex-wrap: wrap; gap: 8px; } html:not(.js) .mapa > .nucleo, html:not(.js) .mapa-linhas { display: none; }
+    .ministerios .cabeca { margin-bottom: 8px; }
+    .ministerios .cabeca p { display: none; }
+    .roda { display: block; position: relative; height: 470px; margin: 0 -16px; overflow: hidden; }
+    .roda-linhas { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; pointer-events: none; }
+    .roda-linhas path { fill: none; stroke: rgba(255,255,255,.16); stroke-width: 1.3; stroke-linecap: round; stroke-dasharray: 1; stroke-dashoffset: 1; transition: stroke .4s, stroke-width .4s; }
+    .roda-linhas path.tronco { stroke: rgba(255,255,255,.3); }
+    .roda.desenhada .roda-linhas path { stroke-dashoffset: 0; transition: stroke-dashoffset .9s var(--curva) var(--atraso, 0s), stroke .4s, stroke-width .4s; }
+    .roda-linhas path.aceso { stroke: var(--cor); stroke-width: 2; filter: drop-shadow(0 0 5px var(--cor)); }
+    .roda-linhas circle { fill: #fff; filter: drop-shadow(0 0 5px rgba(255,255,255,.9)); }
+    .roda-nucleo {
+      position: absolute; left: -92px; top: 50%; width: 184px; height: 184px; margin-top: -92px; border-radius: 50%; cursor: pointer;
+      background: radial-gradient(circle at 70% 30%, rgba(255,255,255,.16), rgba(255,255,255,.04) 60%);
+      border: 1px solid rgba(255,255,255,.22);
+      -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.22), 0 0 70px -14px var(--cor-nucleo, rgba(255,255,255,.25));
+      transition: box-shadow .5s;
     }
-    .painel-celular[hidden] { display: none; }
-    @keyframes abrir { from { opacity: 0; transform: translateY(-6px); } }
+    .roda-nucleo::before {
+      content: ""; position: absolute; inset: -8px; border-radius: 50%; padding: 1px;
+      background: conic-gradient(from var(--giro, 0deg), transparent 0 60%, var(--cor-nucleo, rgba(255,255,255,.75)) 85%, transparent 100%);
+      -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); -webkit-mask-composite: xor;
+      mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0);
+      animation: girar 6s linear infinite;
+    }
+    .roda-nucleo img { position: absolute; left: 112px; top: 50%; width: 50px; transform: translateY(-50%); }
+    .roda-grupo {
+      position: absolute; transform: translate(-50%, -50%); width: 104px; padding: 8px 6px; border-radius: 14px; cursor: pointer;
+      font-weight: 700; font-size: .56rem; letter-spacing: .12em; text-transform: uppercase; line-height: 1.35; text-align: center; color: #fff;
+      background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.16);
+      -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px);
+      transition: background-color .4s, border-color .4s, box-shadow .4s;
+    }
+    .roda-grupo.ativo { background: rgba(255,255,255,.12); border-color: rgba(255,255,255,.4); box-shadow: inset 0 1px 0 rgba(255,255,255,.2), 0 0 24px -8px rgba(255,255,255,.4); }
+    .roda-chip {
+      position: absolute; transform: translate(0, -50%); padding: 6px 12px 6px 10px; gap: 7px; font-size: .8rem;
+      transition: opacity .5s ease, transform .6s var(--curva), background-color .3s, border-color .3s, box-shadow .3s, color .3s;
+    }
+    .roda-chip .chip-ponto { width: 7px; height: 7px; }
+    .roda-chip.entra { opacity: 0; transform: translate(-22px, -50%) scale(.9); }
+    .roda-chip.sai { opacity: 0; transform: translate(22px, -50%) scale(.9); transition-delay: 0s !important; pointer-events: none; }
+    .roda-info {
+      display: grid; gap: 6px; align-content: center; min-height: 116px; margin-top: 4px; padding: 16px 18px; border-radius: 18px;
+      background: color-mix(in srgb, var(--cor-nucleo, #fff) 10%, rgba(255,255,255,.04));
+      border: 1px solid color-mix(in srgb, var(--cor-nucleo, #fff) 55%, transparent);
+      -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px);
+      transition: background-color .4s, border-color .4s;
+    }
+    .roda-info .info-nome { font-size: 1.05rem; }
+    .roda-info:not(.escolhido) .info-nome { font-size: .72rem; letter-spacing: .16em; text-transform: uppercase; color: rgba(255,255,255,.6); }
+  }
+  @media (max-width: 1020px) and (prefers-reduced-motion: reduce) {
+    .roda-linhas path { stroke-dashoffset: 0; } .roda-linhas circle { display: none; } .roda-nucleo::before { animation: none; }
   }
   @media (max-width: 860px) {
     :root { --topo: 60px; }
@@ -494,7 +519,8 @@
     .acoes .botao { min-height: 38px; font-size: .84rem; }
     .acoes .botao svg { width: 16px; height: 16px; }
     .quem-grade, .contribua-grade { grid-template-columns: 1fr; gap: 40px; }
-    .metal { max-width: 220px; order: -1; justify-self: start; }
+    .metal { max-width: 200px; order: -1; justify-self: start; }
+    .metal-sombra { margin-top: 20px; }
     .contribua::before { width: 640px; height: 520px; right: -200px; top: 70%; }
     .pix { padding: 28px 22px 22px; }
     .contatos { grid-template-columns: 1fr; gap: 12px; }
@@ -504,7 +530,7 @@
   @media (max-width: 560px) {
     .abertura { padding: calc(var(--topo) + 44px) 0 88px; min-height: min(100svh, 760px); }
     .abertura-interno { gap: 24px; }
-    .conheca { font-size: .72rem; letter-spacing: .16em; max-width: 26ch; text-align: center; line-height: 1.7; }
+    .conheca { font-size: .72rem; letter-spacing: .16em; max-width: 300px; text-align: center; line-height: 1.8; text-wrap: balance; }
     .contato-cartao strong { font-size: 1.02rem; }
     .contato-cartao { grid-template-columns: auto 1fr; }
     .contato-seta { display: none; }
@@ -514,8 +540,8 @@
 
   @media (prefers-reduced-motion: reduce) {
     html { scroll-behavior: auto; }
-    .aurora span, .logo-brilho, .metal-brilho, .metal, .visao em, .rolar::after, .nucleo::before, .contribua::before { animation: none !important; }
-    .logo-brilho, .metal-brilho { display: none !important; }
+    .aurora span, .logo-brilho, .metal img, .metal-sombra, .visao em, .rolar::after, .nucleo::before, .contribua::before { animation: none !important; }
+    .logo-brilho { display: none !important; }
     .js .entra { opacity: 1; transform: none; filter: none; animation: none; }
     .js .revelar, .js .cartao { opacity: 1 !important; transform: none !important; transition: none !important; }
     .js .mapa-linhas path { stroke-dashoffset: 0; }
@@ -542,8 +568,7 @@
         <span class="logo-brilho" aria-hidden="true"></span>
       </h1>
       <p class="visao entra" style="--d:1">Sermos uma comunidade cristã, saudável e presente <em>em cada casa</em> de Campo Grande/MS.</p>
-      <p class="para-quem entra" style="--d:2">Para toda pessoa que queira conhecer a Cristo.</p>
-      <a class="conheca entra" style="--d:3" href="#igrejas">Conheça nossas igrejas em Campo Grande-MS<span class="rolar" aria-hidden="true"></span></a>
+      <a class="conheca entra" style="--d:2" href="#igrejas">Conheça nossas igrejas em Campo Grande-MS<span class="rolar" aria-hidden="true"></span></a>
     </div>
   </section>
 
@@ -663,8 +688,8 @@
         <a class="botao botao-escuro" href="/quem-somos/">Conheça a IEIM<svg class="seta" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
       </div>
       <div class="metal revelar" style="--d:2" aria-hidden="true">
-        <img src="/img/logo_ieim_simbolo_aluminio_escovado.webp" alt="" width="1600" height="1058" loading="lazy">
-        <span class="metal-brilho"></span>
+        <img src="/img/logo_ieim_simbolo_preto.svg" alt="" width="738" height="488" loading="lazy">
+        <span class="metal-sombra"></span>
       </div>
     </div>
   </section>
@@ -695,7 +720,7 @@
             <ul class="chips">
               <li><button class="chip" type="button" style="--cor:#FF8A3D" data-nome="Ministério Abraço" data-desc="Recepção e integração de quem chega à igreja." data-lider="" aria-pressed="false"><span class="chip-ponto"></span>Ministério Abraço</button></li>
               <li><button class="chip" type="button" style="--cor:#5BE38F" data-nome="Ensino Logos" data-desc="Ensino bíblico." data-lider="" aria-pressed="false"><span class="chip-ponto"></span>Ensino Logos</button></li>
-              <li><button class="chip" type="button" style="--cor:#FFD24D" data-nome="Ágape" data-desc="Ministério da cozinha. O cuidado com a mesa e as refeições que reúnem a igreja, como nas refeições de comunhão dos primeiros cristãos." data-lider="" aria-pressed="false"><span class="chip-ponto"></span>Ágape</button></li>
+              <li><button class="chip" type="button" style="--cor:#FFD24D" data-nome="Cozinha" data-desc="Equipe que serve na cozinha da igreja." data-lider="" aria-pressed="false"><span class="chip-ponto"></span>Cozinha</button></li>
             </ul>
           </div>
         </div>
@@ -889,24 +914,33 @@
     var svg = mapa.querySelector('.mapa-linhas');
     var nucleo = mapa.querySelector('.nucleo');
     var chips = Array.prototype.slice.call(mapa.querySelectorAll('.chip'));
-    var painel = document.createElement('div');
-    painel.className = 'painel-celular'; painel.hidden = true; painel.setAttribute('aria-live', 'polite');
-    painel.innerHTML = '<p class="info-nome"></p><p class="info-desc"></p><p class="info-lider"></p>';
     var NS = 'http://www.w3.org/2000/svg';
     var largo = window.matchMedia('(min-width: 1021px)');
     var linhasChip = new Map();
+    var auto = null, parado = false, indice = 0;
+    function parar() { parado = true; clearInterval(auto); clearTimeout(auto); }
 
-    function caminho(d, classe, atraso) {
+    function caminho(alvoSvg, d, classe, atraso) {
       var p = document.createElementNS(NS, 'path');
       p.setAttribute('d', d); p.setAttribute('pathLength', '1');
       if (classe) p.setAttribute('class', classe);
       p.style.setProperty('--atraso', atraso + 's');
-      svg.appendChild(p); return p;
+      alvoSvg.appendChild(p); return p;
     }
     function curva(x1, y1, x2, y2) {
       var mx = (x1 + x2) / 2;
       return 'M' + x1 + ' ' + y1 + ' C' + mx + ' ' + y1 + ' ' + mx + ' ' + y2 + ' ' + x2 + ' ' + y2;
     }
+    function ponto(alvoSvg, idCaminho, dur, inicio) {
+      if (semMovimento) return;
+      var c = document.createElementNS(NS, 'circle');
+      c.setAttribute('r', '2.6');
+      c.innerHTML = '<animateMotion dur="' + dur + 's" begin="' + inicio + 's" repeatCount="indefinite" keyPoints="0;1" keyTimes="0;1" calcMode="linear"><mpath href="#' + idCaminho + '"/></animateMotion>';
+      alvoSvg.appendChild(c);
+    }
+
+    /* Computador: mapa completo */
+    var selecionado = null;
     function desenhar() {
       svg.innerHTML = ''; linhasChip.clear();
       if (!largo.matches) return;
@@ -921,87 +955,230 @@
         var rxLonge = (esq ? no.left : no.right) - base.left;
         var ang = Math.atan2(ry - cy, rxPerto - cx);
         var sx = cx + Math.cos(ang) * raio, sy = cy + Math.sin(ang) * raio;
-        var tronco = caminho(curva(sx, sy, rxPerto, ry), 'tronco', i * .15);
+        var tronco = caminho(svg, curva(sx, sy, rxPerto, ry), 'tronco', i * .15);
         tronco.id = 'tronco-' + i;
-        if (!semMovimento) {
-          var c = document.createElementNS(NS, 'circle');
-          c.setAttribute('r', '2.6');
-          c.innerHTML = '<animateMotion dur="' + (3.2 + i * .4) + 's" begin="' + (1.6 + i * .5) + 's" repeatCount="indefinite" keyPoints="0;1" keyTimes="0;1" calcMode="linear"><mpath href="#tronco-' + i + '"/></animateMotion>';
-          svg.appendChild(c);
-        }
+        ponto(svg, 'tronco-' + i, 3.2 + i * .4, 1.6 + i * .5);
         ramo.querySelectorAll('.chip').forEach(function (chip, j) {
           var r = chip.getBoundingClientRect();
           var x = (esq ? r.right : r.left) - base.left, y = r.top + r.height / 2 - base.top;
-          var p = caminho(curva(rxLonge, ry, x, y), '', .5 + i * .15 + j * .05);
+          var p = caminho(svg, curva(rxLonge, ry, x, y), '', .5 + i * .15 + j * .05);
           p.style.setProperty('--cor', chip.style.getPropertyValue('--cor'));
           linhasChip.set(chip, p);
         });
       });
       if (selecionado) acender(selecionado);
     }
-    var selecionado = null;
-    function acender(chip) {
-      linhasChip.forEach(function (p, c) { p.classList.toggle('aceso', c === chip); });
+    function acender(chip) { linhasChip.forEach(function (p, c) { p.classList.toggle('aceso', c === chip); }); }
+    function preencher(alvo, d) {
+      alvo.querySelector('.info-nome').textContent = d.nome;
+      alvo.querySelector('.info-desc').textContent = d.desc;
+      alvo.querySelector('.info-lider').textContent = d.lider ? 'Líder: ' + d.lider : '';
     }
-    function mostrar(chip, doUsuario) {
-      chips.forEach(function (c) { c.setAttribute('aria-pressed', c === chip ? 'true' : 'false'); c.classList.remove('brilha'); });
+    function mostrar(chip) {
+      chips.forEach(function (c) { c.setAttribute('aria-pressed', c === chip ? 'true' : 'false'); });
       selecionado = chip;
-      var cor = chip.style.getPropertyValue('--cor');
-      [nucleo, painel].forEach(function (alvo) {
-        alvo.style.setProperty('--cor-nucleo', cor);
-        alvo.querySelector('.info-nome').textContent = chip.dataset.nome;
-        alvo.querySelector('.info-desc').textContent = chip.dataset.desc;
-        alvo.querySelector('.info-lider').textContent = chip.dataset.lider ? 'Líder: ' + chip.dataset.lider : '';
-      });
+      nucleo.style.setProperty('--cor-nucleo', chip.style.getPropertyValue('--cor'));
+      preencher(nucleo, chip.dataset);
       nucleo.classList.add('mostrando');
       acender(chip);
-      if (doUsuario && !largo.matches) {
-        chip.closest('.chips').appendChild(painel);
-        painel.hidden = false;
-        painel.style.animation = 'none'; painel.offsetHeight; painel.style.animation = '';
-      }
     }
     function limpar() {
       chips.forEach(function (c) { c.setAttribute('aria-pressed', 'false'); });
       selecionado = null; nucleo.classList.remove('mostrando'); nucleo.style.removeProperty('--cor-nucleo');
-      painel.hidden = true; acender(null);
+      acender(null);
     }
-    // Passeio automático pelos ministérios até a pessoa tocar em um
-    var auto = null, indice = 0, parado = false;
+    chips.forEach(function (chip) {
+      chip.addEventListener('click', function (e) {
+        e.stopPropagation(); parar();
+        if (chip.getAttribute('aria-pressed') === 'true') limpar(); else mostrar(chip);
+      });
+    });
+    // Tocar no círculo ou fora dos ministérios volta ao logo
+    mapa.closest('.ministerios').addEventListener('click', function (e) {
+      if (!largo.matches || e.target.closest('.chip')) return;
+      parar(); limpar();
+    });
+
+    /* Celular: roda em semicírculo */
+    var grupos = Array.prototype.slice.call(mapa.querySelectorAll('.ramo'))
+      .sort(function (a, b) { return parseInt(a.style.getPropertyValue('--ordem'), 10) - parseInt(b.style.getPropertyValue('--ordem'), 10); })
+      .map(function (ramo) {
+        return {
+          nome: ramo.querySelector('.ramo-no').textContent,
+          itens: Array.prototype.slice.call(ramo.querySelectorAll('.chip')).map(function (c) {
+            return { nome: c.dataset.nome, desc: c.dataset.desc, lider: c.dataset.lider, cor: c.style.getPropertyValue('--cor') };
+          })
+        };
+      });
+    var roda = document.createElement('div');
+    roda.className = 'roda';
+    roda.innerHTML = '<svg class="roda-linhas" aria-hidden="true"></svg>'
+      + '<button class="roda-nucleo" type="button" aria-label="Voltar ao início dos ministérios"><img src="/img/logo_ieim_simbolo_branco.svg" alt="" width="50" height="33"></button>';
+    var info = document.createElement('div');
+    info.className = 'roda-info'; info.setAttribute('aria-live', 'polite');
+    info.innerHTML = '<p class="info-nome"></p><p class="info-desc"></p><p class="info-lider"></p>';
+    mapa.appendChild(roda); mapa.appendChild(info);
+    var rSvg = roda.querySelector('.roda-linhas');
+    var rNucleo = roda.querySelector('.roda-nucleo');
+    var botoesGrupo = grupos.map(function (g, i) {
+      var b = document.createElement('button');
+      b.type = 'button'; b.className = 'roda-grupo'; b.textContent = g.nome;
+      b.addEventListener('click', function (e) { e.stopPropagation(); parar(); if (i !== gAtivo) girarPara(i); limparRoda(); });
+      roda.appendChild(b); return b;
+    });
+    var N = grupos.length, PASSO = 52, pos = 0, gAtivo = 0, rSel = null, animando = null;
+    var R0 = 92, R1, R2, cy;
+    function dif(d) { d = ((d % N) + N) % N; if (d >= N / 2) d -= N; return d; }
+    function medidas() {
+      var W = roda.clientWidth; cy = roda.clientHeight / 2;
+      R2 = Math.min(224, W * .6); R1 = Math.max(R0 + 56, R2 * .67);
+    }
+    function posicionarGrupos() {
+      botoesGrupo.forEach(function (b, i) {
+        var graus = dif(i - pos) * PASSO, a = graus * Math.PI / 180;
+        b.style.left = (R1 * Math.cos(a)) + 'px';
+        b.style.top = (cy + R1 * Math.sin(a)) + 'px';
+        var v = Math.max(0, 1 - Math.abs(graus) / 80);
+        b.style.opacity = i === gAtivo ? 1 : Math.min(.65, v * 1.6);
+        b.style.visibility = v <= 0 ? 'hidden' : 'visible';
+        b.classList.toggle('ativo', i === gAtivo);
+        b.setAttribute('aria-pressed', i === gAtivo ? 'true' : 'false');
+      });
+    }
+    function angulos(k) {
+      if (k === 1) return [0];
+      var abre = Math.min(124, (k - 1) * 26), lista = [];
+      for (var j = 0; j < k; j++) lista.push(-abre / 2 + j * abre / (k - 1));
+      return lista;
+    }
+    function montarItens() {
+      roda.querySelectorAll('.roda-chip').forEach(function (c) {
+        c.classList.add('sai'); setTimeout(function () { c.remove(); }, 450);
+      });
+      var g = grupos[gAtivo], ang = angulos(g.itens.length);
+      g.itens.forEach(function (d, j) {
+        var b = document.createElement('button');
+        b.type = 'button'; b.className = 'chip roda-chip entra'; b.setAttribute('aria-pressed', 'false');
+        b.style.setProperty('--cor', d.cor);
+        b.innerHTML = '<span class="chip-ponto"></span>';
+        b.appendChild(document.createTextNode(d.nome));
+        var a = ang[j] * Math.PI / 180;
+        b.style.left = (R2 * Math.cos(a)) + 'px';
+        b.style.top = (cy + R2 * Math.sin(a)) + 'px';
+        b.style.transitionDelay = (j * .06 + .15) + 's';
+        b._dados = d;
+        b.addEventListener('click', function (e) {
+          e.stopPropagation(); parar();
+          if (rSel === b) limparRoda(); else selecionarRoda(b);
+        });
+        roda.appendChild(b);
+      });
+      requestAnimationFrame(function () { requestAnimationFrame(function () {
+        roda.querySelectorAll('.roda-chip.entra').forEach(function (c) { c.classList.remove('entra'); });
+      }); });
+    }
+    function linhasRoda() {
+      rSvg.innerHTML = '';
+      var gb = botoesGrupo[gAtivo];
+      var gx = parseFloat(gb.style.left), gy = parseFloat(gb.style.top), gw = gb.offsetWidth / 2;
+      var t = caminho(rSvg, curva(R0 + 8, cy, gx - gw, gy), 'tronco', 0);
+      t.id = 'roda-tronco';
+      ponto(rSvg, 'roda-tronco', 2.4, 0);
+      roda.querySelectorAll('.roda-chip:not(.sai)').forEach(function (c, j) {
+        var p = caminho(rSvg, curva(gx + gw, gy, parseFloat(c.style.left) - 2, parseFloat(c.style.top)), '', .1 + j * .05);
+        p.style.setProperty('--cor', c.style.getPropertyValue('--cor'));
+        p._chip = c;
+        if (c === rSel) p.classList.add('aceso');
+      });
+      rSvg.getBoundingClientRect();
+      roda.classList.add('desenhada');
+    }
+    function girarPara(i, depois) {
+      var inicio = pos, fim = pos + dif(i - pos), t0 = null, dur = semMovimento ? 0 : 750;
+      gAtivo = i;
+      roda.classList.remove('desenhada'); rSvg.innerHTML = '';
+      montarItens(); posicionarGrupos();
+      cancelAnimationFrame(animando);
+      function passo(t) {
+        if (!t0) t0 = t;
+        var k = dur ? Math.min(1, (t - t0) / dur) : 1;
+        var e = k < .5 ? 4 * k * k * k : 1 - Math.pow(-2 * k + 2, 3) / 2;
+        pos = inicio + (fim - inicio) * e;
+        rNucleo.style.setProperty('--giro', (pos * -PASSO) + 'deg');
+        posicionarGrupos();
+        if (k < 1) animando = requestAnimationFrame(passo);
+        else { pos = ((fim % N) + N) % N; posicionarGrupos(); setTimeout(function () { linhasRoda(); if (depois) depois(); }, 120); }
+      }
+      animando = requestAnimationFrame(passo);
+    }
+    function selecionarRoda(b) {
+      rSel = b;
+      roda.querySelectorAll('.roda-chip').forEach(function (c) { c.setAttribute('aria-pressed', c === b ? 'true' : 'false'); });
+      rSvg.querySelectorAll('path').forEach(function (p) { p.classList.toggle('aceso', p._chip === b); });
+      var cor = b.style.getPropertyValue('--cor');
+      roda.style.setProperty('--cor-nucleo', cor); info.style.setProperty('--cor-nucleo', cor);
+      preencher(info, b._dados);
+      info.classList.add('escolhido');
+    }
+    function limparRoda() {
+      rSel = null;
+      roda.querySelectorAll('.roda-chip').forEach(function (c) { c.setAttribute('aria-pressed', 'false'); });
+      rSvg.querySelectorAll('path').forEach(function (p) { p.classList.remove('aceso'); });
+      roda.style.removeProperty('--cor-nucleo'); info.style.removeProperty('--cor-nucleo');
+      preencher(info, { nome: grupos[gAtivo].nome, desc: 'Toque em um ministério para conhecer.', lider: '' });
+      info.classList.remove('escolhido');
+    }
+    rNucleo.addEventListener('click', function (e) { e.stopPropagation(); parar(); limparRoda(); });
+    roda.addEventListener('click', function () { parar(); limparRoda(); });
+    info.addEventListener('click', function () { parar(); });
+    function iniciarRoda() {
+      medidas(); posicionarGrupos(); montarItens(); limparRoda();
+      setTimeout(linhasRoda, 500);
+    }
+
+    /* Passeio automático até a pessoa tocar */
     function passeio() {
       if (parado || semMovimento) return;
       clearInterval(auto);
       auto = setInterval(function () {
-        var chip = chips[indice++ % chips.length];
-        if (largo.matches) mostrar(chip, false);
-        else { chips.forEach(function (c) { c.classList.remove('brilha'); }); chip.classList.add('brilha'); }
+        if (largo.matches) { mostrar(chips[indice++ % chips.length]); return; }
+        var itens = roda.querySelectorAll('.roda-chip:not(.sai)');
+        var atualIdx = rSel ? Array.prototype.indexOf.call(itens, rSel) : -1;
+        if (atualIdx < itens.length - 1) selecionarRoda(itens[atualIdx + 1]);
+        else {
+          limparRoda();
+          girarPara((gAtivo + 1) % N, function () {
+            var primeiro = roda.querySelector('.roda-chip:not(.sai)');
+            if (primeiro && !parado) selecionarRoda(primeiro);
+          });
+        }
       }, 2600);
     }
-    chips.forEach(function (chip) {
-      chip.addEventListener('click', function () {
-        parado = true; clearInterval(auto);
-        chips.forEach(function (c) { c.classList.remove('brilha'); });
-        if (chip.getAttribute('aria-pressed') === 'true' && !largo.matches) { limpar(); return; }
-        mostrar(chip, true);
-      });
-    });
-    var visivelAgora = false;
     if (temObs) {
       new IntersectionObserver(function (es) {
         es.forEach(function (e) {
-          visivelAgora = e.isIntersecting;
           if (e.isIntersecting) { mapa.classList.add('visivel'); passeio(); }
           else clearInterval(auto);
         });
       }, { threshold: 0.25 }).observe(mapa);
     } else mapa.classList.add('visivel');
+
     var tmr;
-    function redesenhar() { clearTimeout(tmr); tmr = setTimeout(desenhar, 120); }
+    function redesenhar() {
+      clearTimeout(tmr);
+      tmr = setTimeout(function () {
+        desenhar();
+        if (!largo.matches) { medidas(); posicionarGrupos(); var ang = angulos(grupos[gAtivo].itens.length);
+          roda.querySelectorAll('.roda-chip:not(.sai)').forEach(function (c, j) { var a = ang[j] * Math.PI / 180; c.style.left = (R2 * Math.cos(a)) + 'px'; c.style.top = (cy + R2 * Math.sin(a)) + 'px'; });
+          linhasRoda(); }
+      }, 150);
+    }
     window.addEventListener('resize', redesenhar);
-    largo.addEventListener && largo.addEventListener('change', function () { painel.hidden = true; if (selecionado && !parado) limpar(); desenhar(); });
-    if (document.fonts && document.fonts.ready) document.fonts.ready.then(desenhar);
-    window.addEventListener('load', desenhar);
+    if (largo.addEventListener) largo.addEventListener('change', redesenhar);
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(redesenhar);
+    window.addEventListener('load', redesenhar);
     desenhar();
+    iniciarRoda();
 
     /* ───── PIX: copiar chave ───── */
     var botaoPix = document.getElementById('copiar-pix');

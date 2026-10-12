@@ -48,11 +48,14 @@
     + '.menu-aberto .mt-barras i:nth-child(1){top:6px;transform:rotate(45deg)}'
     + '.menu-aberto .mt-barras i:nth-child(2){opacity:0;transform:scaleX(.2)}'
     + '.menu-aberto .mt-barras i:nth-child(3){top:6px;transform:rotate(-45deg)}'
-    + '.mt-painel{position:fixed;inset:0;z-index:79;font-family:"Raleway",system-ui,sans-serif;overflow-y:auto;padding:116px 24px 48px;visibility:hidden;opacity:0;'
-    + 'background:rgba(5,5,7,.8);-webkit-backdrop-filter:blur(26px) saturate(150%);backdrop-filter:blur(26px) saturate(150%);'
+    + '.mt-painel{position:fixed;inset:0;z-index:90;overscroll-behavior:contain;font-family:"Raleway",system-ui,sans-serif;overflow-y:auto;padding:116px 24px 48px;visibility:hidden;opacity:0;'
+    + 'background:rgba(5,5,7,.93);-webkit-backdrop-filter:blur(26px) saturate(150%);backdrop-filter:blur(26px) saturate(150%);'
     + 'transition:opacity .45s ease,visibility 0s linear .45s}'
+    + '.mt-painel-topo{position:absolute;left:0;right:0;top:0;height:68px;z-index:2}'
+    + '.mt-painel-topo .mt-interno{position:relative}'
     + '.mt-painel::before{content:"";position:absolute;inset:0;pointer-events:none;'
     + 'background:radial-gradient(45% 40% at 90% 10%,rgba(47,95,224,.35),transparent 70%),radial-gradient(40% 40% at 5% 95%,rgba(230,0,126,.25),transparent 70%)}'
+    + '.mt-painel .mt-barras i:nth-child(1){top:6px;transform:rotate(45deg)}.mt-painel .mt-barras i:nth-child(2){opacity:0}.mt-painel .mt-barras i:nth-child(3){top:6px;transform:rotate(-45deg)}'
     + '.mt-painel.aberto{visibility:visible;opacity:1;transition:opacity .45s ease}'
     + '.mt-lista{position:relative;max-width:1072px;margin:0 auto;list-style:none;display:grid;gap:4px}'
     + '.mt-lista a{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:14px 4px;text-decoration:none;color:#fff;'
@@ -68,7 +71,7 @@
     + 'opacity:0;transition:opacity .5s ease}'
     + '.mt-painel.aberto .mt-grupo{opacity:1;transition-delay:.35s}'
     + '.mt-lista.eventos a{font-size:clamp(1.25rem,3.4vw,1.6rem);font-weight:600}'
-    + '@media (max-width:860px){.menu-topo{height:60px}.mt-interno{padding:0 16px}.mt-marca .mt-nome{display:none}.mt-simbolo{width:42px}.mt-botao{width:42px;height:42px}.mt-painel{padding:96px 16px 40px}}'
+    + '@media (max-width:860px){.menu-topo{height:60px}.mt-interno{padding:0 16px}.mt-marca .mt-nome{display:none}.mt-simbolo{width:42px}.mt-botao{width:42px;height:42px}.mt-painel-topo{height:60px}.mt-painel{padding:96px 16px 40px}}'
     + '@media (prefers-reduced-motion:reduce){.mt-painel,.mt-lista a,.mt-grupo,.mt-barras i{transition:none!important}.mt-lista a{transform:none}}';
   var estilo = document.createElement('style');
   estilo.textContent = css;
@@ -97,31 +100,44 @@
   var painel = document.createElement('nav');
   painel.className = 'mt-painel'; painel.id = 'menu-painel'; painel.setAttribute('aria-label', 'Menu do site');
   painel.innerHTML = ''
+    + '<div class="mt-painel-topo"><div class="mt-interno">'
+    + '<a class="mt-marca" href="/" aria-label="Igreja Evangélica Irmãos Menonitas, início"><img class="mt-simbolo" src="/img/logo_ieim_simbolo_branco.svg" alt="" width="46" height="30"><img class="mt-nome" src="/img/logo_ieim_nome_branco.svg" alt="" width="150" height="24"></a>'
+    + '<button class="mt-botao mt-fechar" type="button" aria-label="Fechar menu"><span class="mt-barras" aria-hidden="true"><i></i><i></i><i></i></span></button>'
+    + '</div></div>'
     + '<ul class="mt-lista">' + itens(PAGINAS) + '</ul>'
     + (eventos.length ? '<p class="mt-grupo">Eventos</p><ul class="mt-lista eventos">' + itens(eventos) + '</ul>' : '');
   script.parentNode.insertBefore(topo, script);
   script.parentNode.insertBefore(painel, script);
 
   var botao = topo.querySelector('.mt-botao');
+  var fechar = painel.querySelector('.mt-fechar');
+  var barraPainel = painel.querySelector('.mt-painel-topo');
   painel.setAttribute('inert', '');
   function abrir(sim) {
     topo.classList.toggle('menu-aberto', sim); painel.classList.toggle('aberto', sim);
     botao.setAttribute('aria-expanded', sim ? 'true' : 'false');
     botao.setAttribute('aria-label', sim ? 'Fechar menu' : 'Abrir menu');
-    document.documentElement.style.overflow = sim ? 'hidden' : '';
-    if (sim) { painel.style.paddingTop = Math.round(topo.getBoundingClientRect().bottom + 28) + 'px'; painel.removeAttribute('inert'); setTimeout(function () { var a = painel.querySelector('a'); if (a) a.focus({ preventScroll: true }); }, 120); }
+    if (sim) {
+      // a barra do painel (logo + X) fica exatamente onde está o menu na tela
+      var r = topo.getBoundingClientRect(), alto = Math.max(0, Math.round(r.top));
+      barraPainel.style.top = alto + 'px';
+      painel.style.paddingTop = (alto + Math.round(r.height) + 28) + 'px';
+      painel.removeAttribute('inert');
+      setTimeout(function () { fechar.focus({ preventScroll: true }); }, 120);
+    }
     else painel.setAttribute('inert', '');
   }
   botao.addEventListener('click', function () { abrir(!topo.classList.contains('menu-aberto')); });
+  fechar.addEventListener('click', function (e) { e.stopPropagation(); abrir(false); botao.focus({ preventScroll: true }); });
   painel.addEventListener('click', function (e) {
     if (e.target.closest('a')) abrir(false);
-    else if (e.target === painel) { abrir(false); botao.focus(); }
+    else if (!e.target.closest('.mt-marca, .mt-fechar')) { abrir(false); botao.focus({ preventScroll: true }); }
   });
   document.addEventListener('keydown', function (e) {
     if (!topo.classList.contains('menu-aberto')) return;
     if (e.key === 'Escape') { abrir(false); botao.focus(); return; }
     if (e.key !== 'Tab') return;
-    var foco = [botao].concat(Array.prototype.slice.call(painel.querySelectorAll('a')));
+    var foco = Array.prototype.slice.call(painel.querySelectorAll('a, button'));
     var i = foco.indexOf(document.activeElement);
     if (e.shiftKey && i <= 0) { e.preventDefault(); foco[foco.length - 1].focus(); }
     else if (!e.shiftKey && i === foco.length - 1) { e.preventDefault(); foco[0].focus(); }
