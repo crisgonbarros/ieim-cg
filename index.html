@@ -156,13 +156,13 @@
   .canais { display: flex; flex-wrap: wrap; gap: 12px; }
 
   /* ── Rodapé ── */
-  footer {
-    background: var(--preto); color: var(--branco);
-    margin-top: 32px; padding: 48px 0 40px;
-  }
-  .rodape { display: grid; gap: 24px; justify-items: center; text-align: center; }
-  .rodape img { width: 170px; }
-  .rodape p { color: #b5b5b5; font-size: 0.88rem; line-height: 1.7; }
+  footer { background: var(--preto); color: var(--branco); margin-top: 32px; padding: 44px 16px 36px; }
+  .rodape { display: grid; gap: 20px; justify-items: center; text-align: center; }
+  .rodape img { width: 150px; }
+  .rodape nav { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px 22px; }
+  .rodape nav a { color: var(--branco); font-size: 0.9rem; text-decoration: none; }
+  .rodape nav a:hover { text-decoration: underline; text-underline-offset: 4px; }
+  .rodape p { color: #b5b5b5; font-size: 0.85rem; line-height: 1.7; }
 
   /* ── Celular ── */
   @media (max-width: 860px) {
@@ -302,8 +302,13 @@
 
 <footer>
   <div class="conteudo rodape">
-    <img src="/img/logo_ieim_completo_branco.svg" alt="Igreja Evangélica Irmãos Menonitas" width="170" height="150" loading="lazy">
-    <p>Rua Camapuã, 141 · Amambaí · Campo Grande/MS<br>© 2026 Igreja Evangélica Irmãos Menonitas de Campo Grande</p>
+    <img src="/img/logo_ieim_completo_branco.svg" alt="Igreja Evangélica Irmãos Menonitas" width="150" height="132">
+    <nav aria-label="Políticas">
+      <a href="/privacidade/">Política de Privacidade</a>
+      <a href="/cookies/">Política de Cookies</a>
+      <a href="/termos/">Termos de Uso</a>
+    </nav>
+    <p>Igreja Evangélica Irmãos Menonitas de Campo Grande<br>CNPJ 26.856.633/0001-90<br>Rua Camapuã, 141, Amambaí, Campo Grande/MS, CEP 79008-270</p>
   </div>
 </footer>
 
