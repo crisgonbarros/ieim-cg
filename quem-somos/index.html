@@ -12,7 +12,7 @@
 <link rel="apple-touch-icon" href="/img/apple-touch-icon.png">
 
 <meta property="og:title" content="Quem somos · Igreja Evangélica Irmãos Menonitas · Campo Grande/MS">
-<meta property="og:description" content="Um lugar para chegar, ficar e pertencer.">
+<meta property="og:description" content="Um lugar para estar e pertencer.">
 <meta property="og:image" content="https://www.irmaosmenonitas.com.br/img/og_ieim.jpg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
@@ -139,7 +139,7 @@
   .trilho { position: absolute; left: var(--eixo); top: 10px; bottom: 60px; width: 2px; margin-left: -1px; background: rgba(255,255,255,.12); border-radius: 2px; }
   .trilho-luz {
     position: absolute; inset: 0; border-radius: 2px; -webkit-clip-path: inset(0 0 calc((1 - var(--p, 0)) * 100%) 0); clip-path: inset(0 0 calc((1 - var(--p, 0)) * 100%) 0);
-    background: linear-gradient(180deg, #ff5cb0 0%, #ffc93d 42%, #4fdc8a 52%, #5aa8f0 84%, #6c9bff 100%);
+    background: linear-gradient(180deg, #ff5cb0 0%, #ffc93d 30%, #4fdc8a 36%, #5aa8f0 57%, #6c9bff 63%, #a472ff 100%);
     box-shadow: 0 0 14px rgba(255,255,255,.35);
   }
   .capitulo, .marco { position: relative; display: grid; grid-template-columns: var(--eixo) 1fr; }
@@ -163,6 +163,12 @@
     color: rgba(255,255,255,.5); transition: color .8s;
   }
   .capitulo.aceso .capitulo-nome { color: var(--cor); }
+  .marco.intro { padding-bottom: 34px; margin-top: -14px; }
+  .marco.intro .marco-texto { grid-column: 2; font-size: clamp(1.1rem, 2vw, 1.3rem); font-weight: 600; font-style: italic; color: rgba(255,255,255,.62); }
+  .marco.intro.aceso .marco-texto { color: #fff; }
+  .fontes { max-width: 860px; margin: 72px auto 0; font-size: .82rem; color: rgba(255,255,255,.45); text-align: center; }
+  .fontes a { text-underline-offset: 4px; text-decoration-color: rgba(255,255,255,.3); }
+  .fontes a:hover { color: #fff; }
   .final { position: relative; display: grid; grid-template-columns: var(--eixo) 1fr; align-items: center; padding-top: 6px; }
   .final-simbolo { position: absolute; left: var(--eixo); top: 0; width: 64px; margin-left: -32px; opacity: .35; transition: opacity 1s ease, filter 1s ease; }
   .final.aceso .final-simbolo { opacity: 1; filter: drop-shadow(0 0 18px rgba(108,155,255,.75)); }
@@ -248,7 +254,7 @@
 
   /* ── Pastores ── */
   .pastores { background: var(--fundo-claro); }
-  .igrejas-pastores { display: grid; grid-template-columns: 1.2fr 1fr 1fr; gap: 20px; align-items: stretch; }
+  .igrejas-pastores { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; align-items: stretch; }
   .igreja {
     position: relative; overflow: hidden; display: flex; flex-direction: column; gap: 22px;
     padding: 30px 28px 26px; border-radius: 26px;
@@ -330,8 +336,7 @@
   @media (max-width: 1020px) {
     .grade-valores { grid-template-columns: repeat(2, 1fr); }
     .grade-junta { grid-template-columns: repeat(2, 1fr); }
-    .igrejas-pastores { grid-template-columns: 1fr 1fr; }
-    .igrejas-pastores .igreja:first-child { grid-column: 1 / -1; }
+    .igrejas-pastores { grid-template-columns: 1fr; gap: 14px; }
     .cremos-grade { grid-template-columns: 1fr; gap: 36px; }
   }
   @media (max-width: 860px) {
@@ -352,6 +357,9 @@
     .marco .ponto-linha { top: .78rem; }
     .final-simbolo { width: 44px; margin-left: -22px; }
     .final-texto { grid-column: 1; padding: 46px 0 0; font-size: 1.12rem; }
+    .marco.intro .marco-texto { grid-column: 1; }
+    .marco.intro { margin-top: -18px; }
+    .fontes { margin-top: 56px; text-align: left; }
     .grade-valores { grid-template-columns: 1fr; gap: 10px; }
     .valor { display: grid; grid-template-columns: 2.4rem 1fr; column-gap: 8px; padding: 18px 18px 18px 16px; border-radius: 18px; }
     .valor-num { margin: 3px 0 0; grid-row: 1 / span 2; }
@@ -393,7 +401,7 @@
         <span class="simbolo-brilho"></span>
       </div>
       <h1 id="titulo-abertura" class="entra" style="--d:1">Quem somos</h1>
-      <p class="chamada entra" style="--d:2">Um lugar para chegar, ficar e <em>pertencer</em>.</p>
+      <p class="chamada entra" style="--d:2">Um lugar para <em>estar e pertencer</em>.</p>
       <span class="rolar entra" style="--d:3" aria-hidden="true"></span>
     </div>
   </section>
@@ -423,11 +431,21 @@
         <div class="marco" style="--cor:#5aa8f0"><span class="ponto-linha" aria-hidden="true"></span><p class="ano">1995</p><p class="marco-texto">As duas se unem e nasce a COBIM, Convenção Brasileira das Igrejas Evangélicas Irmãos Menonitas.</p></div>
 
         <div class="capitulo" style="--cor:#6c9bff"><span class="ponto-linha" aria-hidden="true"></span><h3 class="capitulo-nome">Em Campo Grande</h3></div>
+        <div class="marco intro" style="--cor:#6c9bff"><p class="marco-texto">Aqui, a igreja não nasceu de uma colônia de imigrantes, mas da missão.</p></div>
+        <div class="marco" style="--cor:#6c9bff"><span class="ponto-linha" aria-hidden="true"></span><p class="ano">1985</p><p class="marco-texto">A Convenção envia o casal Dietrich e Aganeta Reimer para plantar uma igreja em Campo Grande. Os primeiros encontros acontecem na casa deles.</p></div>
+        <div class="marco" style="--cor:#7d8cff"><span class="ponto-linha" aria-hidden="true"></span><p class="ano">1987</p><p class="marco-texto">Acontece o primeiro batismo.</p></div>
+        <div class="marco" style="--cor:#8e7fff"><span class="ponto-linha" aria-hidden="true"></span><p class="ano">1991</p><p class="marco-texto">Em 1º de janeiro, a igreja é fundada oficialmente, ligada à Convenção, com o casal Reimer como pastores.</p></div>
+        <div class="marco" style="--cor:#9a78ff"><span class="ponto-linha" aria-hidden="true"></span><p class="ano">Anos 1990</p><p class="marco-texto">A igreja compra o terreno da Rua Camapuã e começa a construir a sede.</p></div>
+        <!-- São Conrado: entra aqui quando o ano for confirmado
+        <div class="marco" style="--cor:#a072ff"><span class="ponto-linha" aria-hidden="true"></span><p class="ano">ANO</p><p class="marco-texto">Começa a Igreja do São Conrado.</p></div>
+        -->
+        <div class="marco" style="--cor:#a472ff"><span class="ponto-linha" aria-hidden="true"></span><p class="ano">2025</p><p class="marco-texto">Começa a Igreja do Los Angeles.</p></div>
         <div class="final">
           <img class="final-simbolo" src="/img/logo_ieim_simbolo_branco.svg" alt="" width="64" height="42" aria-hidden="true">
           <p class="final-texto">Em Campo Grande, caminhamos junto com a <a href="https://cobim.com.br/" target="_blank" rel="noopener">COBIM</a>, como parte da <a href="https://cobim.com.br/regionais/" target="_blank" rel="noopener">Regional Mato Grosso do Sul</a>.</p>
         </div>
       </div>
+      <p class="fontes revelar">Fontes: <a href="https://cobim.com.br/a-cobim/" target="_blank" rel="noopener">COBIM</a> e <a href="https://cobim.com.br/wp-content/uploads/2024/02/materiais-livro-Livro-Refugiados-e-Embaixadores.pdf" target="_blank" rel="noopener"><em>Refugiados e Embaixadores</em></a>, de Victor Wiens.</p>
     </div>
   </section>
 
@@ -608,7 +626,7 @@
     var luz = linha.querySelector('.trilho-luz');
     var trilho = linha.querySelector('.trilho');
     var etapas = Array.prototype.slice.call(linha.querySelectorAll('.capitulo, .marco, .final')).map(function (el) {
-      return { el: el, alvo: el.querySelector('.ponto-linha, .final-simbolo') };
+      return { el: el, alvo: el.querySelector('.ponto-linha, .final-simbolo') || el };
     });
 
     // o trilho termina exatamente no símbolo da igreja
