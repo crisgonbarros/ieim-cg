@@ -103,9 +103,15 @@
   .cartao { perspective: 1400px; height: 320px; }
   .lados {
     position: relative; height: 100%;
-    transform-style: preserve-3d; transition: transform .8s var(--curva);
+    -webkit-transform-style: preserve-3d; transform-style: preserve-3d; transition: transform .8s var(--curva);
   }
   .cartao.virado .lados { transform: rotateY(180deg); }
+  /* Safari (iPhone) às vezes ignora backface-visibility: a troca de lado é garantida
+     pela visibilidade, que muda exatamente na metade do giro */
+  .frente { visibility: visible; transform: translateZ(1px); transition: visibility 0s linear .4s; }
+  .verso  { visibility: hidden; transition: visibility 0s linear .4s; }
+  .cartao.virado .frente { visibility: hidden; }
+  .cartao.virado .verso  { visibility: visible; }
   .lado {
     position: absolute; inset: 0; border-radius: 22px; overflow: hidden;
     backface-visibility: hidden; -webkit-backface-visibility: hidden;
@@ -147,7 +153,7 @@
   .frente:hover::after { transform: translateX(120%); transition: transform 1s ease; }
 
   .verso {
-    transform: rotateY(180deg); background: var(--branco); color: var(--preto);
+    transform: rotateY(180deg) translateZ(1px); background: var(--branco); color: var(--preto);
     border: 1.5px solid var(--preto); gap: 14px;
   }
   .verso-topo { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
@@ -222,7 +228,7 @@
     @keyframes pulsar { 0%, 100% { opacity: .25; } 50% { opacity: 1; } }
     .js .cartao { opacity: 1 !important; transform: none !important; transition: none !important; }
     .frente::after { display: none; }
-    .lados { transition: none; }
+    .lados, .frente, .verso { transition: none !important; }
     .cartao.virado .lados { transform: none; }
     .cartao.virado .frente { visibility: hidden; }
     .verso { transform: none; visibility: hidden; }
