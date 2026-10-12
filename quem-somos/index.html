@@ -2,62 +2,655 @@
 <html lang="pt-BR">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="robots" content="noindex, nofollow">
-<title>Em construção · IEIM Campo Grande</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Quem somos · Igreja Evangélica Irmãos Menonitas · Campo Grande/MS</title>
+<meta name="description" content="A história dos Irmãos Menonitas, nossa missão, nossos valores, no que cremos e quem cuida da Igreja Evangélica Irmãos Menonitas em Campo Grande/MS.">
+<meta name="theme-color" content="#040405">
+
 <link rel="icon" href="/img/favicon.svg" type="image/svg+xml">
 <link rel="icon" href="/img/favicon-32.png" sizes="32x32" type="image/png">
 <link rel="apple-touch-icon" href="/img/apple-touch-icon.png">
+
+<meta property="og:title" content="Quem somos · Igreja Evangélica Irmãos Menonitas · Campo Grande/MS">
+<meta property="og:description" content="Um lugar para chegar, ficar e pertencer.">
+<meta property="og:image" content="https://www.irmaosmenonitas.com.br/img/og_ieim.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:url" content="https://www.irmaosmenonitas.com.br/quem-somos/">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="pt_BR">
+<meta name="twitter:card" content="summary_large_image">
+
+<script>document.documentElement.classList.add('js');</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Raleway:wght@500&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;500;600;700&display=swap">
+<link rel="preload" as="image" href="/img/logo_ieim_simbolo_branco.svg">
+
 <style>
-  :root { --preto: #000; --branco: #fff; --linha: #e6e6e6; }
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  html, body { height: 100%; }
+  :root {
+    --preto: #000;
+    --branco: #fff;
+    --cinza: #5f5f5f;
+    --cinza-claro: #a8a8a8;
+    --linha: #e6e6e6;
+    --fundo-claro: #f6f6f4;
+    --largura: 1120px;
+    --topo: 68px;
+    --curva: cubic-bezier(.2, .75, .2, 1);
+    --rosa: #e6007e; --azul: #2f5fe0; --amarelo: #f5b700; --verde: #2e9e4f;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; scroll-padding-top: calc(var(--topo) + 8px); }
   body {
-    background: var(--branco);
-    color: var(--preto);
-    font-family: "Raleway", system-ui, sans-serif;
-    font-weight: 500;
-    display: grid;
-    place-items: center;
-    padding: 24px 16px;
+    background: var(--branco); color: var(--preto);
+    font-family: "Raleway", system-ui, sans-serif; font-weight: 500;
+    font-variant-numeric: lining-nums; line-height: 1.55; overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
   }
-  main { display: grid; justify-items: center; gap: 40px; text-align: center; }
-  img { width: clamp(140px, 36vw, 220px); height: auto; display: block; }
-  h1 { font-size: clamp(1.05rem, 3.2vw, 1.3rem); font-weight: 500; letter-spacing: 0.04em; }
-  .barra {
-    width: clamp(160px, 40vw, 240px);
-    height: 3px;
-    background: var(--linha);
-    border-radius: 3px;
-    overflow: hidden;
+  img { display: block; max-width: 100%; height: auto; }
+  a { color: inherit; }
+  button { font: inherit; color: inherit; }
+  :focus-visible { outline: 2px solid currentColor; outline-offset: 3px; border-radius: 8px; }
+  .conteudo { width: 100%; max-width: var(--largura); margin: 0 auto; padding: 0 24px; }
+
+  .sobre { display: block; font-size: .78rem; font-weight: 700; letter-spacing: .22em; text-transform: uppercase; margin-bottom: 14px; color: var(--cinza); }
+  h2 { font-size: clamp(1.7rem, 4.2vw, 2.6rem); font-weight: 700; line-height: 1.12; letter-spacing: -.01em; text-wrap: balance; }
+  .secao { padding: 112px 0; position: relative; }
+  .cabeca { margin-bottom: 48px; }
+  .escura { background: #050506; color: var(--branco); overflow: hidden; isolation: isolate; }
+  .escura .sobre { color: rgba(255,255,255,.55); }
+
+  /* Luzes coloridas desfocadas se movendo devagar */
+  .luzes { position: absolute; inset: 0; z-index: -2; pointer-events: none; overflow: hidden; }
+  .luzes span {
+    position: absolute; width: 56vmax; height: 56vmax; border-radius: 50%;
+    background: radial-gradient(circle, var(--c) 0%, transparent 62%);
+    opacity: var(--o); mix-blend-mode: screen; will-change: transform;
   }
-  .barra span {
-    display: block;
-    width: 40%;
-    height: 100%;
-    background: var(--preto);
-    border-radius: 3px;
-    animation: carregar 1.6s ease-in-out infinite;
+  .grao::after {
+    content: ""; position: absolute; inset: 0; z-index: -1; opacity: .07; pointer-events: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   }
-  @keyframes carregar {
-    0%   { transform: translateX(-100%); opacity: .35; }
-    50%  { opacity: 1; }
-    100% { transform: translateX(250%); opacity: .35; }
+  @keyframes deriva1 { to { transform: translate(18vw, 14vh) scale(1.15); } }
+  @keyframes deriva2 { to { transform: translate(-16vw, 18vh) scale(.9); } }
+  @keyframes deriva3 { to { transform: translate(20vw, -16vh) scale(1.1); } }
+  @keyframes deriva4 { to { transform: translate(-22vw, -12vh) scale(1.2); } }
+
+  /* Entradas */
+  .js .entra { opacity: 0; transform: translateY(22px); filter: blur(6px); animation: entrar 1.1s var(--curva) forwards; animation-delay: calc(var(--d) * .14s + .15s); }
+  @keyframes entrar { to { opacity: 1; transform: none; filter: none; } }
+  .js .revelar { opacity: 0; transform: translateY(34px); transition: opacity .9s ease, transform 1.1s var(--curva); transition-delay: calc(var(--d, 0) * .1s); }
+  .js .revelar.revelado { opacity: 1; transform: none; }
+
+  /* ── Abertura ── */
+  .abertura {
+    position: relative; overflow: hidden; isolation: isolate;
+    margin-top: calc(var(--topo) * -1);
+    min-height: min(86svh, 820px);
+    padding: calc(var(--topo) + 72px) 0 88px;
+    display: grid; place-items: center; text-align: center;
+    background: #040405; color: var(--branco);
   }
+  .abertura .luzes span:nth-child(1) { --c: var(--rosa); --o: .5; left: -18%; top: -24%; animation: deriva1 26s ease-in-out infinite alternate; }
+  .abertura .luzes span:nth-child(2) { --c: var(--azul); --o: .72; right: -20%; top: -12%; animation: deriva2 30s ease-in-out infinite alternate; }
+  .abertura .luzes span:nth-child(3) { --c: var(--amarelo); --o: .26; left: 8%; bottom: -40%; animation: deriva3 34s ease-in-out infinite alternate; }
+  .abertura .luzes span:nth-child(4) { --c: var(--verde); --o: .36; right: -4%; bottom: -36%; animation: deriva4 28s ease-in-out infinite alternate; }
+  .abertura::before {
+    content: ""; position: absolute; inset: 0; z-index: -1;
+    background: radial-gradient(60% 55% at 50% 50%, rgba(4,4,5,.6) 0%, rgba(4,4,5,.15) 70%, rgba(4,4,5,.55) 100%);
+  }
+  .abertura-interno { display: grid; justify-items: center; gap: 26px; }
+  .simbolo-hero { position: relative; width: clamp(96px, 11vw, 128px); }
+  .simbolo-hero img { width: 100%; }
+  .simbolo-brilho { display: none; }
+  @supports ((-webkit-mask-image: url("x.svg")) or (mask-image: url("x.svg"))) {
+    .simbolo-brilho {
+      display: block; position: absolute; inset: 0; pointer-events: none;
+      -webkit-mask: url(/img/logo_ieim_simbolo_branco.svg) center / 100% 100% no-repeat;
+      mask: url(/img/logo_ieim_simbolo_branco.svg) center / 100% 100% no-repeat;
+      background: linear-gradient(105deg, transparent 38%, rgba(160,175,255,.9) 45%, #fff 50%, rgba(255,170,215,.9) 55%, transparent 62%) no-repeat;
+      background-size: 300% 100%; background-position: 130% 0;
+      animation: reflexo 7s ease-in-out 1.6s infinite;
+    }
+  }
+  @keyframes reflexo { 0% { background-position: 130% 0; } 32%, 100% { background-position: -30% 0; } }
+  .abertura h1 { font-size: clamp(2.6rem, 8vw, 5.2rem); font-weight: 700; line-height: 1; letter-spacing: -.02em; }
+  .chamada { font-size: clamp(1.15rem, 2.6vw, 1.6rem); font-weight: 600; color: rgba(255,255,255,.86); max-width: 30ch; text-wrap: balance; }
+  .chamada em {
+    font-style: normal; white-space: nowrap;
+    background: linear-gradient(90deg, #ff5cb0, #ffc93d, #4fdc8a, #6c9bff, #ff5cb0);
+    background-size: 220% 100%;
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+    animation: correr 9s linear infinite;
+  }
+  @keyframes correr { to { background-position: -220% 0; } }
+  .rolar { position: relative; display: block; width: 1px; height: 52px; margin-top: 18px; background: rgba(255,255,255,.2); overflow: hidden; }
+  .rolar::after { content: ""; position: absolute; left: 0; top: -50%; width: 100%; height: 50%; background: #fff; animation: descer 2.2s ease-in-out infinite; }
+  @keyframes descer { to { top: 100%; } }
+
+  /* ── História: linha do tempo ── */
+  .historia { padding-top: 96px; }
+  .historia .luzes span:nth-child(1) { --c: var(--azul); --o: .22; left: -30%; top: 10%; animation: deriva2 36s ease-in-out infinite alternate; }
+  .historia .luzes span:nth-child(2) { --c: var(--rosa); --o: .16; right: -30%; top: 45%; animation: deriva1 40s ease-in-out infinite alternate; }
+  .historia .luzes span:nth-child(3) { --c: var(--verde); --o: .14; left: -10%; bottom: -30%; animation: deriva4 38s ease-in-out infinite alternate; }
+  .historia .cabeca { max-width: 860px; margin-left: auto; margin-right: auto; }
+  .linha { position: relative; max-width: 860px; margin: 0 auto; --eixo: 200px; }
+  .trilho { position: absolute; left: var(--eixo); top: 10px; bottom: 60px; width: 2px; margin-left: -1px; background: rgba(255,255,255,.12); border-radius: 2px; }
+  .trilho-luz {
+    position: absolute; inset: 0; border-radius: 2px; -webkit-clip-path: inset(0 0 calc((1 - var(--p, 0)) * 100%) 0); clip-path: inset(0 0 calc((1 - var(--p, 0)) * 100%) 0);
+    background: linear-gradient(180deg, #ff5cb0 0%, #ffc93d 42%, #4fdc8a 52%, #5aa8f0 84%, #6c9bff 100%);
+    box-shadow: 0 0 14px rgba(255,255,255,.35);
+  }
+  .capitulo, .marco { position: relative; display: grid; grid-template-columns: var(--eixo) 1fr; }
+  .capitulo { margin: 0 0 34px; padding-top: 8px; }
+  .marco { padding-bottom: 46px; }
+  .marco + .capitulo { margin-top: 30px; }
+  .ano { padding-right: 34px; text-align: right; font-size: clamp(1.5rem, 2.6vw, 2rem); font-weight: 700; line-height: 1.1; letter-spacing: -.01em; white-space: nowrap; color: rgba(255,255,255,.28); transition: color .8s ease; }
+  .marco.aceso .ano { color: #fff; }
+  .marco-texto { padding-left: 34px; font-size: 1.05rem; line-height: 1.6; color: rgba(255,255,255,.5); max-width: 52ch; transition: color .8s ease; }
+  .marco.aceso .marco-texto { color: rgba(255,255,255,.86); }
+  .ponto-linha {
+    position: absolute; left: var(--eixo); top: 1.05rem; width: 13px; height: 13px; margin: -6.5px 0 0 -6.5px; border-radius: 50%;
+    background: #050506; border: 2px solid rgba(255,255,255,.3);
+    transition: background-color .6s, border-color .6s, box-shadow .6s, transform .6s var(--curva);
+  }
+  .marco.aceso .ponto-linha, .capitulo.aceso .ponto-linha { background: var(--cor); border-color: var(--cor); box-shadow: 0 0 0 5px color-mix(in srgb, var(--cor) 22%, transparent), 0 0 22px var(--cor); transform: scale(1.1); }
+  .capitulo .ponto-linha { width: 19px; height: 19px; margin: -9.5px 0 0 -9.5px; top: calc(50% + 4px); }
+  .capitulo-nome {
+    grid-column: 2; padding-left: 34px;
+    font-size: .8rem; font-weight: 700; letter-spacing: .24em; text-transform: uppercase;
+    color: rgba(255,255,255,.5); transition: color .8s;
+  }
+  .capitulo.aceso .capitulo-nome { color: var(--cor); }
+  .final { position: relative; display: grid; grid-template-columns: var(--eixo) 1fr; align-items: center; padding-top: 6px; }
+  .final-simbolo { position: absolute; left: var(--eixo); top: 0; width: 64px; margin-left: -32px; opacity: .35; transition: opacity 1s ease, filter 1s ease; }
+  .final.aceso .final-simbolo { opacity: 1; filter: drop-shadow(0 0 18px rgba(108,155,255,.75)); }
+  .final-texto { grid-column: 2; padding: 64px 0 0 34px; font-size: clamp(1.15rem, 2.2vw, 1.4rem); font-weight: 600; line-height: 1.45; color: rgba(255,255,255,.55); max-width: 40ch; transition: color .8s; text-wrap: balance; }
+  .final.aceso .final-texto { color: #fff; }
+  .final-texto a { text-decoration: underline; text-decoration-color: rgba(255,255,255,.35); text-underline-offset: 5px; text-decoration-thickness: 1px; transition: text-decoration-color .3s; }
+  .final-texto a:hover { text-decoration-color: #fff; }
+
+  /* ── Missão ── */
+  .missao { background: var(--fundo-claro); overflow: hidden; isolation: isolate; }
+  .missao::before {
+    content: ""; position: absolute; z-index: -1; pointer-events: none;
+    width: 820px; height: 520px; left: 50%; top: 50%; transform: translate(-50%, -50%);
+    background:
+      radial-gradient(closest-side at 30% 40%, rgba(230,0,126,.13), transparent),
+      radial-gradient(closest-side at 70% 45%, rgba(47,95,224,.15), transparent),
+      radial-gradient(closest-side at 50% 75%, rgba(245,183,0,.14), transparent);
+    filter: blur(10px); animation: respirar 14s ease-in-out infinite alternate;
+  }
+  @keyframes respirar { to { transform: translate(-50%, -50%) scale(1.1) rotate(6deg); } }
+  .missao .conteudo { max-width: 980px; text-align: center; }
+  .missao-texto { font-size: clamp(1.55rem, 3.8vw, 2.7rem); font-weight: 700; line-height: 1.28; letter-spacing: -.01em; text-wrap: balance; }
+  .missao-texto .p { color: #c9c9c6; transition: color .6s ease; }
+  .missao-texto .p.acesa { color: var(--preto); }
+
+  /* ── Valores ── */
+  .valores .luzes span:nth-child(1) { --c: var(--rosa); --o: .2; left: -16%; top: -20%; animation: deriva1 30s ease-in-out infinite alternate; }
+  .valores .luzes span:nth-child(2) { --c: var(--azul); --o: .28; right: -24%; bottom: -30%; animation: deriva2 34s ease-in-out infinite alternate; }
+  .grade-valores { list-style: none; display: grid; grid-template-columns: repeat(5, 1fr); gap: 14px; }
+  .valor {
+    position: relative; overflow: hidden; border-radius: 22px; padding: 22px 20px 24px;
+    background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.12);
+    -webkit-backdrop-filter: blur(14px) saturate(140%); backdrop-filter: blur(14px) saturate(140%);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,.12);
+    transition: border-color .4s, background-color .4s, transform .4s var(--curva);
+  }
+  .valor::before { /* reflexo que segue o mouse */
+    content: ""; position: absolute; inset: 0; pointer-events: none; opacity: 0; transition: opacity .4s;
+    background: radial-gradient(260px circle at var(--mx, 50%) var(--my, 0%), color-mix(in srgb, var(--cor) 30%, transparent), transparent 60%);
+  }
+  .valor::after { /* fio de luz no topo */
+    content: ""; position: absolute; left: 20px; right: 20px; top: 0; height: 1px;
+    background: linear-gradient(90deg, transparent, var(--cor), transparent); opacity: .7;
+  }
+  @media (hover: hover) {
+    .valor:hover { border-color: color-mix(in srgb, var(--cor) 55%, transparent); background: rgba(255,255,255,.08); transform: translateY(-3px); }
+    .valor:hover::before { opacity: 1; }
+  }
+  .valor-num { position: relative; display: block; font-size: .78rem; font-weight: 700; letter-spacing: .16em; color: var(--cor); margin-bottom: 14px; }
+  .valor h3 { position: relative; font-size: 1.08rem; font-weight: 700; line-height: 1.25; margin-bottom: 8px; }
+  .valor p { position: relative; font-size: .88rem; line-height: 1.5; color: rgba(255,255,255,.66); }
+  .js .grade-valores .valor { opacity: 0; transform: translateY(34px); }
+  .js .grade-valores.visivel .valor { opacity: 1; transform: none; transition: opacity .9s ease calc(var(--i) * .07s), transform 1.1s var(--curva) calc(var(--i) * .07s), border-color .4s, background-color .4s; }
+
+  /* ── No que cremos ── */
+  .cremos-grade { display: grid; grid-template-columns: .9fr 1.1fr; gap: 64px; align-items: start; }
+  .cremos-abertura { font-size: 1.12rem; line-height: 1.65; color: #2a2a2a; margin-top: 22px; }
+  .cremos-fonte { margin-top: 22px; font-size: .88rem; color: var(--cinza); }
+  .cremos-fonte a { text-underline-offset: 4px; }
+  .sanfona { list-style: none; border-top: 1px solid var(--linha); }
+  .sanfona li { border-bottom: 1px solid var(--linha); }
+  .sanfona-botao {
+    position: relative; width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 20px;
+    padding: 26px 4px; background: none; border: 0; cursor: pointer; text-align: left;
+    font-size: clamp(1.15rem, 2.2vw, 1.4rem); font-weight: 700; line-height: 1.25;
+  }
+  .sanfona-icone {
+    position: relative; width: 40px; height: 40px; border-radius: 50%; flex-shrink: 0;
+    border: 1px solid #d6d6d6; transition: background-color .35s, border-color .35s, color .35s, transform .5s var(--curva);
+  }
+  .sanfona-icone::before, .sanfona-icone::after { content: ""; position: absolute; left: 50%; top: 50%; width: 14px; height: 1.8px; margin: -.9px 0 0 -7px; background: currentColor; border-radius: 2px; transition: transform .5s var(--curva); }
+  .sanfona-icone::after { transform: rotate(90deg); }
+  @media (hover: hover) { .sanfona-botao:hover .sanfona-icone { background: var(--preto); color: var(--branco); border-color: var(--preto); } }
+  .sanfona-botao[aria-expanded="true"] .sanfona-icone { background: var(--preto); color: var(--branco); border-color: var(--preto); transform: rotate(180deg); }
+  .sanfona-botao[aria-expanded="true"] .sanfona-icone::after { transform: rotate(0deg); }
+  .sanfona-painel { display: grid; grid-template-rows: 0fr; transition: grid-template-rows .55s var(--curva); }
+  .sanfona-painel.aberto { grid-template-rows: 1fr; }
+  .sanfona-painel > div { overflow: hidden; min-height: 0; }
+  .sanfona-painel p { padding: 0 60px 28px 4px; color: #3a3a3a; font-size: 1.02rem; line-height: 1.65; opacity: 0; transform: translateY(-6px); transition: opacity .45s ease, transform .55s var(--curva); }
+  .sanfona-painel.aberto p { opacity: 1; transform: none; transition-delay: .12s; }
+  html:not(.js) .sanfona-painel { grid-template-rows: 1fr; }
+  html:not(.js) .sanfona-painel p { opacity: 1; transform: none; }
+
+  /* ── Pastores ── */
+  .pastores { background: var(--fundo-claro); }
+  .igrejas-pastores { display: grid; grid-template-columns: 1.2fr 1fr 1fr; gap: 20px; align-items: stretch; }
+  .igreja {
+    position: relative; overflow: hidden; display: flex; flex-direction: column; gap: 22px;
+    padding: 30px 28px 26px; border-radius: 26px;
+    background: var(--branco); border: 1px solid var(--linha);
+    box-shadow: 0 1px 0 rgba(255,255,255,.9) inset, 0 18px 40px -30px rgba(0,0,0,.35);
+    transition: transform .4s var(--curva), box-shadow .4s, border-color .4s;
+  }
+  .igreja::before {
+    content: ""; position: absolute; inset: 0; pointer-events: none; opacity: 0; transition: opacity .4s;
+    background: radial-gradient(380px circle at var(--mx, 50%) var(--my, 0%), rgba(0,0,0,.05), transparent 50%);
+  }
+  .igreja::after { /* reflexo que passa ao entrar */
+    content: ""; position: absolute; inset: 0; pointer-events: none;
+    background: linear-gradient(115deg, transparent 35%, rgba(255,255,255,.75) 50%, transparent 65%);
+    transform: translateX(-130%);
+  }
+  .js .igrejas-pastores.visivel .igreja::after { animation: brilho 1.5s ease calc(var(--i) * .14s + .5s) 1 both; }
+  @keyframes brilho { from { transform: translateX(-130%); } to { transform: translateX(130%); } }
+  @media (hover: hover) {
+    .igreja:hover { transform: translateY(-3px); border-color: #d2d2d2; box-shadow: 0 28px 54px -32px rgba(0,0,0,.45); }
+    .igreja:hover::before { opacity: 1; }
+  }
+  .igreja-marca { position: absolute; right: -44px; bottom: -34px; width: 230px; opacity: .045; pointer-events: none; }
+  .igreja h3 { position: relative; font-size: 1.35rem; font-weight: 700; line-height: 1.2; }
+  .casais { position: relative; list-style: none; display: grid; gap: 16px; flex: 1; align-content: start; border-top: 1px solid var(--linha); padding-top: 20px; }
+  .funcao { display: block; font-size: .72rem; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; color: var(--cinza); margin-bottom: 3px; }
+  .nomes { font-size: 1.04rem; font-weight: 600; line-height: 1.35; }
+  .botao {
+    position: relative; overflow: hidden; isolation: isolate;
+    display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+    min-height: 48px; padding: 0 22px; border-radius: 999px;
+    font-weight: 700; font-size: .92rem; text-decoration: none; cursor: pointer; border: 0;
+    transition: transform .25s var(--curva), box-shadow .25s;
+  }
+  .botao svg { width: 18px; height: 18px; flex-shrink: 0; }
+  .botao:active { transform: scale(.97); }
+  .botao::after {
+    content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none;
+    background: linear-gradient(110deg, transparent 30%, rgba(255,255,255,.22) 50%, transparent 70%);
+    transform: translateX(-130%);
+  }
+  .botao:hover::after { transform: translateX(130%); transition: transform .9s ease; }
+  .botao-escuro { background: var(--preto); color: var(--branco); }
+  .botao-escuro:hover { box-shadow: 0 14px 30px -14px rgba(0,0,0,.6); transform: translateY(-1px); }
+  .igreja .botao { align-self: stretch; white-space: nowrap; padding: 0 16px; }
+  .js .igrejas-pastores .igreja { opacity: 0; transform: translateY(50px) scale(.97); }
+  .js .igrejas-pastores.visivel .igreja { opacity: 1; transform: none; transition: opacity 1s ease calc(var(--i) * .14s), transform 1.3s cubic-bezier(.16,1,.3,1) calc(var(--i) * .14s), box-shadow .4s, border-color .4s; }
+
+  /* ── Junta Administrativa ── */
+  .junta .luzes span:nth-child(1) { --c: var(--verde); --o: .18; left: -20%; top: -30%; animation: deriva3 32s ease-in-out infinite alternate; }
+  .junta .luzes span:nth-child(2) { --c: var(--azul); --o: .26; right: -22%; bottom: -36%; animation: deriva2 30s ease-in-out infinite alternate; }
+  .grade-junta { list-style: none; display: grid; grid-template-columns: repeat(5, 1fr); gap: 14px; }
+  .membro {
+    position: relative; overflow: hidden; border-radius: 22px; padding: 24px 20px 26px;
+    background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.12);
+    -webkit-backdrop-filter: blur(14px) saturate(140%); backdrop-filter: blur(14px) saturate(140%);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,.12);
+  }
+  .membro::before {
+    content: ""; position: absolute; inset: 0; pointer-events: none; opacity: 0; transition: opacity .4s;
+    background: radial-gradient(260px circle at var(--mx, 50%) var(--my, 0%), rgba(255,255,255,.1), transparent 60%);
+  }
+  @media (hover: hover) { .membro:hover::before { opacity: 1; } }
+  .cargo { position: relative; display: block; font-size: .72rem; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; color: rgba(255,255,255,.55); padding-bottom: 14px; margin-bottom: 14px; border-bottom: 1px solid rgba(255,255,255,.12); }
+  .membro strong { position: relative; display: block; font-size: 1.04rem; font-weight: 600; line-height: 1.35; }
+  .js .grade-junta .membro { opacity: 0; transform: translateY(30px); }
+  .js .grade-junta.visivel .membro { opacity: 1; transform: none; transition: opacity .9s ease calc(var(--i) * .09s), transform 1.1s var(--curva) calc(var(--i) * .09s); }
+
+  /* ── Rodapé ── */
+  footer { background: var(--preto); color: var(--branco); padding: 56px 16px 40px; border-top: 1px solid rgba(255,255,255,.08); }
+  .rodape { display: grid; gap: 22px; justify-items: center; text-align: center; }
+  .rodape img { width: 150px; }
+  .rodape nav { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px 22px; }
+  .rodape nav a { color: var(--branco); font-size: .9rem; text-decoration: none; }
+  .rodape nav a:hover { text-decoration: underline; text-underline-offset: 4px; }
+  .rodape p { color: #b5b5b5; font-size: .85rem; line-height: 1.7; }
+
+  /* ── Tablet e celular ── */
+  @media (max-width: 1020px) {
+    .grade-valores { grid-template-columns: repeat(2, 1fr); }
+    .grade-junta { grid-template-columns: repeat(2, 1fr); }
+    .igrejas-pastores { grid-template-columns: 1fr 1fr; }
+    .igrejas-pastores .igreja:first-child { grid-column: 1 / -1; }
+    .cremos-grade { grid-template-columns: 1fr; gap: 36px; }
+  }
+  @media (max-width: 860px) {
+    :root { --topo: 60px; }
+    .secao { padding: 80px 0; }
+    .conteudo { padding: 0 16px; }
+    .cabeca { margin-bottom: 36px; }
+    .abertura { padding: calc(var(--topo) + 52px) 0 72px; min-height: min(78svh, 680px); }
+    .abertura-interno { gap: 22px; }
+    .historia { padding-top: 72px; }
+    .linha { --eixo: 9px; }
+    .trilho { bottom: 40px; }
+    .capitulo, .marco, .final { grid-template-columns: 1fr; padding-left: 34px; }
+    .capitulo-nome { grid-column: 1; padding-left: 0; }
+    .ano { text-align: left; padding: 0 0 6px; font-size: 1.45rem; }
+    .marco-texto { padding-left: 0; font-size: 1rem; }
+    .marco { padding-bottom: 36px; }
+    .marco .ponto-linha { top: .78rem; }
+    .final-simbolo { width: 44px; margin-left: -22px; }
+    .final-texto { grid-column: 1; padding: 46px 0 0; font-size: 1.12rem; }
+    .grade-valores { grid-template-columns: 1fr; gap: 10px; }
+    .valor { display: grid; grid-template-columns: 2.4rem 1fr; column-gap: 8px; padding: 18px 18px 18px 16px; border-radius: 18px; }
+    .valor-num { margin: 3px 0 0; grid-row: 1 / span 2; }
+    .valor h3 { margin-bottom: 4px; font-size: 1.02rem; }
+    .igrejas-pastores { grid-template-columns: 1fr; gap: 12px; }
+    .igreja { padding: 24px 20px 20px; border-radius: 22px; gap: 18px; }
+    .igreja-marca { width: 170px; right: -30px; bottom: -24px; }
+    .grade-junta { grid-template-columns: 1fr; gap: 10px; }
+    .membro { padding: 18px; border-radius: 18px; }
+    .cargo { padding-bottom: 8px; margin-bottom: 8px; }
+    .sanfona-botao { padding: 22px 2px; }
+    .sanfona-painel p { padding: 0 8px 24px 2px; font-size: .98rem; }
+    .sanfona-icone { width: 36px; height: 36px; }
+  }
+
   @media (prefers-reduced-motion: reduce) {
-    .barra span { animation: pulsar 2s ease-in-out infinite; width: 100%; transform: none; }
-    @keyframes pulsar { 0%, 100% { opacity: .25; } 50% { opacity: 1; } }
+    html { scroll-behavior: auto; }
+    .luzes span, .simbolo-brilho, .chamada em, .rolar::after, .missao::before { animation: none !important; }
+    .simbolo-brilho { display: none !important; }
+    .js .entra { opacity: 1; transform: none; filter: none; animation: none; }
+    .js .revelar, .js .grade-valores .valor, .js .igrejas-pastores .igreja, .js .grade-junta .membro { opacity: 1 !important; transform: none !important; transition: none !important; }
+    .igreja::after, .botao::after { display: none; }
+    .ano, .marco-texto, .ponto-linha, .capitulo-nome, .final-simbolo, .final-texto, .missao-texto .p { transition: none !important; }
+    .sanfona-painel, .sanfona-painel p, .sanfona-icone, .sanfona-icone::before, .sanfona-icone::after { transition: none !important; }
   }
 </style>
 </head>
 <body>
+<script src="/avisos.js"></script>
+<script src="/menu.js"></script>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><path id="wa" d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413z"/></defs></svg>
+
 <main>
-  <img src="/img/logo_ieim_simbolo_preto.svg" alt="IEIM" width="220" height="145">
-  <h1>Página em construção</h1>
-  <div class="barra" role="progressbar" aria-label="Carregando"><span></span></div>
+  <section class="abertura grao" aria-labelledby="titulo-abertura">
+    <div class="luzes" aria-hidden="true"><span></span><span></span><span></span><span></span></div>
+    <div class="conteudo abertura-interno">
+      <div class="simbolo-hero entra" style="--d:0" aria-hidden="true">
+        <img src="/img/logo_ieim_simbolo_branco.svg" alt="" width="128" height="85" fetchpriority="high">
+        <span class="simbolo-brilho"></span>
+      </div>
+      <h1 id="titulo-abertura" class="entra" style="--d:1">Quem somos</h1>
+      <p class="chamada entra" style="--d:2">Um lugar para chegar, ficar e <em>pertencer</em>.</p>
+      <span class="rolar entra" style="--d:3" aria-hidden="true"></span>
+    </div>
+  </section>
+
+  <section class="secao escura historia grao" aria-labelledby="titulo-historia">
+    <div class="luzes" aria-hidden="true"><span></span><span></span><span></span></div>
+    <div class="conteudo">
+      <div class="cabeca revelar">
+        <span class="sobre">Desde 1517</span>
+        <h2 id="titulo-historia">Nossa história</h2>
+      </div>
+
+      <div class="linha">
+        <div class="trilho" aria-hidden="true"><span class="trilho-luz"></span></div>
+
+        <div class="capitulo" style="--cor:#ff5cb0"><span class="ponto-linha" aria-hidden="true"></span><h3 class="capitulo-nome">No mundo</h3></div>
+        <div class="marco" style="--cor:#ff5cb0"><span class="ponto-linha" aria-hidden="true"></span><p class="ano">1517</p><p class="marco-texto">Martinho Lutero divulga suas 95 teses em Wittenberg, na Alemanha. Começa a Reforma Protestante.</p></div>
+        <div class="marco" style="--cor:#ff7a9c"><span class="ponto-linha" aria-hidden="true"></span><p class="ano">1525</p><p class="marco-texto">Perto de Zurique, na Suíça, nasce a primeira igreja anabatista, que batiza somente quem crê.</p></div>
+        <div class="marco" style="--cor:#ff9a75"><span class="ponto-linha" aria-hidden="true"></span><p class="ano">1496–1561</p><p class="marco-texto">Na Holanda, Menno Simons se une ao movimento anabatista. Por causa dele, o movimento passa a ser chamado de menonita.</p></div>
+        <div class="marco" style="--cor:#ffb24f"><span class="ponto-linha" aria-hidden="true"></span><p class="ano">1788</p><p class="marco-texto">A convite de Catarina, a Grande, famílias menonitas deixam a Prússia rumo ao sul da Rússia, atual Ucrânia.</p></div>
+        <div class="marco" style="--cor:#ffc93d"><span class="ponto-linha" aria-hidden="true"></span><p class="ano">1860</p><p class="marco-texto">No sul da Rússia, um avivamento dá origem à Igreja Irmãos Menonitas. Irmãos, pelo cuidado de uns pelos outros.</p></div>
+
+        <div class="capitulo" style="--cor:#4fdc8a"><span class="ponto-linha" aria-hidden="true"></span><h3 class="capitulo-nome">No Brasil</h3></div>
+        <div class="marco" style="--cor:#4fdc8a"><span class="ponto-linha" aria-hidden="true"></span><p class="ano">1929</p><p class="marco-texto">Cerca de 1.200 refugiados menonitas vindos da Rússia começam a chegar a Ibirama, em Santa Catarina.</p></div>
+        <div class="marco" style="--cor:#45d0b0"><span class="ponto-linha" aria-hidden="true"></span><p class="ano">1934</p><p class="marco-texto">Começa a expansão para Curitiba e, depois, para o Rio Grande do Sul, Santa Catarina, São Paulo e o interior do Paraná.</p></div>
+        <div class="marco" style="--cor:#4cbcdc"><span class="ponto-linha" aria-hidden="true"></span><p class="ano">1960 · 1966</p><p class="marco-texto">As igrejas de língua alemã formam a AIIMB, e as de língua portuguesa, a CBIIM.</p></div>
+        <div class="marco" style="--cor:#5aa8f0"><span class="ponto-linha" aria-hidden="true"></span><p class="ano">1995</p><p class="marco-texto">As duas se unem e nasce a COBIM, Convenção Brasileira das Igrejas Evangélicas Irmãos Menonitas.</p></div>
+
+        <div class="capitulo" style="--cor:#6c9bff"><span class="ponto-linha" aria-hidden="true"></span><h3 class="capitulo-nome">Em Campo Grande</h3></div>
+        <div class="final">
+          <img class="final-simbolo" src="/img/logo_ieim_simbolo_branco.svg" alt="" width="64" height="42" aria-hidden="true">
+          <p class="final-texto">Em Campo Grande, caminhamos junto com a <a href="https://cobim.com.br/" target="_blank" rel="noopener">COBIM</a>, como parte da <a href="https://cobim.com.br/regionais/" target="_blank" rel="noopener">Regional Mato Grosso do Sul</a>.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="secao missao" aria-labelledby="titulo-missao">
+    <div class="conteudo">
+      <h2 class="sobre revelar" id="titulo-missao">Missão</h2>
+      <p class="missao-texto">Ser uma força de transformação em Campo Grande-MS, comprometendo-nos a ensinar a Palavra de Deus, fortalecer laços de fraternidade e estender nossas mãos em serviço social e educacional.</p>
+    </div>
+  </section>
+
+  <section class="secao escura valores grao" aria-labelledby="titulo-valores">
+    <div class="luzes" aria-hidden="true"><span></span><span></span></div>
+    <div class="conteudo">
+      <div class="cabeca revelar">
+        <span class="sobre">Valores</span>
+        <h2 id="titulo-valores">O que nos move</h2>
+      </div>
+      <ol class="grade-valores">
+        <li class="valor" style="--i:0;--cor:#ff5cb0"><span class="valor-num">01</span><h3>Transformação</h3><p>Mudança positiva, espiritual e social, na comunidade.</p></li>
+        <li class="valor" style="--i:1;--cor:#ff8a5c"><span class="valor-num">02</span><h3>Ensino Bíblico</h3><p>A Palavra de Deus em primeiro lugar, ensinada e vivida.</p></li>
+        <li class="valor" style="--i:2;--cor:#ffc93d"><span class="valor-num">03</span><h3>Fraternidade</h3><p>Laços de amor, apoio e cuidado mútuo.</p></li>
+        <li class="valor" style="--i:3;--cor:#a6e05a"><span class="valor-num">04</span><h3>Presença Comunitária</h3><p>Presentes e ativos em cada lar e em cada vida de Campo Grande.</p></li>
+        <li class="valor" style="--i:4;--cor:#4fdc8a"><span class="valor-num">05</span><h3>Serviço</h3><p>Servir ao próximo nas necessidades espirituais, educacionais e sociais.</p></li>
+        <li class="valor" style="--i:5;--cor:#3fd1c8"><span class="valor-num">06</span><h3>Saúde Espiritual</h3><p>Crescimento de todos no relacionamento com Deus.</p></li>
+        <li class="valor" style="--i:6;--cor:#4cb8ff"><span class="valor-num">07</span><h3>Compromisso</h3><p>Dedicação à missão e à visão.</p></li>
+        <li class="valor" style="--i:7;--cor:#6c9bff"><span class="valor-num">08</span><h3>Integridade</h3><p>Honestidade, transparência e verdade, com base nos ensinamentos de Cristo.</p></li>
+        <li class="valor" style="--i:8;--cor:#a472ff"><span class="valor-num">09</span><h3>Inclusão</h3><p>Acolher todas as pessoas, independente de passado, presente ou condição.</p></li>
+        <li class="valor" style="--i:9;--cor:#e86bff"><span class="valor-num">10</span><h3>Crescimento Contínuo</h3><p>Sempre aprender e melhorar como comunidade de fé.</p></li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="secao cremos" aria-labelledby="titulo-cremos">
+    <div class="conteudo cremos-grade">
+      <div class="revelar">
+        <span class="sobre">No que cremos</span>
+        <h2 id="titulo-cremos">Declaração de fé</h2>
+        <p class="cremos-abertura">Cremos no único Deus verdadeiro, Espírito eterno, criador do céu e da terra, que governa sobre todas as coisas visíveis e invisíveis. Confessamos que Deus é Amoroso, Santo, Misericordioso, Justo, Poderoso, Sábio, Tardio para se irar, e Fiel cumpridor de sua Aliança com o homem, de acordo com o Novo Testamento.</p>
+        <p class="cremos-fonte">Declaração de Fé dos Irmãos Menonitas no Brasil · <a href="https://cobim.com.br/a-cobim/" target="_blank" rel="noopener">COBIM</a></p>
+      </div>
+      <ul class="sanfona revelar" style="--d:2">
+        <li>
+          <button class="sanfona-botao" type="button" aria-expanded="false" aria-controls="cremos-pai" id="b-cremos-pai">Deus, o Pai<span class="sanfona-icone" aria-hidden="true"></span></button>
+          <div class="sanfona-painel" id="cremos-pai" role="region" aria-labelledby="b-cremos-pai"><div><p>Cremos em Deus o Pai, criador dos céus e da terra. Ele pode ser conhecido na medida em que Ele mesmo se revelou em palavra e ação. O Pai adota todos os que respondem em fé, crendo em Jesus Cristo como Salvador e Senhor e arrependem-se de seus pecados.</p></div></div>
+        </li>
+        <li>
+          <button class="sanfona-botao" type="button" aria-expanded="false" aria-controls="cremos-filho" id="b-cremos-filho">Deus, o Filho, Jesus Cristo<span class="sanfona-icone" aria-hidden="true"></span></button>
+          <div class="sanfona-painel" id="cremos-filho" role="region" aria-labelledby="b-cremos-filho"><div><p>Cremos em Deus o Filho que assumiu natureza humana, através de Jesus Cristo, concebido pelo Espírito Santo e nascido da virgem Maria a quem o Pai enviou para salvar os pecadores. Ele é verdadeiro Deus e verdadeiro ser humano, de acordo com a Bíblia. Veio a este mundo, viveu uma vida santa e sem pecado, morreu pelos nossos pecados e ressuscitou dentre os mortos para garantir nossa justificação e subiu aos céus onde, assentado à destra do Pai, intercede por todos os que creem. Ele voltará em glória para julgar vivos e mortos e para estabelecer seu Reino eterno.</p></div></div>
+        </li>
+        <li>
+          <button class="sanfona-botao" type="button" aria-expanded="false" aria-controls="cremos-espirito" id="b-cremos-espirito">Deus, o Espírito Santo<span class="sanfona-icone" aria-hidden="true"></span></button>
+          <div class="sanfona-painel" id="cremos-espirito" role="region" aria-labelledby="b-cremos-espirito"><div><p>Cremos no Espírito Santo, um com o Pai e com o Filho, enviado por eles para tornar efetiva a redenção no homem. Ele tem a missão de convencer o homem do pecado, da justiça e do juízo. O Espírito Santo batiza em um só Corpo todos os que creem, regenera, guia, dá dons, produz fruto, repreende, habita, dá poder, conforta, intercede, une os cristãos num só corpo e glorifica o Filho e o Pai.</p></div></div>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="secao pastores" aria-labelledby="titulo-pastores">
+    <div class="conteudo">
+      <div class="cabeca revelar">
+        <span class="sobre">Pastores</span>
+        <h2 id="titulo-pastores">Quem cuida de cada igreja</h2>
+      </div>
+      <div class="igrejas-pastores">
+        <article class="igreja" style="--i:0">
+          <img class="igreja-marca" src="/img/logo_ieim_simbolo_preto.svg" alt="" width="230" height="152" loading="lazy" aria-hidden="true">
+          <h3>Igreja do Centro</h3>
+          <ul class="casais">
+            <li><span class="funcao">Pastores coordenadores gerais</span><span class="nomes">Reginaldo Valim e Cinara Valim</span></li>
+            <li><span class="funcao">Pastores coordenadores de ministérios</span><span class="nomes">Alexandre Amaral e Jhenifer</span></li>
+            <li><span class="funcao">Pastores auxiliares</span><span class="nomes">Raphael e Claudeane</span></li>
+            <li><span class="funcao">Pastores auxiliares</span><span class="nomes">Cristiano Barros e Milca Katherine</span></li>
+          </ul>
+          <a class="botao botao-escuro" href="https://api.whatsapp.com/send?phone=5567998131900&amp;text=Ol%C3%A1%2C%20pastor%21%20Vim%20atrav%C3%A9s%20do%20site%20da%20igreja." target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><use href="#wa"/></svg>Falar com o Pr. Reginaldo</a>
+        </article>
+        <article class="igreja" style="--i:1">
+          <img class="igreja-marca" src="/img/logo_ieim_simbolo_preto.svg" alt="" width="230" height="152" loading="lazy" aria-hidden="true">
+          <h3>Igreja do São Conrado</h3>
+          <ul class="casais">
+            <li><span class="funcao">Pastores coordenadores gerais</span><span class="nomes">Leandro Gonçalves e Carol</span></li>
+          </ul>
+          <a class="botao botao-escuro" href="https://api.whatsapp.com/send?phone=5541999981359&amp;text=Ol%C3%A1%2C%20pastor%21%20Vim%20atrav%C3%A9s%20do%20site%20da%20igreja." target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><use href="#wa"/></svg>Falar com o Pr. Leandro</a>
+        </article>
+        <article class="igreja" style="--i:2">
+          <img class="igreja-marca" src="/img/logo_ieim_simbolo_preto.svg" alt="" width="230" height="152" loading="lazy" aria-hidden="true">
+          <h3>Igreja do Los Angeles</h3>
+          <ul class="casais">
+            <li><span class="funcao">Pastores coordenadores gerais</span><span class="nomes">Ap. Paulo Sergio e Marlene</span></li>
+          </ul>
+          <a class="botao botao-escuro" href="https://api.whatsapp.com/send?phone=5567992411995&amp;text=Ol%C3%A1%2C%20pastor%21%20Vim%20atrav%C3%A9s%20do%20site%20da%20igreja." target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><use href="#wa"/></svg>Falar com o Ap. Paulo Sergio</a>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="secao escura junta grao" aria-labelledby="titulo-junta">
+    <div class="luzes" aria-hidden="true"><span></span><span></span></div>
+    <div class="conteudo">
+      <div class="cabeca revelar">
+        <span class="sobre">Junta Administrativa</span>
+        <h2 id="titulo-junta">Quem administra a igreja</h2>
+      </div>
+      <ul class="grade-junta">
+        <li class="membro" style="--i:0"><span class="cargo">Presidente</span><strong>Pr. Reginaldo de Almeida Valim</strong></li>
+        <li class="membro" style="--i:1"><span class="cargo">Vice-presidente</span><strong>José Roberto Borges Guimarães</strong></li>
+        <li class="membro" style="--i:2"><span class="cargo">1ª Tesoureira</span><strong>Nataly Sandim Vianna</strong></li>
+        <li class="membro" style="--i:3"><span class="cargo">2ª Tesoureira</span><strong>Marilene Aparecida Petrarcha</strong></li>
+        <li class="membro" style="--i:4"><span class="cargo">Secretária</span><strong>Elizandra Alfonso Gonçalves Nunes</strong></li>
+      </ul>
+    </div>
+  </section>
 </main>
+
+<footer>
+  <div class="conteudo rodape">
+    <img src="/img/logo_ieim_completo_branco.svg" alt="Igreja Evangélica Irmãos Menonitas" width="150" height="132" loading="lazy">
+    <nav aria-label="Políticas">
+      <a href="/privacidade/">Política de Privacidade</a>
+      <a href="/cookies/">Política de Cookies</a>
+      <a href="/termos/">Termos de Uso</a>
+    </nav>
+    <p>Igreja Evangélica Irmãos Menonitas de Campo Grande<br>CNPJ 26.856.633/0001-90<br>Rua Camapuã, 141, Amambaí, Campo Grande/MS, CEP 79008-270</p>
+  </div>
+</footer>
+
+<script>
+  (function () {
+    var semMovimento = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var temObs = 'IntersectionObserver' in window;
+
+    function quandoVisivel(el, fn, limiar) {
+      if (semMovimento || !temObs) { fn(); return; }
+      var o = new IntersectionObserver(function (es) {
+        es.forEach(function (e) { if (e.isIntersecting) { fn(); o.disconnect(); } });
+      }, { threshold: limiar || 0.15 });
+      o.observe(el);
+    }
+
+    // Revelar ao rolar
+    document.querySelectorAll('.revelar').forEach(function (el) {
+      quandoVisivel(el, function () { el.classList.add('revelado'); }, 0.12);
+    });
+    ['.grade-valores', '.igrejas-pastores', '.grade-junta'].forEach(function (s) {
+      var el = document.querySelector(s);
+      quandoVisivel(el, function () { el.classList.add('visivel'); }, 0.08);
+    });
+
+    // Reflexo que segue o mouse
+    if (window.matchMedia('(hover: hover)').matches) {
+      document.querySelectorAll('.valor, .igreja, .membro').forEach(function (el) {
+        el.addEventListener('pointermove', function (e) {
+          var r = el.getBoundingClientRect();
+          el.style.setProperty('--mx', (e.clientX - r.left) + 'px');
+          el.style.setProperty('--my', (e.clientY - r.top) + 'px');
+        });
+      });
+    }
+
+    /* ───── No que cremos: abre e fecha ───── */
+    document.querySelectorAll('.sanfona-botao').forEach(function (b) {
+      var painel = document.getElementById(b.getAttribute('aria-controls'));
+      b.addEventListener('click', function () {
+        var abrir = b.getAttribute('aria-expanded') !== 'true';
+        b.setAttribute('aria-expanded', abrir ? 'true' : 'false');
+        painel.classList.toggle('aberto', abrir);
+      });
+    });
+
+    /* ───── Missão: palavras acendem em sequência ───── */
+    var missao = document.querySelector('.missao-texto');
+    var frase = missao.textContent.trim();
+    missao.innerHTML = '<span class="sr" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap">' + frase + '</span>'
+      + frase.split(/\s+/).map(function (p) { return '<span class="p" aria-hidden="true">' + p + '</span>'; }).join(' ');
+    var palavras = Array.prototype.slice.call(missao.querySelectorAll('.p'));
+
+    /* ───── Linha do tempo: a luz desce conforme a rolagem ───── */
+    var linha = document.querySelector('.linha');
+    var luz = linha.querySelector('.trilho-luz');
+    var trilho = linha.querySelector('.trilho');
+    var etapas = Array.prototype.slice.call(linha.querySelectorAll('.capitulo, .marco, .final')).map(function (el) {
+      return { el: el, alvo: el.querySelector('.ponto-linha, .final-simbolo') };
+    });
+
+    // o trilho termina exatamente no símbolo da igreja
+    var simbolo = linha.querySelector('.final-simbolo');
+    function medir() {
+      var l = linha.getBoundingClientRect(), sb = simbolo.getBoundingClientRect();
+      if (sb.height) trilho.style.bottom = Math.max(0, l.bottom - sb.top - 2) + 'px';
+    }
+    medir();
+    simbolo.addEventListener('load', medir);
+    window.addEventListener('resize', medir);
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(medir);
+
+    if (semMovimento) {
+      luz.style.setProperty('--p', 1);
+      etapas.forEach(function (e) { e.el.classList.add('aceso'); });
+      palavras.forEach(function (s) { s.classList.add('acesa'); });
+      return;
+    }
+
+    var pedido = null;
+    function atualizar() {
+      pedido = null;
+      var vh = window.innerHeight, marca = vh * 0.62;
+
+      var r = trilho.getBoundingClientRect();
+      var p = Math.max(0, Math.min(1, (marca - r.top) / r.height));
+      luz.style.setProperty('--p', p.toFixed(4));
+      etapas.forEach(function (e) { e.el.classList.toggle('aceso', e.alvo.getBoundingClientRect().top < marca); });
+
+      var m = missao.getBoundingClientRect();
+      var ini = vh * 0.9, fim = vh * 0.4;
+      var q = Math.max(0, Math.min(1, (ini - m.top) / (ini - fim)));
+      var n = Math.round(q * palavras.length);
+      palavras.forEach(function (s, i) { s.classList.toggle('acesa', i < n); });
+    }
+    function agendar() { if (!pedido) pedido = requestAnimationFrame(atualizar); }
+    window.addEventListener('scroll', agendar, { passive: true });
+    window.addEventListener('resize', agendar);
+    window.addEventListener('load', agendar);
+    atualizar();
+  })();
+</script>
 </body>
 </html>
