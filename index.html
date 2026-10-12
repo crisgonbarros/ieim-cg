@@ -870,6 +870,70 @@
       });
     }
 
+    /* ───── Som (sintetizado no navegador, sem arquivos). Só toca depois de um toque/clique da pessoa ───── */
+    var som = (function () {
+      var ctx = null, ligado = true;
+      try { ligado = localStorage.getItem('ieim-som') !== 'off'; } catch (e) {}
+      var TIMBRES = [1100, 1500, 1900, 2400]; // um timbre de toque por bloco de ministérios
+      function ac() {
+        if (!ctx) { var C = window.AudioContext || window.webkitAudioContext; if (!C) return null; ctx = new C(); }
+        if (ctx.state === 'suspended') ctx.resume();
+        return ctx;
+      }
+      function tom(f, dur, tipo, vol, ate, atraso) {
+        var c = ac(); if (!c || !ligado) return;
+        var t = c.currentTime + (atraso || 0), o = c.createOscillator(), g = c.createGain();
+        o.type = tipo || 'sine'; o.frequency.setValueAtTime(f, t);
+        if (ate) o.frequency.exponentialRampToValueAtTime(ate, t + dur);
+        g.gain.setValueAtTime(0.0001, t);
+        g.gain.exponentialRampToValueAtTime(vol, t + .012);
+        g.gain.exponentialRampToValueAtTime(0.0001, t + dur);
+        o.connect(g); g.connect(c.destination); o.start(t); o.stop(t + dur + .03);
+      }
+      function sopro(f1, f2, dur, vol, atraso) {
+        var c = ac(); if (!c || !ligado) return;
+        var t = c.currentTime + (atraso || 0), n = Math.floor(c.sampleRate * dur);
+        var buf = c.createBuffer(1, n, c.sampleRate), d = buf.getChannelData(0);
+        for (var i = 0; i < n; i++) d[i] = Math.random() * 2 - 1;
+        var src = c.createBufferSource(), f = c.createBiquadFilter(), g = c.createGain();
+        src.buffer = buf; f.type = 'bandpass'; f.Q.value = 1.4;
+        f.frequency.setValueAtTime(f1, t); f.frequency.exponentialRampToValueAtTime(f2, t + dur);
+        g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(vol, t + dur * .4); g.gain.exponentialRampToValueAtTime(0.0001, t + dur);
+        src.connect(f); f.connect(g); g.connect(c.destination); src.start(t); src.stop(t + dur + .02);
+      }
+      // toque suave de interface: estalo curto de ar + batida grave, sem nota musical
+      function toque(f, vol) {
+        sopro(f, f * 1.15, .045, vol);
+        tom(150, .09, 'sine', vol * .9, 60);
+      }
+      function laser() {
+        var c = ac(); if (!c || !ligado) return;
+        var t = c.currentTime, o = c.createOscillator(), o2 = c.createOscillator(), fl = c.createBiquadFilter(), g = c.createGain();
+        o.type = 'sawtooth'; o2.type = 'sine';
+        o.frequency.setValueAtTime(2200, t); o.frequency.exponentialRampToValueAtTime(160, t + .32);
+        o2.frequency.setValueAtTime(1500, t); o2.frequency.exponentialRampToValueAtTime(90, t + .32);
+        fl.type = 'lowpass'; fl.frequency.setValueAtTime(3200, t); fl.frequency.exponentialRampToValueAtTime(600, t + .32);
+        g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(.05, t + .015); g.gain.exponentialRampToValueAtTime(0.0001, t + .34);
+        o.connect(fl); o2.connect(fl); fl.connect(g); g.connect(c.destination);
+        o.start(t); o2.start(t); o.stop(t + .36); o2.stop(t + .36);
+      }
+      return {
+        // card virando: sopro de ar + toque suave quando o lado troca
+        virar: function (volta) {
+          if (volta) sopro(3000, 700, .4, .08); else sopro(700, 3000, .4, .08);
+          setTimeout(function () { toque(volta ? 1300 : 1700, .05); }, 290);
+        },
+        // ministério escolhido: o mesmo toque, com timbre próprio de cada bloco
+        escolher: function (bloco) { toque(TIMBRES[bloco % TIMBRES.length], .07); },
+        // giro da roda: laser
+        girar: function () { laser(); },
+        voltar: function () { toque(800, .05); },
+        passar: function () { if (ctx && ctx.state === 'running') sopro(3500, 3800, .025, .012); },
+        ligado: function () { return ligado; },
+        alternar: function () { ligado = !ligado; try { localStorage.setItem('ieim-som', ligado ? 'on' : 'off'); } catch (e) {} if (ligado) { ac(); toque(1500, .06); } return ligado; }
+      };
+    })();
+
     /* ───── Igrejas ───── */
     var grade = document.querySelector('.cartoes');
     quandoVisivel(grade, function () { grade.classList.add('visivel'); });
@@ -889,9 +953,9 @@
     cartoes.forEach(function (cartao) {
       cartao.querySelector('.virar').addEventListener('click', function () {
         cartoes.forEach(function (c) { if (c !== cartao && c.classList.contains('virado')) virar(c, false); });
-        virar(cartao, true);
+        virar(cartao, true); som.virar(false);
       });
-      cartao.querySelector('.voltar').addEventListener('click', function () { virar(cartao, false); });
+      cartao.querySelector('.voltar').addEventListener('click', function () { virar(cartao, false); som.virar(true); });
     });
     document.addEventListener('keydown', function (e) {
       if (e.key !== 'Escape') return;
@@ -941,43 +1005,11 @@
     var linhasChip = new Map();
     var auto = null, parado = false, indice = 0;
 
-    /* ───── Som (sintetizado no navegador, sem arquivos). Só toca depois de um toque/clique da pessoa ───── */
-    var som = (function () {
-      var ctx = null, ligado = true;
-      try { ligado = localStorage.getItem('ieim-som') !== 'off'; } catch (e) {}
-      var NOTAS = [523.25, 587.33, 659.25, 783.99, 880, 1046.5, 1174.66, 1318.51, 1567.98];
-      function ac() {
-        if (!ctx) { var C = window.AudioContext || window.webkitAudioContext; if (!C) return null; ctx = new C(); }
-        if (ctx.state === 'suspended') ctx.resume();
-        return ctx;
-      }
-      function tom(f, dur, tipo, vol, ate, atraso) {
-        var c = ac(); if (!c || !ligado) return;
-        var t = c.currentTime + (atraso || 0), o = c.createOscillator(), g = c.createGain();
-        o.type = tipo || 'sine'; o.frequency.setValueAtTime(f, t);
-        if (ate) o.frequency.exponentialRampToValueAtTime(ate, t + dur);
-        g.gain.setValueAtTime(0.0001, t);
-        g.gain.exponentialRampToValueAtTime(vol, t + .012);
-        g.gain.exponentialRampToValueAtTime(0.0001, t + dur);
-        o.connect(g); g.connect(c.destination); o.start(t); o.stop(t + dur + .03);
-      }
-      return {
-        // cada ministério tem a sua nota (escala pentatônica: sempre soa harmônico)
-        escolher: function (i) { var f = NOTAS[i % NOTAS.length]; tom(f, .22, 'sine', .07); tom(f * 2, .14, 'triangle', .018, 0, .01); },
-        // giro da roda: varredura subindo + estalos de engrenagem
-        girar: function () { tom(260, .5, 'sine', .045, 900); for (var k = 0; k < 6; k++) tom(1900 + k * 120, .025, 'triangle', .02, 0, .06 + k * .075); },
-        voltar: function () { tom(700, .25, 'sine', .045, 300); },
-        passar: function () { if (ctx && ctx.state === 'running') tom(2600, .02, 'sine', .008); },
-        ligado: function () { return ligado; },
-        alternar: function () { ligado = !ligado; try { localStorage.setItem('ieim-som', ligado ? 'on' : 'off'); } catch (e) {} if (ligado) { ac(); tom(880, .12, 'sine', .05); } return ligado; }
-      };
-    })();
     var botaoSom = document.querySelector('.som-botao');
-    function pintarSom() { botaoSom.setAttribute('aria-pressed', som.ligado() ? 'true' : 'false'); botaoSom.setAttribute('aria-label', som.ligado() ? 'Desligar o som dos ministérios' : 'Ligar o som dos ministérios'); }
+    function pintarSom() { botaoSom.setAttribute('aria-pressed', som.ligado() ? 'true' : 'false'); botaoSom.setAttribute('aria-label', som.ligado() ? 'Desligar os sons da página' : 'Ligar os sons da página'); }
     pintarSom();
     botaoSom.addEventListener('click', function (e) { e.stopPropagation(); som.alternar(); pintarSom(); });
     function pulsar(el) { el.classList.remove('pulsa'); void el.offsetWidth; el.classList.add('pulsa'); }
-    var nomesMin = chips.map(function (c) { return c.dataset.nome; });
     function parar() { parado = true; clearInterval(auto); clearTimeout(auto); }
 
     function caminho(alvoSvg, d, classe, atraso) {
@@ -1051,7 +1083,7 @@
       chip.addEventListener('click', function (e) {
         e.stopPropagation(); parar();
         if (chip.getAttribute('aria-pressed') === 'true') { limpar(); som.voltar(); }
-        else { mostrar(chip); som.escolher(chips.indexOf(chip)); }
+        else { mostrar(chip); som.escolher(parseInt(chip.closest('.ramo').style.getPropertyValue('--ordem'), 10)); }
       });
       chip.addEventListener('mouseenter', function () { if (largo.matches) som.passar(); });
     });
@@ -1132,7 +1164,7 @@
         b.addEventListener('click', function (e) {
           e.stopPropagation(); parar();
           if (rSel === b) { limparRoda(); som.voltar(); }
-          else { selecionarRoda(b); som.escolher(nomesMin.indexOf(d.nome)); }
+          else { selecionarRoda(b); som.escolher(gAtivo); }
         });
         roda.appendChild(b);
       });
