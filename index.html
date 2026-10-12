@@ -20,6 +20,7 @@
 <meta property="og:locale" content="pt_BR">
 <meta name="twitter:card" content="summary_large_image">
 
+<script>document.documentElement.classList.add('js');</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;500;600;700&display=swap">
@@ -29,128 +30,146 @@
     --preto: #000000;
     --branco: #ffffff;
     --cinza: #5f5f5f;
+    --cinza-claro: #a8a8a8;
     --linha: #e4e4e4;
-    --fundo-suave: #f6f6f6;
     --retiro-fundo: #080810;
     --retiro-texto: #f2f0ec;
     --retiro-azul: #6b85aa;
     --largura: 1040px;
+    --curva: cubic-bezier(.2, .75, .2, 1);
   }
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   html { -webkit-text-size-adjust: 100%; }
   body {
-    background: var(--branco);
-    color: var(--preto);
-    font-family: "Raleway", system-ui, sans-serif;
-    font-weight: 500;
-    font-variant-numeric: lining-nums;
-    line-height: 1.55;
-    overflow-x: hidden;
+    background: var(--branco); color: var(--preto);
+    font-family: "Raleway", system-ui, sans-serif; font-weight: 500;
+    font-variant-numeric: lining-nums; line-height: 1.55; overflow-x: hidden;
   }
   img { display: block; max-width: 100%; height: auto; }
   a { color: inherit; }
-  :focus-visible { outline: 2px solid var(--preto); outline-offset: 3px; border-radius: 4px; }
-
+  button { font: inherit; color: inherit; }
+  :focus-visible { outline: 2px solid currentColor; outline-offset: 3px; border-radius: 6px; }
   .conteudo { width: 100%; max-width: var(--largura); margin: 0 auto; padding: 0 16px; }
 
   /* ── Abertura ── */
-  .abertura {
-    min-height: 78svh;
-    display: grid;
-    place-items: center;
-    text-align: center;
-    padding: 56px 16px 48px;
-  }
+  .abertura { min-height: 78svh; display: grid; place-items: center; text-align: center; padding: 56px 16px 48px; }
   .abertura-interno { display: grid; justify-items: center; gap: 36px; }
   .logo { width: clamp(220px, 58vw, 340px); }
-  .visao {
-    font-size: clamp(1.15rem, 3.4vw, 1.5rem);
-    font-weight: 500;
-    line-height: 1.45;
-    max-width: 30ch;
-    text-wrap: balance;
-  }
+  .visao { font-size: clamp(1.15rem, 3.4vw, 1.5rem); font-weight: 500; line-height: 1.45; max-width: 30ch; text-wrap: balance; }
   .status { display: grid; justify-items: center; gap: 14px; }
   .status p { font-size: 0.95rem; color: var(--cinza); letter-spacing: 0.02em; }
   .barra { width: 200px; height: 3px; background: var(--linha); border-radius: 3px; overflow: hidden; }
-  .barra span {
-    display: block; width: 40%; height: 100%; background: var(--preto); border-radius: 3px;
-    animation: carregar 1.6s ease-in-out infinite;
-  }
-  @keyframes carregar {
-    0% { transform: translateX(-100%); opacity: .35; }
-    50% { opacity: 1; }
-    100% { transform: translateX(250%); opacity: .35; }
-  }
+  .barra span { display: block; width: 40%; height: 100%; background: var(--preto); border-radius: 3px; animation: carregar 1.6s ease-in-out infinite; }
+  @keyframes carregar { 0% { transform: translateX(-100%); opacity: .35; } 50% { opacity: 1; } 100% { transform: translateX(250%); opacity: .35; } }
 
   section { padding: 56px 0; }
-  h2 {
-    font-size: clamp(1.35rem, 3.6vw, 1.75rem);
-    font-weight: 700;
-    line-height: 1.25;
-    margin-bottom: 28px;
-  }
+  h2 { font-size: clamp(1.35rem, 3.6vw, 1.75rem); font-weight: 700; line-height: 1.25; margin-bottom: 28px; }
 
   /* ── Botões ── */
   .botao {
     display: inline-flex; align-items: center; justify-content: center; gap: 8px;
-    min-height: 46px; padding: 0 22px;
-    border-radius: 999px;
-    font: inherit; font-weight: 600; font-size: 0.95rem;
-    text-decoration: none; cursor: pointer;
-    transition: background-color .2s, color .2s, border-color .2s;
+    min-height: 46px; padding: 0 22px; border-radius: 999px;
+    font-weight: 600; font-size: 0.95rem; text-decoration: none; cursor: pointer;
+    transition: background-color .2s, color .2s, border-color .2s, transform .2s;
   }
+  .botao:active { transform: scale(.97); }
   .botao svg { width: 18px; height: 18px; flex-shrink: 0; }
   .botao-escuro { background: var(--preto); color: var(--branco); border: 1.5px solid var(--preto); }
   .botao-escuro:hover { background: #2a2a2a; border-color: #2a2a2a; }
   .botao-claro { background: transparent; color: var(--preto); border: 1.5px solid var(--preto); }
   .botao-claro:hover { background: var(--preto); color: var(--branco); }
+  .botao-insta {
+    color: var(--branco); border: none;
+    background-image: linear-gradient(45deg, #feda75 0%, #fa7e1e 22%, #d62976 50%, #962fbf 76%, #4f5bd5 100%);
+    transition: filter .3s ease, transform .2s;
+  }
+  .botao-insta:hover { filter: saturate(1.2) brightness(1.08); }
 
   /* ── Retiro ── */
   .retiro {
-    background: var(--retiro-fundo);
-    color: var(--retiro-texto);
-    border-radius: 20px;
-    padding: 28px;
-    display: grid;
-    grid-template-columns: 180px 1fr;
-    align-items: center;
-    gap: 28px;
+    background: var(--retiro-fundo); color: var(--retiro-texto); border-radius: 20px; padding: 28px;
+    display: grid; grid-template-columns: 180px 1fr; align-items: center; gap: 28px;
   }
   .retiro img { width: 180px; }
   .retiro-texto { display: grid; gap: 10px; }
   .retiro-texto p:first-child { color: var(--retiro-azul); font-weight: 600; font-size: 0.95rem; }
   .retiro-texto h3 { font-size: clamp(1.3rem, 3.4vw, 1.6rem); font-weight: 700; line-height: 1.2; }
   .retiro-texto .detalhe { color: #c8c4bc; }
-  .retiro .botao {
-    margin-top: 8px; width: fit-content;
-    background: var(--retiro-azul); color: var(--retiro-fundo); border: 1.5px solid var(--retiro-azul);
-  }
+  .retiro .botao { margin-top: 8px; width: fit-content; background: var(--retiro-azul); color: var(--retiro-fundo); border: 1.5px solid var(--retiro-azul); }
   .retiro .botao:hover { background: var(--retiro-texto); border-color: var(--retiro-texto); }
 
-  /* ── Igrejas ── */
-  .igrejas { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
-  .igreja { display: grid; grid-template-rows: auto 1fr; }
-  /* Telhado: cada igreja é uma casa, com a mesma inclinação do símbolo */
-  .igreja .telhado { display: block; width: calc(100% - 1.5px); margin-left: 0.75px; height: auto; aspect-ratio: 100 / 26; overflow: visible; }
-  .igreja .telhado polyline { fill: none; stroke: var(--preto); stroke-width: 1.5; vector-effect: non-scaling-stroke; stroke-linejoin: round; stroke-linecap: square; }
-  .igreja .corpo {
-    border: 1.5px solid var(--preto);
-    border-top: none;
-    border-radius: 0 0 16px 16px;
-    padding: 6px 22px 22px;
-    display: grid;
-    grid-template-rows: auto auto 1fr auto;
-    gap: 14px;
+  /* ── Igrejas: cards que viram ── */
+  .cartoes { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+  .cartao { perspective: 1400px; height: 320px; }
+  .lados {
+    position: relative; height: 100%;
+    transform-style: preserve-3d; transition: transform .8s var(--curva);
   }
-  .igreja h3 { font-size: 1.2rem; font-weight: 700; line-height: 1.25; }
-  .igreja address { font-style: normal; color: var(--cinza); font-size: 0.95rem; }
-  .horarios { list-style: none; display: grid; gap: 8px; align-content: start; border-top: 1px solid var(--linha); padding-top: 14px; }
-  .horarios li { display: grid; grid-template-columns: 5.4rem 3.2rem 1fr; gap: 6px; font-size: 0.93rem; }
-  .horarios .dia { font-weight: 600; }
+  .cartao.virado .lados { transform: rotateY(180deg); }
+  .lado {
+    position: absolute; inset: 0; border-radius: 22px; overflow: hidden;
+    backface-visibility: hidden; -webkit-backface-visibility: hidden;
+    display: flex; flex-direction: column; padding: 26px 24px 22px;
+  }
+  .frente {
+    background: radial-gradient(120% 90% at 100% 0%, #262626 0%, #0a0a0a 45%, #000 100%);
+    color: var(--branco); justify-content: space-between;
+    box-shadow: 0 1px 0 rgba(255,255,255,.08) inset, 0 18px 40px -22px rgba(0,0,0,.55);
+  }
+  .frente::after {
+    content: ""; position: absolute; inset: 0; pointer-events: none;
+    background: linear-gradient(115deg, transparent 35%, rgba(255,255,255,.07) 50%, transparent 65%);
+    transform: translateX(-120%);
+  }
+  .marca { position: absolute; right: -46px; bottom: -40px; width: 260px; opacity: .07; pointer-events: none; }
+  .frente-topo, .frente-base { position: relative; z-index: 1; }
+  .frente h3 { font-size: 1.4rem; font-weight: 700; line-height: 1.2; }
+  .endereco { color: var(--cinza-claro); font-size: 0.92rem; margin-top: 6px; }
+  .frente-base { display: grid; gap: 16px; }
+  .proximo { display: flex; align-items: flex-start; gap: 10px; font-size: 0.92rem; line-height: 1.4; }
+  .proximo[hidden] { display: none; }
+  .proximo-rotulo { display: block; color: var(--cinza-claro); font-size: 0.8rem; }
+  .proximo-texto strong { font-weight: 700; }
+  .ponto { width: 8px; height: 8px; border-radius: 50%; background: var(--branco); opacity: .45; flex-shrink: 0; margin-top: 6px; }
+  .ao-vivo .ponto { opacity: 1; background: #ffffff; animation: pulsar-ponto 1.6s ease-in-out infinite; }
+  @keyframes pulsar-ponto { 0%, 100% { box-shadow: 0 0 0 0 rgba(255,255,255,.55); } 70% { box-shadow: 0 0 0 9px rgba(255,255,255,0); } }
+  .virar {
+    justify-self: start; display: inline-flex; align-items: center; gap: 10px;
+    background: transparent; border: 1.5px solid rgba(255,255,255,.55); border-radius: 999px;
+    padding: 0 18px; min-height: 42px; font-weight: 600; font-size: 0.92rem; cursor: pointer;
+    transition: background-color .25s, color .25s, border-color .25s;
+  }
+  .virar svg { width: 17px; height: 17px; transition: transform .5s var(--curva); }
+  .virar::before { content: ""; position: absolute; inset: -400px -400px -400px -400px; } /* o card inteiro é clicável */
+  .frente { cursor: pointer; }
+  .frente:hover .virar, .virar:focus-visible { background: var(--branco); color: var(--preto); border-color: var(--branco); }
+  .frente:hover .virar svg { transform: rotate(180deg); }
+  .frente:hover::after { transform: translateX(120%); transition: transform 1s ease; }
+
+  .verso {
+    transform: rotateY(180deg); background: var(--branco); color: var(--preto);
+    border: 1.5px solid var(--preto); gap: 14px;
+  }
+  .verso-topo { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+  .verso-nome { font-weight: 700; font-size: 1.05rem; }
+  .voltar {
+    width: 40px; height: 40px; border-radius: 50%; border: 1.5px solid var(--preto); background: transparent;
+    display: grid; place-items: center; cursor: pointer; flex-shrink: 0; transition: background-color .2s, color .2s;
+  }
+  .voltar:hover { background: var(--preto); color: var(--branco); }
+  .voltar svg { width: 18px; height: 18px; }
+  .horarios { list-style: none; display: grid; gap: 7px; align-content: start; flex: 1; border-top: 1px solid var(--linha); padding-top: 12px; }
+  .horarios li { display: grid; grid-template-columns: 5.2rem 3.1rem 1fr; gap: 6px; font-size: 0.92rem; }
+  .horarios .dia { font-weight: 700; }
   .horarios .hora { color: var(--cinza); }
-  .igreja-acoes { display: flex; flex-wrap: wrap; gap: 10px; padding-top: 6px; }
-  .igreja-acoes .botao { flex: 1 1 auto; min-height: 42px; padding: 0 16px; font-size: 0.9rem; }
+  .acoes { display: grid; grid-template-columns: 1fr; gap: 8px; }
+  .acoes .botao { min-height: 42px; padding: 0 12px; font-size: 0.9rem; white-space: nowrap; }
+
+  /* Entrada: os cards sobem em sequência quando a seção aparece */
+  .js .cartao { opacity: 0; transform: translateY(24px); }
+  .js .cartoes.visivel .cartao { opacity: 1; transform: none; transition: opacity .7s ease calc(var(--ordem) * .12s), transform .9s var(--curva) calc(var(--ordem) * .12s); }
+  .js .cartoes.visivel .cartao .frente::after { animation: brilho 1.4s ease calc(var(--ordem) * .12s + .5s) 1 both; }
+  @keyframes brilho { from { transform: translateX(-120%); } to { transform: translateX(120%); } }
 
   /* ── Canais ── */
   .canais { display: flex; flex-wrap: wrap; gap: 12px; }
@@ -166,7 +185,28 @@
 
   /* ── Celular ── */
   @media (max-width: 860px) {
-    .igrejas { grid-template-columns: 1fr; gap: 28px; }
+    #igrejas { padding: 32px 0; }
+    #igrejas h2 { margin-bottom: 14px; }
+    .cartoes { grid-template-columns: 1fr; gap: 10px; }
+    .cartao { height: 172px; }
+    .lado { padding: 16px 18px 14px; border-radius: 18px; }
+    .frente { display: grid; grid-template-columns: 1fr auto; grid-template-rows: auto 1fr; column-gap: 12px; }
+    .frente-topo { grid-column: 1 / -1; }
+    .frente h3 { font-size: 1.15rem; }
+    .endereco { font-size: 0.82rem; margin-top: 2px; }
+    .frente-base { grid-column: 1 / -1; align-self: end; grid-template-columns: 1fr auto; align-items: end; gap: 10px; }
+    .proximo { font-size: 0.84rem; }
+    .proximo-rotulo { font-size: 0.74rem; }
+    .virar { padding: 0 14px; min-height: 40px; font-size: 0.85rem; }
+    .marca { width: 170px; right: -30px; bottom: -28px; }
+    .verso { gap: 8px; }
+    .verso-nome { font-size: 0.95rem; }
+    .voltar { width: 34px; height: 34px; }
+    .horarios { gap: 1px; padding-top: 6px; }
+    .horarios li { grid-template-columns: 4.4rem 2.9rem 1fr; font-size: 0.8rem; line-height: 1.4; }
+    .acoes { grid-template-columns: 1fr 1fr; gap: 10px; }
+    .acoes .botao { min-height: 38px; font-size: 0.84rem; }
+    .acoes .botao svg { width: 16px; height: 16px; }
   }
   @media (max-width: 560px) {
     .abertura { min-height: 72svh; padding-top: 44px; }
@@ -180,11 +220,20 @@
   @media (prefers-reduced-motion: reduce) {
     .barra span { animation: pulsar 2s ease-in-out infinite; width: 100%; transform: none; }
     @keyframes pulsar { 0%, 100% { opacity: .25; } 50% { opacity: 1; } }
-    .botao { transition: none; }
+    .js .cartao { opacity: 1 !important; transform: none !important; transition: none !important; }
+    .frente::after { display: none; }
+    .lados { transition: none; }
+    .cartao.virado .lados { transform: none; }
+    .cartao.virado .frente { visibility: hidden; }
+    .verso { transform: none; visibility: hidden; }
+    .cartao.virado .verso { visibility: visible; }
+    .ao-vivo .ponto { animation: none; }
+    .botao, .virar, .virar svg { transition: none; }
   }
 </style>
 </head>
 <body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><path id="ig" d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></defs></svg>
 
 <main>
   <header class="abertura">
@@ -212,69 +261,106 @@
     </div>
   </section>
 
-  <section aria-labelledby="titulo-igrejas">
+  <section id="igrejas" aria-labelledby="titulo-igrejas">
     <div class="conteudo">
       <h2 id="titulo-igrejas">Nossas igrejas em Campo Grande</h2>
-      <div class="igrejas">
-
-        <article class="igreja">
-          <svg class="telhado" viewBox="0 0 100 26" preserveAspectRatio="none" aria-hidden="true"><polyline points="0,26 0,24 50,0.6 100,24 100,26"/></svg>
-          <div class="corpo">
-          <h3>Igreja do Centro</h3>
-          <address>Rua Camapuã, 141<br>Amambaí</address>
-          <ul class="horarios">
-            <li><span class="dia">Sábado</span><span class="hora">19h30</span><span>Menon Wave · Culto Jovem</span></li>
-            <li><span class="dia">Domingo</span><span class="hora">19h</span><span>Culto da Família</span></li>
-          </ul>
-          <div class="igreja-acoes">
-            <a class="botao botao-escuro" href="https://www.google.com/maps/search/?api=1&query=Rua%20Camapu%C3%A3%2C%20141%20-%20Amamba%C3%AD%2C%20Campo%20Grande%20-%20MS" target="_blank" rel="noopener">Como chegar</a>
-            <a class="botao botao-claro" href="https://www.instagram.com/ieimcampograndems/" target="_blank" rel="noopener" aria-label="Instagram da Igreja do Centro">
-              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
-              Instagram
-            </a>
-          </div>
-          </div>
-        </article>
-
-        <article class="igreja">
-          <svg class="telhado" viewBox="0 0 100 26" preserveAspectRatio="none" aria-hidden="true"><polyline points="0,26 0,24 50,0.6 100,24 100,26"/></svg>
-          <div class="corpo">
-          <h3>Igreja do São Conrado</h3>
-          <address>Rua Cel. José Hélio, 660<br>Jardim São Conrado</address>
-          <ul class="horarios">
-            <li><span class="dia">Quarta</span><span class="hora">19h30</span><span>Culto de Oração</span></li>
-            <li><span class="dia">Domingo</span><span class="hora">9h30</span><span>Culto da Família</span></li>
-          </ul>
-          <div class="igreja-acoes">
-            <a class="botao botao-escuro" href="https://www.google.com/maps/search/?api=1&query=Rua%20Coronel%20Jos%C3%A9%20H%C3%A9lio%20Macedo%20de%20Carvalho%2C%20660%20-%20Jardim%20S%C3%A3o%20Conrado%2C%20Campo%20Grande%20-%20MS" target="_blank" rel="noopener">Como chegar</a>
-            <a class="botao botao-claro" href="https://www.instagram.com/ieim_sao_conrado/" target="_blank" rel="noopener" aria-label="Instagram da Igreja do São Conrado">
-              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><use href="#ig"/></svg>
-              Instagram
-            </a>
-          </div>
+      <div class="cartoes">
+        <article class="cartao" id="igreja-centro" style="--ordem:0">
+          <div class="lados">
+            <div class="lado frente">
+              <img class="marca" src="/img/logo_ieim_simbolo_branco.svg" alt="" aria-hidden="true" width="260" height="172">
+              <div class="frente-topo">
+                <h3>Igreja do Centro</h3>
+                <p class="endereco">Rua Camapuã, 141 · Amambaí</p>
+              </div>
+              <div class="frente-base">
+                <p class="proximo" hidden><span class="ponto"></span><span><span class="proximo-rotulo">Próximo culto</span><span class="proximo-texto"></span></span></p>
+                <button class="virar" type="button" aria-controls="verso-centro" aria-expanded="false">
+                  <span>Ver mais</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12a9 9 0 0 1 15.5-6.2L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-15.5 6.2L3 16"/><path d="M3 21v-5h5"/></svg>
+                </button>
+              </div>
+            </div>
+            <div class="lado verso" id="verso-centro" aria-hidden="true" inert>
+              <div class="verso-topo">
+                <p class="verso-nome">Igreja do Centro</p>
+                <button class="voltar" type="button" aria-label="Voltar para a frente do card"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 14 4 9l5-5"/><path d="M4 9h10.5a5.5 5.5 0 0 1 0 11H11"/></svg></button>
+              </div>
+              <ul class="horarios">
+                <li data-dia="6" data-hora="19:30"><span class="dia">Sábado</span><span class="hora">19h30</span><span class="nome">Menon Wave · Culto Jovem</span></li>
+                <li data-dia="0" data-hora="19:00"><span class="dia">Domingo</span><span class="hora">19h</span><span class="nome">Culto da Família</span></li>
+              </ul>
+              <div class="acoes">
+                <a class="botao botao-escuro" href="https://www.google.com/maps/search/?api=1&query=Rua%20Camapu%C3%A3%2C%20141%20-%20Amamba%C3%AD%2C%20Campo%20Grande%20-%20MS" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-7-6.1-7-11.5A7 7 0 0 1 19 9.5C19 14.9 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg>Como chegar</a>
+                <a class="botao botao-insta" href="https://www.instagram.com/ieimcampograndems/" target="_blank" rel="noopener" aria-label="Instagram da Igreja do Centro"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><use href="#ig"/></svg>Instagram</a>
+              </div>
+            </div>
           </div>
         </article>
 
-        <article class="igreja">
-          <svg class="telhado" viewBox="0 0 100 26" preserveAspectRatio="none" aria-hidden="true"><polyline points="0,26 0,24 50,0.6 100,24 100,26"/></svg>
-          <div class="corpo">
-          <h3>Igreja do Los Angeles</h3>
-          <address>Rua Artur Pires, 226<br>Los Angeles</address>
-          <ul class="horarios">
-            <li><span class="dia">Segunda</span><span class="hora">19h30</span><span>Culto de Oração</span></li>
-            <li><span class="dia">Quarta</span><span class="hora">19h30</span><span>Culto Profético</span></li>
-            <li><span class="dia">Domingo</span><span class="hora">19h</span><span>Culto da Família</span></li>
-          </ul>
-          <div class="igreja-acoes">
-            <a class="botao botao-escuro" href="https://www.google.com/maps/search/?api=1&query=Rua%20Artur%20Pires%2C%20226%20-%20Los%20Angeles%2C%20Campo%20Grande%20-%20MS" target="_blank" rel="noopener">Como chegar</a>
-            <a class="botao botao-claro" href="https://www.instagram.com/ieim_losangeles_cg/" target="_blank" rel="noopener" aria-label="Instagram da Igreja do Los Angeles">
-              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><use href="#ig"/></svg>
-              Instagram
-            </a>
-          </div>
+        <article class="cartao" id="igreja-sao-conrado" style="--ordem:1">
+          <div class="lados">
+            <div class="lado frente">
+              <img class="marca" src="/img/logo_ieim_simbolo_branco.svg" alt="" aria-hidden="true" width="260" height="172">
+              <div class="frente-topo">
+                <h3>Igreja do São Conrado</h3>
+                <p class="endereco">Rua Cel. José Hélio, 660 · Jardim São Conrado</p>
+              </div>
+              <div class="frente-base">
+                <p class="proximo" hidden><span class="ponto"></span><span><span class="proximo-rotulo">Próximo culto</span><span class="proximo-texto"></span></span></p>
+                <button class="virar" type="button" aria-controls="verso-sao-conrado" aria-expanded="false">
+                  <span>Ver mais</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12a9 9 0 0 1 15.5-6.2L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-15.5 6.2L3 16"/><path d="M3 21v-5h5"/></svg>
+                </button>
+              </div>
+            </div>
+            <div class="lado verso" id="verso-sao-conrado" aria-hidden="true" inert>
+              <div class="verso-topo">
+                <p class="verso-nome">Igreja do São Conrado</p>
+                <button class="voltar" type="button" aria-label="Voltar para a frente do card"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 14 4 9l5-5"/><path d="M4 9h10.5a5.5 5.5 0 0 1 0 11H11"/></svg></button>
+              </div>
+              <ul class="horarios">
+                <li data-dia="3" data-hora="19:30"><span class="dia">Quarta</span><span class="hora">19h30</span><span class="nome">Culto de Oração</span></li>
+                <li data-dia="0" data-hora="09:30"><span class="dia">Domingo</span><span class="hora">9h30</span><span class="nome">Culto da Família</span></li>
+              </ul>
+              <div class="acoes">
+                <a class="botao botao-escuro" href="https://www.google.com/maps/search/?api=1&query=Rua%20Coronel%20Jos%C3%A9%20H%C3%A9lio%20Macedo%20de%20Carvalho%2C%20660%20-%20Jardim%20S%C3%A3o%20Conrado%2C%20Campo%20Grande%20-%20MS" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-7-6.1-7-11.5A7 7 0 0 1 19 9.5C19 14.9 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg>Como chegar</a>
+                <a class="botao botao-insta" href="https://www.instagram.com/ieim_sao_conrado/" target="_blank" rel="noopener" aria-label="Instagram da Igreja do São Conrado"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><use href="#ig"/></svg>Instagram</a>
+              </div>
+            </div>
           </div>
         </article>
 
+        <article class="cartao" id="igreja-los-angeles" style="--ordem:2">
+          <div class="lados">
+            <div class="lado frente">
+              <img class="marca" src="/img/logo_ieim_simbolo_branco.svg" alt="" aria-hidden="true" width="260" height="172">
+              <div class="frente-topo">
+                <h3>Igreja do Los Angeles</h3>
+                <p class="endereco">Rua Artur Pires, 226 · Los Angeles</p>
+              </div>
+              <div class="frente-base">
+                <p class="proximo" hidden><span class="ponto"></span><span><span class="proximo-rotulo">Próximo culto</span><span class="proximo-texto"></span></span></p>
+                <button class="virar" type="button" aria-controls="verso-los-angeles" aria-expanded="false">
+                  <span>Ver mais</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12a9 9 0 0 1 15.5-6.2L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-15.5 6.2L3 16"/><path d="M3 21v-5h5"/></svg>
+                </button>
+              </div>
+            </div>
+            <div class="lado verso" id="verso-los-angeles" aria-hidden="true" inert>
+              <div class="verso-topo">
+                <p class="verso-nome">Igreja do Los Angeles</p>
+                <button class="voltar" type="button" aria-label="Voltar para a frente do card"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 14 4 9l5-5"/><path d="M4 9h10.5a5.5 5.5 0 0 1 0 11H11"/></svg></button>
+              </div>
+              <ul class="horarios">
+                <li data-dia="1" data-hora="19:30"><span class="dia">Segunda</span><span class="hora">19h30</span><span class="nome">Culto de Oração</span></li>
+                <li data-dia="3" data-hora="19:30"><span class="dia">Quarta</span><span class="hora">19h30</span><span class="nome">Culto Profético</span></li>
+                <li data-dia="0" data-hora="19:00"><span class="dia">Domingo</span><span class="hora">19h</span><span class="nome">Culto da Família</span></li>
+              </ul>
+              <div class="acoes">
+                <a class="botao botao-escuro" href="https://www.google.com/maps/search/?api=1&query=Rua%20Artur%20Pires%2C%20226%20-%20Los%20Angeles%2C%20Campo%20Grande%20-%20MS" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-7-6.1-7-11.5A7 7 0 0 1 19 9.5C19 14.9 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg>Como chegar</a>
+                <a class="botao botao-insta" href="https://www.instagram.com/ieim_losangeles_cg/" target="_blank" rel="noopener" aria-label="Instagram da Igreja do Los Angeles"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><use href="#ig"/></svg>Instagram</a>
+              </div>
+            </div>
+          </div>
+        </article>
       </div>
     </div>
   </section>
@@ -283,18 +369,9 @@
     <div class="conteudo">
       <h2 id="titulo-canais">Acompanhe a igreja</h2>
       <div class="canais">
-        <a class="botao botao-claro" href="https://www.youtube.com/@ieimcampograndems" target="_blank" rel="noopener">
-          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
-          Cultos no YouTube
-        </a>
-        <a class="botao botao-claro" href="https://www.facebook.com/ieimcampograndems" target="_blank" rel="noopener">
-          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
-          Facebook
-        </a>
-        <a class="botao botao-claro" href="https://chat.whatsapp.com/K2lynhJGzAXKZrjBjL7HGr?mode=gi_t" target="_blank" rel="noopener">
-          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413z"/></svg>
-          Grupo de comunicação oficial
-        </a>
+        <a class="botao botao-claro" href="https://www.youtube.com/@ieimcampograndems" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>Cultos no YouTube</a>
+        <a class="botao botao-claro" href="https://www.facebook.com/ieimcampograndems" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>Facebook</a>
+        <a class="botao botao-claro" href="https://chat.whatsapp.com/K2lynhJGzAXKZrjBjL7HGr?mode=gi_t" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413z"/></svg>Grupo de comunicação oficial</a>
       </div>
     </div>
   </section>
@@ -312,21 +389,87 @@
   </div>
 </footer>
 
-<!-- Ícone do Instagram reutilizado pelos cards -->
-<svg width="0" height="0" style="position:absolute" aria-hidden="true">
-  <defs>
-    <path id="ig" d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
-  </defs>
-</svg>
-
 <script>
-  // O card do retiro some sozinho depois do evento (16/11/2026, horário de Campo Grande)
   (function () {
-    var fim = new Date('2026-11-16T00:00:00-04:00');
-    if (new Date() >= fim) {
-      var s = document.getElementById('evento');
-      if (s) s.remove();
+    var semMovimento = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    // O card do retiro some sozinho depois do evento (16/11/2026, horário de Campo Grande)
+    if (new Date() >= new Date('2026-11-16T00:00:00-04:00')) {
+      var ev = document.getElementById('evento'); if (ev) ev.remove();
     }
+
+    var grade = document.querySelector('.cartoes');
+    if (!grade) return;
+
+    // Entrada dos cards quando a seção aparece
+    if (semMovimento || !('IntersectionObserver' in window)) {
+      grade.classList.add('visivel');
+    } else {
+      var obs = new IntersectionObserver(function (es) {
+        es.forEach(function (e) { if (e.isIntersecting) { grade.classList.add('visivel'); obs.disconnect(); } });
+      }, { threshold: 0.15 });
+      obs.observe(grade);
+    }
+
+    // Virar os cards
+    var cartoes = Array.prototype.slice.call(grade.querySelectorAll('.cartao'));
+    function virar(cartao, paraVerso) {
+      var frente = cartao.querySelector('.frente'), verso = cartao.querySelector('.verso');
+      cartao.classList.toggle('virado', paraVerso);
+      cartao.querySelector('.virar').setAttribute('aria-expanded', paraVerso ? 'true' : 'false');
+      verso.setAttribute('aria-hidden', paraVerso ? 'false' : 'true');
+      frente.setAttribute('aria-hidden', paraVerso ? 'true' : 'false');
+      if (paraVerso) { verso.removeAttribute('inert'); frente.setAttribute('inert', ''); }
+      else { frente.removeAttribute('inert'); verso.setAttribute('inert', ''); }
+      setTimeout(function () {
+        (paraVerso ? cartao.querySelector('.voltar') : cartao.querySelector('.virar')).focus({ preventScroll: true });
+      }, semMovimento ? 0 : 400);
+    }
+    cartoes.forEach(function (cartao) {
+      cartao.querySelector('.virar').addEventListener('click', function () {
+        cartoes.forEach(function (c) { if (c !== cartao && c.classList.contains('virado')) virar(c, false); });
+        virar(cartao, true);
+      });
+      cartao.querySelector('.voltar').addEventListener('click', function () { virar(cartao, false); });
+    });
+    document.addEventListener('keydown', function (e) {
+      if (e.key !== 'Escape') return;
+      cartoes.forEach(function (c) { if (c.classList.contains('virado')) virar(c, false); });
+    });
+
+    // Próximo culto, pelo horário de Campo Grande (UTC-4, sem horário de verão)
+    function agoraCG() { var n = new Date(); return new Date(n.getTime() + (n.getTimezoneOffset() - 240) * 60000); }
+    var NOMES = ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'];
+    function horaTexto(h) { var p = h.split(':'); return parseInt(p[0], 10) + 'h' + (p[1] === '00' ? '' : p[1]); }
+    function atualizar() {
+      var agora = agoraCG(), hoje = agora.getDay(), minAgora = agora.getHours() * 60 + agora.getMinutes();
+      cartoes.forEach(function (cartao) {
+        var melhor = null;
+        cartao.querySelectorAll('.horarios li').forEach(function (li) {
+          var dia = parseInt(li.dataset.dia, 10), p = li.dataset.hora.split(':');
+          var ini = parseInt(p[0], 10) * 60 + parseInt(p[1], 10);
+          for (var d = 0; d < 8; d++) {
+            if ((hoje + d) % 7 !== dia) continue;
+            var dist = d * 1440 + ini - minAgora;
+            if (dist < -120) continue; // considera o culto encerrado 2h depois do início
+            if (!melhor || dist < melhor.dist) melhor = { dist: dist, d: d, dia: dia, hora: li.dataset.hora, nome: li.querySelector('.nome').textContent };
+            break;
+          }
+        });
+        var el = cartao.querySelector('.proximo');
+        if (!melhor) { el.hidden = true; return; }
+        var quando;
+        if (melhor.dist <= 0) quando = 'Acontecendo agora';
+        else if (melhor.d === 0) quando = 'Hoje, ' + horaTexto(melhor.hora);
+        else if (melhor.d === 1) quando = 'Amanhã, ' + horaTexto(melhor.hora);
+        else quando = NOMES[melhor.dia] + ', ' + horaTexto(melhor.hora);
+        el.querySelector('.proximo-texto').innerHTML = '<strong>' + quando + '</strong> · ' + melhor.nome;
+        el.classList.toggle('ao-vivo', melhor.dist <= 0);
+        el.hidden = false;
+      });
+    }
+    atualizar();
+    setInterval(atualizar, 60000);
   })();
 </script>
 </body>
