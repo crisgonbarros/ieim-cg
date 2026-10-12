@@ -3,20 +3,20 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Quem somos · Igreja Evangélica Irmãos Menonitas · Campo Grande/MS</title>
-<meta name="description" content="A história dos Irmãos Menonitas, nossa missão, nossos valores, no que cremos e quem cuida da Igreja Evangélica Irmãos Menonitas em Campo Grande/MS.">
+<title>Igreja Evangélica Irmãos Menonitas · Campo Grande/MS</title>
+<meta name="description" content="Igreja Evangélica Irmãos Menonitas em Campo Grande/MS. Igrejas no Centro, no São Conrado e no Los Angeles. Para toda pessoa que queira conhecer a Cristo.">
 <meta name="theme-color" content="#040405">
 
 <link rel="icon" href="/img/favicon.svg" type="image/svg+xml">
 <link rel="icon" href="/img/favicon-32.png" sizes="32x32" type="image/png">
 <link rel="apple-touch-icon" href="/img/apple-touch-icon.png">
 
-<meta property="og:title" content="Quem somos · Igreja Evangélica Irmãos Menonitas · Campo Grande/MS">
-<meta property="og:description" content="Um lugar para estar e pertencer.">
+<meta property="og:title" content="Igreja Evangélica Irmãos Menonitas · Campo Grande/MS">
+<meta property="og:description" content="Sermos uma comunidade cristã, saudável e presente em cada casa de Campo Grande/MS.">
 <meta property="og:image" content="https://www.irmaosmenonitas.com.br/img/og_ieim.jpg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:url" content="https://www.irmaosmenonitas.com.br/quem-somos/">
+<meta property="og:url" content="https://www.irmaosmenonitas.com.br/">
 <meta property="og:type" content="website">
 <meta property="og:locale" content="pt_BR">
 <meta name="twitter:card" content="summary_large_image">
@@ -25,12 +25,13 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;500;600;700&display=swap">
-<link rel="preload" as="image" href="/img/logo_ieim_simbolo_branco.svg">
+<link rel="preload" as="image" href="/img/logo_ieim_completo_branco.svg">
 
 <style>
   :root {
     --preto: #000;
     --branco: #fff;
+    --tinta: #0b0b0c;
     --cinza: #5f5f5f;
     --cinza-claro: #a8a8a8;
     --linha: #e6e6e6;
@@ -53,71 +54,100 @@
   button { font: inherit; color: inherit; }
   :focus-visible { outline: 2px solid currentColor; outline-offset: 3px; border-radius: 8px; }
   .conteudo { width: 100%; max-width: var(--largura); margin: 0 auto; padding: 0 24px; }
+  .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 
   .sobre { display: block; font-size: .78rem; font-weight: 700; letter-spacing: .22em; text-transform: uppercase; margin-bottom: 14px; color: var(--cinza); }
   h2 { font-size: clamp(1.7rem, 4.2vw, 2.6rem); font-weight: 700; line-height: 1.12; letter-spacing: -.01em; text-wrap: balance; }
   .secao { padding: 112px 0; position: relative; }
-  .cabeca { margin-bottom: 48px; }
-  .escura { background: #050506; color: var(--branco); overflow: hidden; isolation: isolate; }
-  .escura .sobre { color: rgba(255,255,255,.55); }
+  .cabeca { margin-bottom: 44px; }
+  .cabeca p { color: var(--cinza); font-size: 1.05rem; margin-top: 14px; max-width: 46ch; }
 
-  /* Luzes coloridas desfocadas se movendo devagar */
-  .luzes { position: absolute; inset: 0; z-index: -2; pointer-events: none; overflow: hidden; }
-  .luzes span {
-    position: absolute; width: 56vmax; height: 56vmax; border-radius: 50%;
-    background: radial-gradient(circle, var(--c) 0%, transparent 62%);
-    opacity: var(--o); mix-blend-mode: screen; will-change: transform;
+  /* ── Botões ── */
+  .botao {
+    position: relative; overflow: hidden; isolation: isolate;
+    display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+    min-height: 50px; padding: 0 26px; border-radius: 999px;
+    font-weight: 700; font-size: .95rem; letter-spacing: .01em; text-decoration: none; cursor: pointer; border: 0;
+    transition: background-color .25s, color .25s, border-color .25s, transform .25s var(--curva), box-shadow .25s;
   }
-  .grao::after {
-    content: ""; position: absolute; inset: 0; z-index: -1; opacity: .07; pointer-events: none;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  .botao svg { width: 18px; height: 18px; flex-shrink: 0; transition: transform .3s var(--curva); }
+  .botao:hover svg.seta { transform: translateX(4px); }
+  .botao:active { transform: scale(.97); }
+  .botao::after { /* reflexo que passa pelo botão */
+    content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none;
+    background: linear-gradient(110deg, transparent 30%, rgba(255,255,255,.35) 50%, transparent 70%);
+    transform: translateX(-130%);
   }
-  @keyframes deriva1 { to { transform: translate(18vw, 14vh) scale(1.15); } }
-  @keyframes deriva2 { to { transform: translate(-16vw, 18vh) scale(.9); } }
-  @keyframes deriva3 { to { transform: translate(20vw, -16vh) scale(1.1); } }
-  @keyframes deriva4 { to { transform: translate(-22vw, -12vh) scale(1.2); } }
-
-  /* Entradas */
-  .js .entra { opacity: 0; transform: translateY(22px); filter: blur(6px); animation: entrar 1.1s var(--curva) forwards; animation-delay: calc(var(--d) * .14s + .15s); }
-  @keyframes entrar { to { opacity: 1; transform: none; filter: none; } }
-  .js .revelar { opacity: 0; transform: translateY(34px); transition: opacity .9s ease, transform 1.1s var(--curva); transition-delay: calc(var(--d, 0) * .1s); }
-  .js .revelar.revelado { opacity: 1; transform: none; }
+  .botao:hover::after { transform: translateX(130%); transition: transform .9s ease; }
+  .botao-escuro { background: var(--preto); color: var(--branco); }
+  .botao-escuro::after { background: linear-gradient(110deg, transparent 30%, rgba(255,255,255,.22) 50%, transparent 70%); }
+  .botao-escuro:hover { box-shadow: 0 14px 30px -14px rgba(0,0,0,.6); transform: translateY(-1px); }
+  .botao-vidro {
+    color: var(--branco); background: rgba(255,255,255,.10);
+    border: 1px solid rgba(255,255,255,.28);
+    -webkit-backdrop-filter: blur(14px) saturate(150%); backdrop-filter: blur(14px) saturate(150%);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,.25), 0 10px 30px -12px rgba(0,0,0,.5);
+  }
+  .botao-vidro:hover { background: rgba(255,255,255,.18); transform: translateY(-1px); }
+  .botao-branco { background: var(--branco); color: var(--preto); }
+  .botao-branco:hover { transform: translateY(-1px); box-shadow: 0 16px 34px -14px rgba(255,255,255,.45); }
+  .botao-insta {
+    color: var(--branco);
+    background-image: linear-gradient(45deg, #feda75 0%, #fa7e1e 22%, #d62976 50%, #962fbf 76%, #4f5bd5 100%);
+  }
+  .botao-insta:hover { filter: saturate(1.2) brightness(1.08); }
 
   /* ── Abertura ── */
   .abertura {
     position: relative; overflow: hidden; isolation: isolate;
     margin-top: calc(var(--topo) * -1);
-    min-height: min(86svh, 820px);
-    padding: calc(var(--topo) + 72px) 0 88px;
+    min-height: min(100svh, 940px);
+    padding: calc(var(--topo) + 64px) 0 96px;
     display: grid; place-items: center; text-align: center;
     background: #040405; color: var(--branco);
   }
-  .abertura .luzes span:nth-child(1) { --c: var(--rosa); --o: .5; left: -18%; top: -24%; animation: deriva1 26s ease-in-out infinite alternate; }
-  .abertura .luzes span:nth-child(2) { --c: var(--azul); --o: .72; right: -20%; top: -12%; animation: deriva2 30s ease-in-out infinite alternate; }
-  .abertura .luzes span:nth-child(3) { --c: var(--amarelo); --o: .26; left: 8%; bottom: -40%; animation: deriva3 34s ease-in-out infinite alternate; }
-  .abertura .luzes span:nth-child(4) { --c: var(--verde); --o: .36; right: -4%; bottom: -36%; animation: deriva4 28s ease-in-out infinite alternate; }
-  .abertura::before {
-    content: ""; position: absolute; inset: 0; z-index: -1;
-    background: radial-gradient(60% 55% at 50% 50%, rgba(4,4,5,.6) 0%, rgba(4,4,5,.15) 70%, rgba(4,4,5,.55) 100%);
+  .aurora { position: absolute; inset: -10%; z-index: -2; pointer-events: none; }
+  .aurora span {
+    position: absolute; width: 62vmax; height: 62vmax; border-radius: 50%;
+    background: radial-gradient(circle, var(--c) 0%, transparent 62%);
+    opacity: var(--o); mix-blend-mode: screen; will-change: transform;
   }
-  .abertura-interno { display: grid; justify-items: center; gap: 26px; }
-  .simbolo-hero { position: relative; width: clamp(96px, 11vw, 128px); }
-  .simbolo-hero img { width: 100%; }
-  .simbolo-brilho { display: none; }
+  .aurora span:nth-child(1) { --c: var(--rosa); --o: .55; left: -18%; top: -22%; animation: deriva1 26s ease-in-out infinite alternate; }
+  .aurora span:nth-child(2) { --c: var(--azul); --o: .75; right: -20%; top: -10%; animation: deriva2 30s ease-in-out infinite alternate; }
+  .aurora span:nth-child(3) { --c: var(--amarelo); --o: .28; left: 8%; bottom: -38%; animation: deriva3 34s ease-in-out infinite alternate; }
+  .aurora span:nth-child(4) { --c: var(--verde); --o: .38; right: -4%; bottom: -34%; animation: deriva4 28s ease-in-out infinite alternate; }
+  @keyframes deriva1 { to { transform: translate(18vw, 14vh) scale(1.15); } }
+  @keyframes deriva2 { to { transform: translate(-16vw, 18vh) scale(.9); } }
+  @keyframes deriva3 { to { transform: translate(20vw, -16vh) scale(1.1); } }
+  @keyframes deriva4 { to { transform: translate(-22vw, -12vh) scale(1.2); } }
+  .abertura::before { /* vinheta para leitura */
+    content: ""; position: absolute; inset: 0; z-index: -1;
+    background: radial-gradient(60% 55% at 50% 50%, rgba(4,4,5,.62) 0%, rgba(4,4,5,.15) 70%, rgba(4,4,5,.5) 100%);
+  }
+  .abertura::after { /* grão fino */
+    content: ""; position: absolute; inset: 0; z-index: -1; opacity: .07; pointer-events: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+  .abertura-interno { display: grid; justify-items: center; gap: 30px; max-width: 900px; }
+  .logo-hero { position: relative; width: clamp(150px, 20vw, 210px); }
+  .logo-hero img { width: 100%; }
+  .logo-brilho { display: none; }
   @supports ((-webkit-mask-image: url("x.svg")) or (mask-image: url("x.svg"))) {
-    .simbolo-brilho {
+    .logo-brilho {
       display: block; position: absolute; inset: 0; pointer-events: none;
-      -webkit-mask: url(/img/logo_ieim_simbolo_branco.svg) center / 100% 100% no-repeat;
-      mask: url(/img/logo_ieim_simbolo_branco.svg) center / 100% 100% no-repeat;
+      -webkit-mask: url(/img/logo_ieim_completo_branco.svg) center / 100% 100% no-repeat;
+      mask: url(/img/logo_ieim_completo_branco.svg) center / 100% 100% no-repeat;
       background: linear-gradient(105deg, transparent 38%, rgba(160,175,255,.9) 45%, #fff 50%, rgba(255,170,215,.9) 55%, transparent 62%) no-repeat;
       background-size: 300% 100%; background-position: 130% 0;
       animation: reflexo 7s ease-in-out 1.6s infinite;
     }
   }
   @keyframes reflexo { 0% { background-position: 130% 0; } 32%, 100% { background-position: -30% 0; } }
-  .abertura h1 { font-size: clamp(2.6rem, 8vw, 5.2rem); font-weight: 700; line-height: 1; letter-spacing: -.02em; }
-  .chamada { font-size: clamp(1.15rem, 2.6vw, 1.6rem); font-weight: 600; color: rgba(255,255,255,.86); max-width: 30ch; text-wrap: balance; }
-  .chamada em {
+  .visao {
+    font-size: clamp(1.9rem, 3.1vw, 2.5rem); font-weight: 700; line-height: 1.18; letter-spacing: -.01em; max-width: 38ch;
+    text-wrap: balance;
+  }
+  .visao em {
     font-style: normal; white-space: nowrap;
     background: linear-gradient(90deg, #ff5cb0, #ffc93d, #4fdc8a, #6c9bff, #ff5cb0);
     background-size: 220% 100%;
@@ -125,206 +155,293 @@
     animation: correr 9s linear infinite;
   }
   @keyframes correr { to { background-position: -220% 0; } }
-  .rolar { position: relative; display: block; width: 1px; height: 52px; margin-top: 18px; background: rgba(255,255,255,.2); overflow: hidden; }
+  .para-quem { font-size: clamp(1.02rem, 2.4vw, 1.25rem); color: rgba(255,255,255,.78); max-width: 40ch; text-wrap: balance; }
+  .conheca {
+    margin-top: 18px; display: grid; justify-items: center; gap: 18px;
+    font-size: .8rem; font-weight: 600; letter-spacing: .2em; text-transform: uppercase; text-decoration: none;
+    color: rgba(255,255,255,.7); transition: color .3s;
+  }
+  .conheca:hover { color: #fff; }
+  .rolar { position: relative; width: 1px; height: 52px; background: rgba(255,255,255,.2); overflow: hidden; }
   .rolar::after { content: ""; position: absolute; left: 0; top: -50%; width: 100%; height: 50%; background: #fff; animation: descer 2.2s ease-in-out infinite; }
   @keyframes descer { to { top: 100%; } }
 
-  /* ── História: linha do tempo ── */
-  .historia { padding-top: 96px; }
-  .historia .luzes span:nth-child(1) { --c: var(--azul); --o: .22; left: -30%; top: 10%; animation: deriva2 36s ease-in-out infinite alternate; }
-  .historia .luzes span:nth-child(2) { --c: var(--rosa); --o: .16; right: -30%; top: 45%; animation: deriva1 40s ease-in-out infinite alternate; }
-  .historia .luzes span:nth-child(3) { --c: var(--verde); --o: .14; left: -10%; bottom: -30%; animation: deriva4 38s ease-in-out infinite alternate; }
-  .historia .cabeca { max-width: 860px; margin-left: auto; margin-right: auto; }
-  .linha { position: relative; max-width: 860px; margin: 0 auto; --eixo: 200px; }
-  .trilho { position: absolute; left: var(--eixo); top: 10px; bottom: 60px; width: 2px; margin-left: -1px; background: rgba(255,255,255,.12); border-radius: 2px; }
-  .trilho-luz {
-    position: absolute; inset: 0; border-radius: 2px; -webkit-clip-path: inset(0 0 calc((1 - var(--p, 0)) * 100%) 0); clip-path: inset(0 0 calc((1 - var(--p, 0)) * 100%) 0);
-    background: linear-gradient(180deg, #ff5cb0 0%, #ffc93d 30%, #4fdc8a 36%, #5aa8f0 57%, #6c9bff 63%, #a472ff 100%);
-    box-shadow: 0 0 14px rgba(255,255,255,.35);
-  }
-  .capitulo, .marco { position: relative; display: grid; grid-template-columns: var(--eixo) 1fr; }
-  .capitulo { margin: 0 0 34px; padding-top: 8px; }
-  .marco { padding-bottom: 46px; }
-  .marco + .capitulo { margin-top: 30px; }
-  .ano { padding-right: 34px; text-align: right; font-size: clamp(1.5rem, 2.6vw, 2rem); font-weight: 700; line-height: 1.1; letter-spacing: -.01em; white-space: nowrap; color: rgba(255,255,255,.28); transition: color .8s ease; }
-  .marco.aceso .ano { color: #fff; }
-  .marco-texto { padding-left: 34px; font-size: 1.05rem; line-height: 1.6; color: rgba(255,255,255,.5); max-width: 52ch; transition: color .8s ease; }
-  .marco.aceso .marco-texto { color: rgba(255,255,255,.86); }
-  .ponto-linha {
-    position: absolute; left: var(--eixo); top: 1.05rem; width: 13px; height: 13px; margin: -6.5px 0 0 -6.5px; border-radius: 50%;
-    background: #050506; border: 2px solid rgba(255,255,255,.3);
-    transition: background-color .6s, border-color .6s, box-shadow .6s, transform .6s var(--curva);
-  }
-  .marco.aceso .ponto-linha, .capitulo.aceso .ponto-linha { background: var(--cor); border-color: var(--cor); box-shadow: 0 0 0 5px color-mix(in srgb, var(--cor) 22%, transparent), 0 0 22px var(--cor); transform: scale(1.1); }
-  .capitulo .ponto-linha { width: 19px; height: 19px; margin: -9.5px 0 0 -9.5px; top: calc(50% + 4px); }
-  .capitulo-nome {
-    grid-column: 2; padding-left: 34px;
-    font-size: .8rem; font-weight: 700; letter-spacing: .24em; text-transform: uppercase;
-    color: rgba(255,255,255,.5); transition: color .8s;
-  }
-  .capitulo.aceso .capitulo-nome { color: var(--cor); }
-  .marco.intro { padding-bottom: 34px; margin-top: -14px; }
-  .marco.intro .marco-texto { grid-column: 2; font-size: clamp(1.1rem, 2vw, 1.3rem); font-weight: 600; font-style: italic; color: rgba(255,255,255,.62); }
-  .marco.intro.aceso .marco-texto { color: #fff; }
-  .fontes { max-width: 860px; margin: 72px auto 0; font-size: .82rem; color: rgba(255,255,255,.45); text-align: center; }
-  .fontes a { text-underline-offset: 4px; text-decoration-color: rgba(255,255,255,.3); }
-  .fontes a:hover { color: #fff; }
-  .final { position: relative; display: grid; grid-template-columns: var(--eixo) 1fr; align-items: center; padding-top: 6px; }
-  .final-simbolo { position: absolute; left: var(--eixo); top: 0; width: 64px; margin-left: -32px; opacity: .35; transition: opacity 1s ease, filter 1s ease; }
-  .final.aceso .final-simbolo { opacity: 1; filter: drop-shadow(0 0 18px rgba(108,155,255,.75)); }
-  .final-texto { grid-column: 2; padding: 64px 0 0 34px; font-size: clamp(1.15rem, 2.2vw, 1.4rem); font-weight: 600; line-height: 1.45; color: rgba(255,255,255,.55); max-width: 40ch; transition: color .8s; text-wrap: balance; }
-  .final.aceso .final-texto { color: #fff; }
-  .final-texto a { text-decoration: underline; text-decoration-color: rgba(255,255,255,.35); text-underline-offset: 5px; text-decoration-thickness: 1px; transition: text-decoration-color .3s; }
-  .final-texto a:hover { text-decoration-color: #fff; }
+  /* Entrada da abertura */
+  .js .entra { opacity: 0; transform: translateY(22px); filter: blur(6px); animation: entrar 1.1s var(--curva) forwards; animation-delay: calc(var(--d) * .14s + .15s); }
+  @keyframes entrar { to { opacity: 1; transform: none; filter: none; } }
 
-  /* ── Missão ── */
-  .missao { background: var(--fundo-claro); overflow: hidden; isolation: isolate; }
-  .missao::before {
-    content: ""; position: absolute; z-index: -1; pointer-events: none;
-    width: 820px; height: 520px; left: 50%; top: 50%; transform: translate(-50%, -50%);
-    background:
-      radial-gradient(closest-side at 30% 40%, rgba(230,0,126,.13), transparent),
-      radial-gradient(closest-side at 70% 45%, rgba(47,95,224,.15), transparent),
-      radial-gradient(closest-side at 50% 75%, rgba(245,183,0,.14), transparent);
-    filter: blur(10px); animation: respirar 14s ease-in-out infinite alternate;
-  }
-  @keyframes respirar { to { transform: translate(-50%, -50%) scale(1.1) rotate(6deg); } }
-  .missao .conteudo { max-width: 980px; text-align: center; }
-  .missao-texto { font-size: clamp(1.55rem, 3.8vw, 2.7rem); font-weight: 700; line-height: 1.28; letter-spacing: -.01em; text-wrap: balance; }
-  .missao-texto .p { color: #c9c9c6; transition: color .6s ease; }
-  .missao-texto .p.acesa { color: var(--preto); }
+  /* Revelar ao rolar */
+  .js .revelar { opacity: 0; transform: translateY(34px); transition: opacity .9s ease, transform 1.1s var(--curva); transition-delay: calc(var(--d, 0) * .1s); }
+  .js .revelar.revelado { opacity: 1; transform: none; }
 
-  /* ── Valores ── */
-  .valores .luzes span:nth-child(1) { --c: var(--rosa); --o: .2; left: -16%; top: -20%; animation: deriva1 30s ease-in-out infinite alternate; }
-  .valores .luzes span:nth-child(2) { --c: var(--azul); --o: .28; right: -24%; bottom: -30%; animation: deriva2 34s ease-in-out infinite alternate; }
-  .grade-valores { list-style: none; display: grid; grid-template-columns: repeat(5, 1fr); gap: 14px; }
-  .valor {
-    position: relative; overflow: hidden; border-radius: 22px; padding: 22px 20px 24px;
-    background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.12);
-    -webkit-backdrop-filter: blur(14px) saturate(140%); backdrop-filter: blur(14px) saturate(140%);
-    box-shadow: inset 0 1px 0 rgba(255,255,255,.12);
-    transition: border-color .4s, background-color .4s, transform .4s var(--curva);
+  /* ── Igrejas: cards que viram ── */
+  #igrejas { padding-top: 104px; }
+  .cartoes { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
+  .cartao { height: 330px; }
+  .lados { position: relative; height: 100%; }
+  /* Giro em duas fases: um lado gira até ficar de perfil, o outro continua o movimento.
+     Cada lado tem a própria perspectiva, então funciona igual em todos os navegadores (inclusive iPhone). */
+  .lado {
+    position: absolute; inset: 0; border-radius: 24px; overflow: hidden;
+    display: flex; flex-direction: column; padding: 28px 26px 24px;
+    will-change: transform;
   }
-  .valor::before { /* reflexo que segue o mouse */
+  .frente {
+    transform: perspective(1100px) rotateY(0deg);
+    transition: transform .5s cubic-bezier(.22,.9,.32,1) .3s, visibility 0s linear .3s, box-shadow .5s;
+  }
+  .verso {
+    visibility: hidden; transform: perspective(1100px) rotateY(90deg) scale(.94);
+    transition: transform .3s cubic-bezier(.6,0,.85,.35), visibility 0s linear .3s;
+  }
+  .cartao.virado .frente {
+    visibility: hidden; transform: perspective(1100px) rotateY(-90deg) scale(.94);
+    transition: transform .3s cubic-bezier(.6,0,.85,.35), visibility 0s linear .3s;
+  }
+  .cartao.virado .verso {
+    visibility: visible; transform: perspective(1100px) rotateY(0deg);
+    transition: transform .5s cubic-bezier(.22,.9,.32,1) .3s, visibility 0s linear .3s;
+  }
+  .frente {
+    background: radial-gradient(120% 90% at 100% 0%, #2a2a2c 0%, #0b0b0c 45%, #000 100%);
+    color: var(--branco); justify-content: space-between; cursor: pointer;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,.1), 0 24px 48px -26px rgba(0,0,0,.6);
+  }
+  .frente::before { /* reflexo que segue o mouse */
     content: ""; position: absolute; inset: 0; pointer-events: none; opacity: 0; transition: opacity .4s;
-    background: radial-gradient(260px circle at var(--mx, 50%) var(--my, 0%), color-mix(in srgb, var(--cor) 30%, transparent), transparent 60%);
+    background: radial-gradient(420px circle at var(--mx, 50%) var(--my, 0%), rgba(255,255,255,.13), transparent 45%);
   }
-  .valor::after { /* fio de luz no topo */
-    content: ""; position: absolute; left: 20px; right: 20px; top: 0; height: 1px;
-    background: linear-gradient(90deg, transparent, var(--cor), transparent); opacity: .7;
+  .frente:hover::before { opacity: 1; }
+  .frente::after {
+    content: ""; position: absolute; inset: 0; pointer-events: none;
+    background: linear-gradient(115deg, transparent 35%, rgba(255,255,255,.08) 50%, transparent 65%);
+    transform: translateX(-120%);
   }
-  @media (hover: hover) {
-    .valor:hover { border-color: color-mix(in srgb, var(--cor) 55%, transparent); background: rgba(255,255,255,.08); transform: translateY(-3px); }
-    .valor:hover::before { opacity: 1; }
+  .marca { position: absolute; right: -46px; bottom: -40px; width: 260px; opacity: .07; pointer-events: none; }
+  .frente-topo, .frente-base { position: relative; z-index: 1; }
+  .frente h3 { font-size: 1.45rem; font-weight: 700; line-height: 1.2; }
+  .endereco { color: var(--cinza-claro); font-size: .92rem; margin-top: 6px; }
+  .frente-base { display: grid; gap: 16px; }
+  .proximo { display: flex; align-items: flex-start; gap: 10px; font-size: .92rem; line-height: 1.4; }
+  .proximo[hidden] { display: none; }
+  .proximo-rotulo { display: block; color: var(--cinza-claro); font-size: .8rem; }
+  .proximo-texto strong { font-weight: 700; }
+  .ponto { width: 8px; height: 8px; border-radius: 50%; background: var(--branco); opacity: .45; flex-shrink: 0; margin-top: 6px; }
+  .ao-vivo .ponto { opacity: 1; animation: pulsar-ponto 1.6s ease-in-out infinite; }
+  @keyframes pulsar-ponto { 0%, 100% { box-shadow: 0 0 0 0 rgba(255,255,255,.55); } 70% { box-shadow: 0 0 0 9px rgba(255,255,255,0); } }
+  .virar {
+    justify-self: start; display: inline-flex; align-items: center; gap: 10px;
+    background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.4); border-radius: 999px;
+    padding: 0 18px; min-height: 42px; font-weight: 600; font-size: .92rem; cursor: pointer;
+    transition: background-color .25s, color .25s, border-color .25s;
   }
-  .valor-num { position: relative; display: block; font-size: .78rem; font-weight: 700; letter-spacing: .16em; color: var(--cor); margin-bottom: 14px; }
-  .valor h3 { position: relative; font-size: 1.08rem; font-weight: 700; line-height: 1.25; margin-bottom: 8px; }
-  .valor p { position: relative; font-size: .88rem; line-height: 1.5; color: rgba(255,255,255,.66); }
-  .js .grade-valores .valor { opacity: 0; transform: translateY(34px); }
-  .js .grade-valores.visivel .valor { opacity: 1; transform: none; transition: opacity .9s ease calc(var(--i) * .07s), transform 1.1s var(--curva) calc(var(--i) * .07s), border-color .4s, background-color .4s; }
+  .virar svg { width: 17px; height: 17px; transition: transform .5s var(--curva); }
+  .virar::before { content: ""; position: absolute; inset: -400px; }
+  .frente:hover .virar, .virar:focus-visible { background: var(--branco); color: var(--preto); border-color: var(--branco); }
+  .frente:hover .virar svg { transform: rotate(180deg); }
+  .frente:hover::after { transform: translateX(120%); transition: transform 1s ease; }
 
-  /* ── No que cremos ── */
-  .cremos-grade { display: grid; grid-template-columns: .9fr 1.1fr; gap: 64px; align-items: start; }
-  .cremos-abertura { font-size: 1.12rem; line-height: 1.65; color: #2a2a2a; margin-top: 22px; }
-  .cremos-fonte { margin-top: 22px; font-size: .88rem; color: var(--cinza); }
-  .cremos-fonte a { text-underline-offset: 4px; }
-  .sanfona { list-style: none; border-top: 1px solid var(--linha); }
-  .sanfona li { border-bottom: 1px solid var(--linha); }
-  .sanfona-botao {
-    position: relative; width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 20px;
-    padding: 26px 4px; background: none; border: 0; cursor: pointer; text-align: left;
-    font-size: clamp(1.15rem, 2.2vw, 1.4rem); font-weight: 700; line-height: 1.25;
+  .verso {
+    background: var(--branco); color: var(--preto);
+    border: 1.5px solid var(--preto); gap: 14px;
   }
-  .sanfona-icone {
-    position: relative; width: 40px; height: 40px; border-radius: 50%; flex-shrink: 0;
-    border: 1px solid #d6d6d6; transition: background-color .35s, border-color .35s, color .35s, transform .5s var(--curva);
+  .verso-topo { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+  .verso-nome { font-weight: 700; font-size: 1.05rem; }
+  .voltar {
+    width: 40px; height: 40px; border-radius: 50%; border: 1.5px solid var(--preto); background: transparent;
+    display: grid; place-items: center; cursor: pointer; flex-shrink: 0; transition: background-color .2s, color .2s;
   }
-  .sanfona-icone::before, .sanfona-icone::after { content: ""; position: absolute; left: 50%; top: 50%; width: 14px; height: 1.8px; margin: -.9px 0 0 -7px; background: currentColor; border-radius: 2px; transition: transform .5s var(--curva); }
-  .sanfona-icone::after { transform: rotate(90deg); }
-  @media (hover: hover) { .sanfona-botao:hover .sanfona-icone { background: var(--preto); color: var(--branco); border-color: var(--preto); } }
-  .sanfona-botao[aria-expanded="true"] .sanfona-icone { background: var(--preto); color: var(--branco); border-color: var(--preto); transform: rotate(180deg); }
-  .sanfona-botao[aria-expanded="true"] .sanfona-icone::after { transform: rotate(0deg); }
-  .sanfona-painel { display: grid; grid-template-rows: 0fr; transition: grid-template-rows .55s var(--curva); }
-  .sanfona-painel.aberto { grid-template-rows: 1fr; }
-  .sanfona-painel > div { overflow: hidden; min-height: 0; }
-  .sanfona-painel p { padding: 0 60px 28px 4px; color: #3a3a3a; font-size: 1.02rem; line-height: 1.65; opacity: 0; transform: translateY(-6px); transition: opacity .45s ease, transform .55s var(--curva); }
-  .sanfona-painel.aberto p { opacity: 1; transform: none; transition-delay: .12s; }
-  html:not(.js) .sanfona-painel { grid-template-rows: 1fr; }
-  html:not(.js) .sanfona-painel p { opacity: 1; transform: none; }
+  .voltar:hover { background: var(--preto); color: var(--branco); }
+  .voltar svg { width: 18px; height: 18px; }
+  .horarios { list-style: none; display: grid; gap: 7px; align-content: start; flex: 1; border-top: 1px solid var(--linha); padding-top: 12px; }
+  .horarios li { display: grid; grid-template-columns: 5.2rem 3.1rem 1fr; gap: 6px; font-size: .92rem; }
+  .horarios .dia { font-weight: 700; }
+  .horarios .hora { color: var(--cinza); }
+  .acoes { display: grid; grid-template-columns: 1fr; gap: 8px; }
+  .acoes .botao { min-height: 42px; padding: 0 12px; font-size: .9rem; white-space: nowrap; }
 
-  /* ── Pastores ── */
-  .pastores { background: var(--fundo-claro); }
-  .igrejas-pastores { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; align-items: stretch; }
-  .igreja {
-    position: relative; overflow: hidden; display: flex; flex-direction: column; gap: 22px;
-    padding: 30px 28px 26px; border-radius: 26px;
+  .js .cartao { opacity: 0; transform: translateY(56px) scale(.96); }
+  .js .cartoes.visivel .cartao {
+    opacity: 1; transform: none;
+    transition: opacity 1s ease calc(var(--ordem) * .16s), transform 1.4s cubic-bezier(.16,1,.3,1) calc(var(--ordem) * .16s);
+  }
+  .js .cartoes.visivel .cartao .frente::after { animation: brilho 1.4s ease calc(var(--ordem) * .12s + .5s) 1 both; }
+  @keyframes brilho { from { transform: translateX(-120%); } to { transform: translateX(120%); } }
+
+  /* ── Quem somos (chamada) ── */
+  .quem { background: var(--fundo-claro); overflow: hidden; }
+  .quem-grade { display: grid; grid-template-columns: 1.1fr .9fr; align-items: center; gap: 64px; }
+  .quem h2 { font-size: clamp(1.8rem, 4.4vw, 3rem); }
+  .quem h2 span { color: #9a9a9a; }
+  .quem p { color: var(--cinza); font-size: 1.08rem; margin: 22px 0 32px; max-width: 40ch; }
+  .metal { position: relative; width: 100%; max-width: 400px; justify-self: center; }
+  .metal img { animation: flutuar 7s ease-in-out infinite; }
+  .metal img { width: 100%; }
+  .metal-sombra { display: block; width: 70%; height: 18px; margin: 34px auto 0; border-radius: 50%; background: radial-gradient(closest-side, rgba(0,0,0,.16), transparent); animation: sombra 7s ease-in-out infinite; }
+  @keyframes sombra { 0%, 100% { transform: scaleX(1); opacity: 1; } 50% { transform: scaleX(.82); opacity: .6; } }
+  @keyframes flutuar { 0%, 100% { transform: translateY(0) rotate(-1deg); } 50% { transform: translateY(-14px) rotate(1deg); } }
+
+  /* ── Ministérios (mapa mental) ── */
+  .ministerios { background: #050506; color: var(--branco); overflow: hidden; isolation: isolate; }
+  .ministerios::before {
+    content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none;
+    background:
+      radial-gradient(40% 50% at 15% 30%, rgba(230,0,126,.16), transparent 70%),
+      radial-gradient(40% 50% at 85% 70%, rgba(47,95,224,.22), transparent 70%),
+      radial-gradient(30% 40% at 50% 100%, rgba(46,158,79,.12), transparent 70%);
+  }
+  .ministerios .sobre { color: rgba(255,255,255,.55); }
+  .ministerios .cabeca { text-align: center; }
+  .ministerios .cabeca p { color: rgba(255,255,255,.66); margin-left: auto; margin-right: auto; }
+  .mapa { position: relative; display: grid; grid-template-columns: 1fr 290px 1fr; align-items: center; column-gap: 54px; }
+  .mapa-linhas { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; pointer-events: none; z-index: 0; }
+  .mapa-linhas path { fill: none; stroke: rgba(255,255,255,.16); stroke-width: 1.4; stroke-linecap: round; transition: stroke .4s, stroke-width .4s; }
+  .mapa-linhas path.tronco { stroke: rgba(255,255,255,.26); }
+  .mapa-linhas path.aceso { stroke: var(--cor); stroke-width: 2.2; filter: drop-shadow(0 0 6px var(--cor)); }
+  .js .mapa-linhas path { stroke-dasharray: 1; stroke-dashoffset: 1; }
+  .mapa.visivel .mapa-linhas path { stroke-dashoffset: 0; transition: stroke-dashoffset 1.4s var(--curva) var(--atraso, 0s), stroke .4s, stroke-width .4s; }
+  .mapa-linhas circle { fill: #fff; filter: drop-shadow(0 0 5px rgba(255,255,255,.9)); }
+  .lado-mapa { display: grid; gap: 46px; position: relative; z-index: 1; }
+  .ramo { display: flex; align-items: center; gap: 48px; }
+  .lado-esq .ramo { flex-direction: row-reverse; }
+  .ramo-no {
+    flex-shrink: 0; width: 128px; text-align: center; font-weight: 700; font-size: .78rem; letter-spacing: .14em; text-transform: uppercase; line-height: 1.35;
+    padding: 12px 10px; border-radius: 16px;
+    background: rgba(255,255,255,.07); border: 1px solid rgba(255,255,255,.18);
+    -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,.14);
+  }
+  .chips { list-style: none; display: grid; gap: 9px; }
+  .lado-esq .chips { justify-items: end; }
+  .chip {
+    display: inline-flex; align-items: center; gap: 9px; white-space: nowrap;
+    padding: 8px 15px 8px 12px; border-radius: 999px; cursor: pointer;
+    font-weight: 600; font-size: .9rem; color: rgba(255,255,255,.9);
+    background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.14);
+    -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px);
+    transition: background-color .3s, border-color .3s, box-shadow .3s, color .3s, transform .3s var(--curva);
+  }
+  .chip-ponto { width: 8px; height: 8px; border-radius: 50%; background: var(--cor); box-shadow: 0 0 10px var(--cor); flex-shrink: 0; }
+  @media (hover: hover) { .chip:hover { border-color: var(--cor); transform: translateY(-1px); } }
+  .chip[aria-pressed="true"], .chip.brilha {
+    color: #fff; border-color: var(--cor);
+    background: color-mix(in srgb, var(--cor) 22%, transparent);
+    box-shadow: 0 0 0 1px var(--cor), 0 0 26px -4px var(--cor);
+  }
+  .nucleo {
+    position: relative; z-index: 1; width: 290px; height: 290px; border-radius: 50%;
+    display: grid; place-items: center; text-align: center; padding: 34px;
+    background: radial-gradient(circle at 30% 20%, rgba(255,255,255,.16), color-mix(in srgb, var(--cor-nucleo, transparent) 16%, rgba(255,255,255,.04)) 70%);
+    border: 1px solid color-mix(in srgb, var(--cor-nucleo, rgba(255,255,255,.22)) 60%, rgba(255,255,255,.18));
+    -webkit-backdrop-filter: blur(16px) saturate(140%); backdrop-filter: blur(16px) saturate(140%);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,.25), inset 0 0 50px -20px var(--cor-nucleo, transparent), 0 0 90px -16px var(--cor-nucleo, rgba(255,255,255,.25));
+    transition: box-shadow .5s, border-color .5s;
+  }
+  .nucleo::before { /* anel que gira */
+    content: ""; position: absolute; inset: -9px; border-radius: 50%; padding: 1px;
+    background: conic-gradient(from 0deg, transparent 0 70%, var(--cor-nucleo, rgba(255,255,255,.7)) 90%, transparent 100%);
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); -webkit-mask-composite: xor;
+    mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0);
+    animation: girar 6s linear infinite;
+  }
+  @keyframes girar { to { transform: rotate(360deg); } }
+  .nucleo::after, .roda-nucleo::after { /* onda que sai do círculo ao escolher um ministério */
+    content: ""; position: absolute; inset: 0; border-radius: 50%; pointer-events: none; opacity: 0;
+    border: 2px solid var(--cor-nucleo, #fff);
+  }
+  .nucleo.pulsa::after, .roda-nucleo.pulsa::after { animation: onda 1s cubic-bezier(.2,.7,.3,1); }
+  @keyframes onda { from { opacity: .9; transform: scale(1); } to { opacity: 0; transform: scale(1.45); } }
+  .ministerios .conteudo { position: relative; }
+  .som-botao {
+    position: absolute; top: -56px; right: 24px; z-index: 3; width: 40px; height: 40px; border-radius: 50%; cursor: pointer;
+    display: grid; place-items: center; color: rgba(255,255,255,.75);
+    background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.16);
+    transition: background-color .3s, color .3s;
+  }
+  .som-botao:hover { background: rgba(255,255,255,.14); color: #fff; }
+  .som-botao svg { width: 18px; height: 18px; }
+  .som-botao .som-off, .som-botao[aria-pressed="false"] .som-on { display: none; }
+  .som-botao[aria-pressed="false"] .som-off { display: block; }
+  .nucleo-padrao, .nucleo-info { grid-area: 1 / 1; transition: opacity .4s, transform .4s var(--curva); }
+  .nucleo-padrao { display: grid; justify-items: center; gap: 14px; }
+  .nucleo-padrao img { width: 104px; }
+  .nucleo-padrao span { font-size: .78rem; color: rgba(255,255,255,.6); letter-spacing: .04em; }
+  .nucleo-info { opacity: 0; transform: scale(.94); display: grid; gap: 8px; }
+  .nucleo.mostrando .nucleo-padrao { opacity: 0; transform: scale(.94); }
+  .nucleo.mostrando .nucleo-info { opacity: 1; transform: none; }
+  .info-nome { font-weight: 700; font-size: 1.18rem; line-height: 1.2; color: var(--cor-nucleo, #fff); }
+  .info-desc { font-size: .84rem; line-height: 1.45; color: rgba(255,255,255,.82); }
+  .info-lider { font-size: .8rem; color: rgba(255,255,255,.6); }
+  .info-lider:empty { display: none; }
+  .painel-celular { display: none; }
+
+  /* ── Contribua ── */
+  .contribua { overflow: hidden; isolation: isolate; }
+  .contribua::before {
+    content: ""; position: absolute; z-index: -1; pointer-events: none;
+    width: 900px; height: 520px; right: -140px; top: 50%; transform: translateY(-50%);
+    background:
+      radial-gradient(closest-side at 30% 40%, rgba(230,0,126,.28), transparent),
+      radial-gradient(closest-side at 70% 35%, rgba(47,95,224,.30), transparent),
+      radial-gradient(closest-side at 55% 75%, rgba(245,183,0,.30), transparent);
+    filter: blur(10px); animation: respirar 12s ease-in-out infinite alternate;
+  }
+  @keyframes respirar { to { transform: translateY(-50%) scale(1.08) rotate(6deg); } }
+  .contribua-grade { display: grid; grid-template-columns: 1fr 1fr; align-items: center; gap: 64px; }
+  .contribua .cabeca { margin-bottom: 0; }
+  .pix {
+    position: relative; overflow: hidden; border-radius: 28px; padding: 34px 32px 30px;
+    background: rgba(255,255,255,.55);
+    border: 1px solid rgba(255,255,255,.9);
+    -webkit-backdrop-filter: blur(24px) saturate(170%); backdrop-filter: blur(24px) saturate(170%);
+    box-shadow: inset 0 1px 0 #fff, 0 30px 60px -30px rgba(20,20,40,.35);
+    display: grid; gap: 6px;
+  }
+  .pix::before {
+    content: ""; position: absolute; inset: 0; pointer-events: none;
+    background: radial-gradient(380px circle at var(--mx, 80%) var(--my, 0%), rgba(255,255,255,.75), transparent 45%);
+  }
+  .pix > * { position: relative; }
+  .pix-rotulo { font-size: .78rem; font-weight: 700; letter-spacing: .2em; text-transform: uppercase; color: var(--cinza); }
+  .pix-chave { font-size: clamp(1.5rem, 3.4vw, 2.1rem); font-weight: 700; letter-spacing: .01em; margin-top: 4px; }
+  .pix-favorecido { color: var(--cinza); font-size: .95rem; }
+  .pix .botao { margin-top: 22px; width: 100%; }
+  .pix .botao.copiado { background: #138a43; }
+
+  /* ── Contato ── */
+  .contato { background: var(--fundo-claro); }
+  .contatos { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  .contato-cartao {
+    position: relative; overflow: hidden; display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 18px;
+    padding: 26px 26px; border-radius: 24px; text-decoration: none;
     background: var(--branco); border: 1px solid var(--linha);
     box-shadow: 0 1px 0 rgba(255,255,255,.9) inset, 0 18px 40px -30px rgba(0,0,0,.35);
-    transition: transform .4s var(--curva), box-shadow .4s, border-color .4s;
+    transition: transform .35s var(--curva), box-shadow .35s, border-color .35s;
   }
-  .igreja::before {
-    content: ""; position: absolute; inset: 0; pointer-events: none; opacity: 0; transition: opacity .4s;
-    background: radial-gradient(380px circle at var(--mx, 50%) var(--my, 0%), rgba(0,0,0,.05), transparent 50%);
+  .contato-cartao::before {
+    content: ""; position: absolute; inset: 0; pointer-events: none; opacity: 0; transition: opacity .35s;
+    background: radial-gradient(360px circle at var(--mx, 50%) var(--my, 50%), rgba(0,0,0,.05), transparent 50%);
   }
-  .igreja::after { /* reflexo que passa ao entrar */
-    content: ""; position: absolute; inset: 0; pointer-events: none;
-    background: linear-gradient(115deg, transparent 35%, rgba(255,255,255,.75) 50%, transparent 65%);
-    transform: translateX(-130%);
+  .contato-cartao:hover { transform: translateY(-3px); border-color: #cfcfcf; box-shadow: 0 26px 50px -30px rgba(0,0,0,.45); }
+  .contato-cartao:hover::before { opacity: 1; }
+  .contato-icone { width: 54px; height: 54px; border-radius: 50%; background: var(--preto); color: var(--branco); display: grid; place-items: center; }
+  .contato-icone svg { width: 25px; height: 25px; }
+  .contato-cartao strong { display: block; font-size: 1.12rem; line-height: 1.3; }
+  .contato-cartao span.sub { display: block; color: var(--cinza); font-size: .92rem; margin-top: 2px; }
+  .contato-seta { width: 42px; height: 42px; border-radius: 50%; border: 1px solid var(--linha); display: grid; place-items: center; transition: background-color .3s, color .3s, border-color .3s, transform .3s var(--curva); }
+  .contato-seta svg { width: 18px; height: 18px; }
+  .contato-cartao:hover .contato-seta { background: var(--preto); color: var(--branco); border-color: var(--preto); transform: translateX(3px); }
+  .redes { display: flex; align-items: center; gap: 12px; margin-top: 28px; color: var(--cinza); font-size: .92rem; }
+  .redes a {
+    width: 46px; height: 46px; border-radius: 50%; display: grid; place-items: center;
+    border: 1px solid #d6d6d6; color: var(--preto); background: var(--branco);
+    transition: background-color .25s, color .25s, border-color .25s, transform .25s var(--curva);
   }
-  .js .igrejas-pastores.visivel .igreja::after { animation: brilho 1.5s ease calc(var(--i) * .14s + .5s) 1 both; }
-  @keyframes brilho { from { transform: translateX(-130%); } to { transform: translateX(130%); } }
-  @media (hover: hover) {
-    .igreja:hover { transform: translateY(-3px); border-color: #d2d2d2; box-shadow: 0 28px 54px -32px rgba(0,0,0,.45); }
-    .igreja:hover::before { opacity: 1; }
-  }
-  .igreja-marca { position: absolute; right: -44px; bottom: -34px; width: 230px; opacity: .045; pointer-events: none; }
-  .igreja h3 { position: relative; font-size: 1.35rem; font-weight: 700; line-height: 1.2; }
-  .casais { position: relative; list-style: none; display: grid; gap: 16px; flex: 1; align-content: start; border-top: 1px solid var(--linha); padding-top: 20px; }
-  .funcao { display: block; font-size: .72rem; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; color: var(--cinza); margin-bottom: 3px; }
-  .nomes { font-size: 1.04rem; font-weight: 600; line-height: 1.35; }
-  .botao {
-    position: relative; overflow: hidden; isolation: isolate;
-    display: inline-flex; align-items: center; justify-content: center; gap: 10px;
-    min-height: 48px; padding: 0 22px; border-radius: 999px;
-    font-weight: 700; font-size: .92rem; text-decoration: none; cursor: pointer; border: 0;
-    transition: transform .25s var(--curva), box-shadow .25s;
-  }
-  .botao svg { width: 18px; height: 18px; flex-shrink: 0; }
-  .botao:active { transform: scale(.97); }
-  .botao::after {
-    content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none;
-    background: linear-gradient(110deg, transparent 30%, rgba(255,255,255,.22) 50%, transparent 70%);
-    transform: translateX(-130%);
-  }
-  .botao:hover::after { transform: translateX(130%); transition: transform .9s ease; }
-  .botao-escuro { background: var(--preto); color: var(--branco); }
-  .botao-escuro:hover { box-shadow: 0 14px 30px -14px rgba(0,0,0,.6); transform: translateY(-1px); }
-  .igreja .botao { align-self: stretch; white-space: nowrap; padding: 0 16px; }
-  .js .igrejas-pastores .igreja { opacity: 0; transform: translateY(50px) scale(.97); }
-  .js .igrejas-pastores.visivel .igreja { opacity: 1; transform: none; transition: opacity 1s ease calc(var(--i) * .14s), transform 1.3s cubic-bezier(.16,1,.3,1) calc(var(--i) * .14s), box-shadow .4s, border-color .4s; }
-
-  /* ── Junta Administrativa ── */
-  .junta .luzes span:nth-child(1) { --c: var(--verde); --o: .18; left: -20%; top: -30%; animation: deriva3 32s ease-in-out infinite alternate; }
-  .junta .luzes span:nth-child(2) { --c: var(--azul); --o: .26; right: -22%; bottom: -36%; animation: deriva2 30s ease-in-out infinite alternate; }
-  .grade-junta { list-style: none; display: grid; grid-template-columns: repeat(5, 1fr); gap: 14px; }
-  .membro {
-    position: relative; overflow: hidden; border-radius: 22px; padding: 24px 20px 26px;
-    background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.12);
-    -webkit-backdrop-filter: blur(14px) saturate(140%); backdrop-filter: blur(14px) saturate(140%);
-    box-shadow: inset 0 1px 0 rgba(255,255,255,.12);
-  }
-  .membro::before {
-    content: ""; position: absolute; inset: 0; pointer-events: none; opacity: 0; transition: opacity .4s;
-    background: radial-gradient(260px circle at var(--mx, 50%) var(--my, 0%), rgba(255,255,255,.1), transparent 60%);
-  }
-  @media (hover: hover) { .membro:hover::before { opacity: 1; } }
-  .cargo { position: relative; display: block; font-size: .72rem; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; color: rgba(255,255,255,.55); padding-bottom: 14px; margin-bottom: 14px; border-bottom: 1px solid rgba(255,255,255,.12); }
-  .membro strong { position: relative; display: block; font-size: 1.04rem; font-weight: 600; line-height: 1.35; }
-  .js .grade-junta .membro { opacity: 0; transform: translateY(30px); }
-  .js .grade-junta.visivel .membro { opacity: 1; transform: none; transition: opacity .9s ease calc(var(--i) * .09s), transform 1.1s var(--curva) calc(var(--i) * .09s); }
+  .redes a:hover { background: var(--preto); color: var(--branco); border-color: var(--preto); transform: translateY(-2px); }
+  .redes svg { width: 20px; height: 20px; }
 
   /* ── Rodapé ── */
-  footer { background: var(--preto); color: var(--branco); padding: 56px 16px 40px; border-top: 1px solid rgba(255,255,255,.08); }
+  footer { background: var(--preto); color: var(--branco); padding: 56px 16px 40px; }
   .rodape { display: grid; gap: 22px; justify-items: center; text-align: center; }
   .rodape img { width: 150px; }
   .rodape nav { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px 22px; }
@@ -333,228 +450,380 @@
   .rodape p { color: #b5b5b5; font-size: .85rem; line-height: 1.7; }
 
   /* ── Tablet e celular ── */
+  .roda, .roda-info { display: none; }
   @media (max-width: 1020px) {
-    .grade-valores { grid-template-columns: repeat(2, 1fr); }
-    .grade-junta { grid-template-columns: repeat(2, 1fr); }
-    .igrejas-pastores { grid-template-columns: 1fr; gap: 14px; }
-    .cremos-grade { grid-template-columns: 1fr; gap: 36px; }
+    .mapa { display: block; }
+    .js .mapa-linhas, .js .lado-mapa, .js .mapa > .nucleo { display: none; }
+    html:not(.js) .lado-mapa { display: grid; gap: 24px; margin-top: 24px; } html:not(.js) .ramo { flex-direction: column !important; align-items: flex-start; gap: 10px; } html:not(.js) .chips { display: flex; flex-wrap: wrap; gap: 8px; } html:not(.js) .mapa > .nucleo, html:not(.js) .mapa-linhas { display: none; }
+    .ministerios .cabeca { margin-bottom: 8px; }
+    .ministerios .cabeca p { display: none; }
+    .som-botao { top: -48px; right: 16px; width: 36px; height: 36px; }
+    .roda { display: block; position: relative; height: 470px; margin: 0 -16px; overflow: hidden; }
+    .roda-linhas { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; pointer-events: none; }
+    .roda-linhas path { fill: none; stroke: rgba(255,255,255,.16); stroke-width: 1.3; stroke-linecap: round; stroke-dasharray: 1; stroke-dashoffset: 1; transition: stroke .4s, stroke-width .4s; }
+    .roda-linhas path.tronco { stroke: rgba(255,255,255,.3); }
+    .roda.desenhada .roda-linhas path { stroke-dashoffset: 0; transition: stroke-dashoffset .9s var(--curva) var(--atraso, 0s), stroke .4s, stroke-width .4s; }
+    .roda-linhas path.aceso { stroke: var(--cor); stroke-width: 2; filter: drop-shadow(0 0 5px var(--cor)); }
+    .roda-linhas circle { fill: #fff; filter: drop-shadow(0 0 5px rgba(255,255,255,.9)); }
+    .roda-nucleo {
+      position: absolute; left: -92px; top: 50%; width: 184px; height: 184px; margin-top: -92px; border-radius: 50%; cursor: pointer;
+      background: radial-gradient(circle at 70% 30%, rgba(255,255,255,.16), color-mix(in srgb, var(--cor-nucleo, transparent) 18%, rgba(255,255,255,.04)) 70%);
+      border: 1px solid color-mix(in srgb, var(--cor-nucleo, rgba(255,255,255,.22)) 60%, rgba(255,255,255,.18));
+      -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.22), inset 0 0 44px -16px var(--cor-nucleo, transparent), 0 0 80px -10px var(--cor-nucleo, rgba(255,255,255,.25));
+      transition: box-shadow .5s, border-color .5s;
+    }
+    .roda-nucleo::before {
+      content: ""; position: absolute; inset: -8px; border-radius: 50%; padding: 1px;
+      background: conic-gradient(from var(--giro, 0deg), transparent 0 60%, var(--cor-nucleo, rgba(255,255,255,.75)) 85%, transparent 100%);
+      -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); -webkit-mask-composite: xor;
+      mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0);
+      animation: girar 6s linear infinite;
+    }
+    .roda-nucleo img { position: absolute; left: 112px; top: 50%; width: 50px; transform: translateY(-50%); }
+    .roda-grupo {
+      position: absolute; transform: translate(-50%, -50%); width: 104px; padding: 8px 6px; border-radius: 14px; cursor: pointer;
+      font-weight: 700; font-size: .56rem; letter-spacing: .12em; text-transform: uppercase; line-height: 1.35; text-align: center; color: #fff;
+      background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.16);
+      -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px);
+      transition: background-color .4s, border-color .4s, box-shadow .4s;
+    }
+    .roda-grupo.ativo { background: rgba(255,255,255,.12); border-color: rgba(255,255,255,.4); box-shadow: inset 0 1px 0 rgba(255,255,255,.2), 0 0 24px -8px rgba(255,255,255,.4); }
+    .roda-chip {
+      position: absolute; transform: translate(0, -50%); padding: 6px 12px 6px 10px; gap: 7px; font-size: .8rem;
+      transition: opacity .5s ease, transform .6s var(--curva), background-color .3s, border-color .3s, box-shadow .3s, color .3s;
+    }
+    .roda-chip .chip-ponto { width: 7px; height: 7px; }
+    .roda-chip.entra { opacity: 0; transform: translate(-22px, -50%) scale(.9); }
+    .roda-chip.sai { opacity: 0; transform: translate(22px, -50%) scale(.9); transition-delay: 0s !important; pointer-events: none; }
+    .roda-info {
+      display: grid; gap: 6px; align-content: center; min-height: 116px; margin-top: 4px; padding: 16px 18px; border-radius: 18px;
+      background: color-mix(in srgb, var(--cor-nucleo, #fff) 10%, rgba(255,255,255,.04));
+      border: 1px solid color-mix(in srgb, var(--cor-nucleo, #fff) 55%, transparent);
+      -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px);
+      transition: background-color .4s, border-color .4s;
+    }
+    .roda-info .info-nome { font-size: 1.05rem; }
+    .roda-info:not(.escolhido) .info-nome { font-size: .72rem; letter-spacing: .16em; text-transform: uppercase; color: rgba(255,255,255,.6); }
+  }
+  @media (max-width: 1020px) and (prefers-reduced-motion: reduce) {
+    .roda-linhas path { stroke-dashoffset: 0; } .roda-linhas circle { display: none; } .roda-nucleo::before { animation: none; }
   }
   @media (max-width: 860px) {
     :root { --topo: 60px; }
     .secao { padding: 80px 0; }
     .conteudo { padding: 0 16px; }
-    .cabeca { margin-bottom: 36px; }
-    .abertura { padding: calc(var(--topo) + 52px) 0 72px; min-height: min(78svh, 680px); }
-    .abertura-interno { gap: 22px; }
-    .historia { padding-top: 72px; }
-    .linha { --eixo: 9px; }
-    .trilho { bottom: 40px; }
-    .capitulo, .marco, .final { grid-template-columns: 1fr; padding-left: 34px; }
-    .capitulo-nome { grid-column: 1; padding-left: 0; }
-    .ano { text-align: left; padding: 0 0 6px; font-size: 1.45rem; }
-    .marco-texto { padding-left: 0; font-size: 1rem; }
-    .marco { padding-bottom: 36px; }
-    .marco .ponto-linha { top: .78rem; }
-    .final-simbolo { width: 44px; margin-left: -22px; }
-    .final-texto { grid-column: 1; padding: 46px 0 0; font-size: 1.12rem; }
-    .marco.intro .marco-texto { grid-column: 1; }
-    .marco.intro { margin-top: -18px; }
-    .fontes { margin-top: 56px; text-align: left; }
-    .grade-valores { grid-template-columns: 1fr; gap: 10px; }
-    .valor { display: grid; grid-template-columns: 2.4rem 1fr; column-gap: 8px; padding: 18px 18px 18px 16px; border-radius: 18px; }
-    .valor-num { margin: 3px 0 0; grid-row: 1 / span 2; }
-    .valor h3 { margin-bottom: 4px; font-size: 1.02rem; }
-    .igrejas-pastores { grid-template-columns: 1fr; gap: 12px; }
-    .igreja { padding: 24px 20px 20px; border-radius: 22px; gap: 18px; }
-    .igreja-marca { width: 170px; right: -30px; bottom: -24px; }
-    .grade-junta { grid-template-columns: 1fr; gap: 10px; }
-    .membro { padding: 18px; border-radius: 18px; }
-    .cargo { padding-bottom: 8px; margin-bottom: 8px; }
-    .sanfona-botao { padding: 22px 2px; }
-    .sanfona-painel p { padding: 0 8px 24px 2px; font-size: .98rem; }
-    .sanfona-icone { width: 36px; height: 36px; }
+    .cabeca { margin-bottom: 32px; }
+    #igrejas { padding: 64px 0 72px; }
+    #igrejas .cabeca { margin-bottom: 18px; }
+    .cartoes { grid-template-columns: 1fr; gap: 10px; }
+    .cartao { height: 172px; }
+    .lado { padding: 16px 18px 14px; border-radius: 18px; }
+    .frente { display: grid; grid-template-columns: 1fr auto; grid-template-rows: auto 1fr; column-gap: 12px; }
+    .frente-topo { grid-column: 1 / -1; }
+    .frente h3 { font-size: 1.15rem; }
+    .endereco { font-size: .82rem; margin-top: 2px; }
+    .frente-base { grid-column: 1 / -1; align-self: end; grid-template-columns: 1fr auto; align-items: end; gap: 10px; }
+    .proximo { font-size: .84rem; }
+    .proximo-rotulo { font-size: .74rem; }
+    .virar { padding: 0 14px; min-height: 40px; font-size: .85rem; }
+    .marca { width: 170px; right: -30px; bottom: -28px; }
+    .verso { gap: 8px; }
+    .verso-nome { font-size: .95rem; }
+    .voltar { width: 34px; height: 34px; }
+    .horarios { gap: 1px; padding-top: 6px; }
+    .horarios li { grid-template-columns: 4.4rem 2.9rem 1fr; font-size: .8rem; line-height: 1.4; }
+    .acoes { grid-template-columns: 1fr 1fr; gap: 10px; }
+    .acoes .botao { min-height: 38px; font-size: .84rem; }
+    .acoes .botao svg { width: 16px; height: 16px; }
+    .quem-grade, .contribua-grade { grid-template-columns: 1fr; gap: 40px; }
+    .metal { max-width: 200px; order: -1; justify-self: start; }
+    .metal-sombra { margin-top: 20px; }
+    .contribua::before { width: 640px; height: 520px; right: -200px; top: 70%; }
+    .pix { padding: 28px 22px 22px; }
+    .contatos { grid-template-columns: 1fr; gap: 12px; }
+    .contato-cartao { padding: 20px 18px; gap: 14px; }
+    .contato-icone { width: 48px; height: 48px; }
+  }
+  @media (max-width: 560px) {
+    .abertura { padding: calc(var(--topo) + 44px) 0 88px; min-height: min(100svh, 760px); }
+    .abertura-interno { gap: 24px; }
+    .conheca { font-size: .72rem; letter-spacing: .16em; max-width: 300px; text-align: center; line-height: 1.8; text-wrap: balance; }
+    .contato-cartao strong { font-size: 1.02rem; }
+    .contato-cartao { grid-template-columns: auto 1fr; }
+    .contato-seta { display: none; }
+    .contato-icone { width: 46px; height: 46px; }
+    .contato-icone svg { width: 22px; height: 22px; }
   }
 
   @media (prefers-reduced-motion: reduce) {
     html { scroll-behavior: auto; }
-    .luzes span, .simbolo-brilho, .chamada em, .rolar::after, .missao::before { animation: none !important; }
-    .simbolo-brilho { display: none !important; }
+    .aurora span, .logo-brilho, .metal img, .metal-sombra, .visao em, .rolar::after, .nucleo::before, .contribua::before { animation: none !important; }
+    .logo-brilho { display: none !important; }
     .js .entra { opacity: 1; transform: none; filter: none; animation: none; }
-    .js .revelar, .js .grade-valores .valor, .js .igrejas-pastores .igreja, .js .grade-junta .membro { opacity: 1 !important; transform: none !important; transition: none !important; }
-    .igreja::after, .botao::after { display: none; }
-    .ano, .marco-texto, .ponto-linha, .capitulo-nome, .final-simbolo, .final-texto, .missao-texto .p { transition: none !important; }
-    .sanfona-painel, .sanfona-painel p, .sanfona-icone, .sanfona-icone::before, .sanfona-icone::after { transition: none !important; }
+    .js .revelar, .js .cartao { opacity: 1 !important; transform: none !important; transition: none !important; }
+    .js .mapa-linhas path { stroke-dashoffset: 0; }
+    .mapa-linhas circle { display: none; }
+    .frente::after { display: none; }
+    .frente, .verso, .cartao.virado .frente, .cartao.virado .verso { transition: none !important; transform: none !important; }
+    .botao::after { display: none; }
+    .ao-vivo .ponto { animation: none; }
   }
 </style>
 </head>
 <body>
 <script src="/avisos.js"></script>
 <script src="/menu.js"></script>
-<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><path id="wa" d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413z"/></defs></svg>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><path id="ig" d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/><path id="wa" d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413z"/></defs></svg>
+
 
 <main>
-  <section class="abertura grao" aria-labelledby="titulo-abertura">
-    <div class="luzes" aria-hidden="true"><span></span><span></span><span></span><span></span></div>
+  <section class="abertura" aria-labelledby="titulo-abertura">
+    <div class="aurora" aria-hidden="true"><span></span><span></span><span></span><span></span></div>
     <div class="conteudo abertura-interno">
-      <div class="simbolo-hero entra" style="--d:0" aria-hidden="true">
-        <img src="/img/logo_ieim_simbolo_branco.svg" alt="" width="128" height="85" fetchpriority="high">
-        <span class="simbolo-brilho"></span>
-      </div>
-      <h1 id="titulo-abertura" class="entra" style="--d:1">Quem somos</h1>
-      <p class="chamada entra" style="--d:2">Um lugar para <em>estar e pertencer</em>.</p>
-      <span class="rolar entra" style="--d:3" aria-hidden="true"></span>
+      <h1 id="titulo-abertura" class="logo-hero entra" style="--d:0">
+        <img src="/img/logo_ieim_completo_branco.svg" alt="Igreja Evangélica Irmãos Menonitas · Campo Grande/MS" width="210" height="185" fetchpriority="high">
+        <span class="logo-brilho" aria-hidden="true"></span>
+      </h1>
+      <p class="visao entra" style="--d:1">Sermos uma comunidade cristã, saudável e presente <em>em cada casa</em> de Campo Grande/MS.</p>
+      <a class="conheca entra" style="--d:2" href="#igrejas">Conheça nossas igrejas em Campo Grande-MS<span class="rolar" aria-hidden="true"></span></a>
     </div>
   </section>
 
-  <section class="secao escura historia grao" aria-labelledby="titulo-historia">
-    <div class="luzes" aria-hidden="true"><span></span><span></span><span></span></div>
+  <section class="secao" id="igrejas" aria-labelledby="titulo-igrejas">
     <div class="conteudo">
       <div class="cabeca revelar">
-        <span class="sobre">Desde 1517</span>
-        <h2 id="titulo-historia">Nossa história</h2>
+        <span class="sobre">Onde estamos</span>
+        <h2 id="titulo-igrejas">Nossas igrejas em Campo Grande</h2>
       </div>
+      <div class="cartoes">
+        <article class="cartao" id="igreja-centro" style="--ordem:0">
+          <div class="lados">
+            <div class="lado frente">
+              <img class="marca" src="/img/logo_ieim_simbolo_branco.svg" alt="" aria-hidden="true" width="260" height="172">
+              <div class="frente-topo">
+                <h3>Igreja do Centro</h3>
+                <p class="endereco">Rua Camapuã, 141 · Amambaí</p>
+              </div>
+              <div class="frente-base">
+                <p class="proximo" hidden><span class="ponto"></span><span><span class="proximo-rotulo">Próximo culto</span><span class="proximo-texto"></span></span></p>
+                <button class="virar" type="button" aria-controls="verso-centro" aria-expanded="false">
+                  <span>Ver mais</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12a9 9 0 0 1 15.5-6.2L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-15.5 6.2L3 16"/><path d="M3 21v-5h5"/></svg>
+                </button>
+              </div>
+            </div>
+            <div class="lado verso" id="verso-centro" aria-hidden="true" inert>
+              <div class="verso-topo">
+                <p class="verso-nome">Igreja do Centro</p>
+                <button class="voltar" type="button" aria-label="Voltar para a frente do card"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 14 4 9l5-5"/><path d="M4 9h10.5a5.5 5.5 0 0 1 0 11H11"/></svg></button>
+              </div>
+              <ul class="horarios">
+                <li data-dia="6" data-hora="19:30"><span class="dia">Sábado</span><span class="hora">19h30</span><span class="nome">Menon Wave · Culto Jovem</span></li>
+                <li data-dia="0" data-hora="19:00"><span class="dia">Domingo</span><span class="hora">19h</span><span class="nome">Culto da Família</span></li>
+              </ul>
+              <div class="acoes">
+                <a class="botao botao-escuro" href="https://www.google.com/maps/search/?api=1&query=Rua%20Camapu%C3%A3%2C%20141%20-%20Amamba%C3%AD%2C%20Campo%20Grande%20-%20MS" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-7-6.1-7-11.5A7 7 0 0 1 19 9.5C19 14.9 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg>Como chegar</a>
+                <a class="botao botao-insta" href="https://www.instagram.com/ieimcampograndems/" target="_blank" rel="noopener" aria-label="Instagram da Igreja do Centro"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><use href="#ig"/></svg>Instagram</a>
+              </div>
+            </div>
+          </div>
+        </article>
 
-      <div class="linha">
-        <div class="trilho" aria-hidden="true"><span class="trilho-luz"></span></div>
+        <article class="cartao" id="igreja-sao-conrado" style="--ordem:1">
+          <div class="lados">
+            <div class="lado frente">
+              <img class="marca" src="/img/logo_ieim_simbolo_branco.svg" alt="" aria-hidden="true" width="260" height="172">
+              <div class="frente-topo">
+                <h3>Igreja do São Conrado</h3>
+                <p class="endereco">Rua Cel. José Hélio, 660 · Jardim São Conrado</p>
+              </div>
+              <div class="frente-base">
+                <p class="proximo" hidden><span class="ponto"></span><span><span class="proximo-rotulo">Próximo culto</span><span class="proximo-texto"></span></span></p>
+                <button class="virar" type="button" aria-controls="verso-sao-conrado" aria-expanded="false">
+                  <span>Ver mais</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12a9 9 0 0 1 15.5-6.2L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-15.5 6.2L3 16"/><path d="M3 21v-5h5"/></svg>
+                </button>
+              </div>
+            </div>
+            <div class="lado verso" id="verso-sao-conrado" aria-hidden="true" inert>
+              <div class="verso-topo">
+                <p class="verso-nome">Igreja do São Conrado</p>
+                <button class="voltar" type="button" aria-label="Voltar para a frente do card"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 14 4 9l5-5"/><path d="M4 9h10.5a5.5 5.5 0 0 1 0 11H11"/></svg></button>
+              </div>
+              <ul class="horarios">
+                <li data-dia="3" data-hora="19:30"><span class="dia">Quarta</span><span class="hora">19h30</span><span class="nome">Culto de Oração</span></li>
+                <li data-dia="0" data-hora="09:30"><span class="dia">Domingo</span><span class="hora">9h30</span><span class="nome">Culto da Família</span></li>
+              </ul>
+              <div class="acoes">
+                <a class="botao botao-escuro" href="https://www.google.com/maps/search/?api=1&query=Rua%20Coronel%20Jos%C3%A9%20H%C3%A9lio%20Macedo%20de%20Carvalho%2C%20660%20-%20Jardim%20S%C3%A3o%20Conrado%2C%20Campo%20Grande%20-%20MS" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-7-6.1-7-11.5A7 7 0 0 1 19 9.5C19 14.9 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg>Como chegar</a>
+                <a class="botao botao-insta" href="https://www.instagram.com/ieim_sao_conrado/" target="_blank" rel="noopener" aria-label="Instagram da Igreja do São Conrado"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><use href="#ig"/></svg>Instagram</a>
+              </div>
+            </div>
+          </div>
+        </article>
 
-        <div class="capitulo" style="--cor:#ff5cb0"><span class="ponto-linha" aria-hidden="true"></span><h3 class="capitulo-nome">No mundo</h3></div>
-        <div class="marco" style="--cor:#ff5cb0"><span class="ponto-linha" aria-hidden="true"></span><p class="ano">1517</p><p class="marco-texto">Martinho Lutero divulga suas 95 teses em Wittenberg, na Alemanha. Começa a Reforma Protestante.</p></div>
-        <div class="marco" style="--cor:#ff7a9c"><span class="ponto-linha" aria-hidden="true"></span><p class="ano">1525</p><p class="marco-texto">Perto de Zurique, na Suíça, nasce a primeira igreja anabatista, que batiza somente quem crê.</p></div>
-        <div class="marco" style="--cor:#ff9a75"><span class="ponto-linha" aria-hidden="true"></span><p class="ano">1496–1561</p><p class="marco-texto">Na Holanda, Menno Simons se une ao movimento anabatista. Por causa dele, o movimento passa a ser chamado de menonita.</p></div>
-        <div class="marco" style="--cor:#ffb24f"><span class="ponto-linha" aria-hidden="true"></span><p class="ano">1788</p><p class="marco-texto">A convite de Catarina, a Grande, famílias menonitas deixam a Prússia rumo ao sul da Rússia, atual Ucrânia.</p></div>
-        <div class="marco" style="--cor:#ffc93d"><span class="ponto-linha" aria-hidden="true"></span><p class="ano">1860</p><p class="marco-texto">No sul da Rússia, um avivamento dá origem à Igreja Irmãos Menonitas. Irmãos, pelo cuidado de uns pelos outros.</p></div>
+        <article class="cartao" id="igreja-los-angeles" style="--ordem:2">
+          <div class="lados">
+            <div class="lado frente">
+              <img class="marca" src="/img/logo_ieim_simbolo_branco.svg" alt="" aria-hidden="true" width="260" height="172">
+              <div class="frente-topo">
+                <h3>Igreja do Los Angeles</h3>
+                <p class="endereco">Rua Artur Pires, 226 · Los Angeles</p>
+              </div>
+              <div class="frente-base">
+                <p class="proximo" hidden><span class="ponto"></span><span><span class="proximo-rotulo">Próximo culto</span><span class="proximo-texto"></span></span></p>
+                <button class="virar" type="button" aria-controls="verso-los-angeles" aria-expanded="false">
+                  <span>Ver mais</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12a9 9 0 0 1 15.5-6.2L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-15.5 6.2L3 16"/><path d="M3 21v-5h5"/></svg>
+                </button>
+              </div>
+            </div>
+            <div class="lado verso" id="verso-los-angeles" aria-hidden="true" inert>
+              <div class="verso-topo">
+                <p class="verso-nome">Igreja do Los Angeles</p>
+                <button class="voltar" type="button" aria-label="Voltar para a frente do card"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 14 4 9l5-5"/><path d="M4 9h10.5a5.5 5.5 0 0 1 0 11H11"/></svg></button>
+              </div>
+              <ul class="horarios">
+                <li data-dia="1" data-hora="19:30"><span class="dia">Segunda</span><span class="hora">19h30</span><span class="nome">Culto de Oração</span></li>
+                <li data-dia="3" data-hora="19:30"><span class="dia">Quarta</span><span class="hora">19h30</span><span class="nome">Culto Profético</span></li>
+                <li data-dia="0" data-hora="19:00"><span class="dia">Domingo</span><span class="hora">19h</span><span class="nome">Culto da Família</span></li>
+              </ul>
+              <div class="acoes">
+                <a class="botao botao-escuro" href="https://www.google.com/maps/search/?api=1&query=Rua%20Artur%20Pires%2C%20226%20-%20Los%20Angeles%2C%20Campo%20Grande%20-%20MS" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-7-6.1-7-11.5A7 7 0 0 1 19 9.5C19 14.9 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg>Como chegar</a>
+                <a class="botao botao-insta" href="https://www.instagram.com/ieim_losangeles_cg/" target="_blank" rel="noopener" aria-label="Instagram da Igreja do Los Angeles"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><use href="#ig"/></svg>Instagram</a>
+              </div>
+            </div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
 
-        <div class="capitulo" style="--cor:#4fdc8a"><span class="ponto-linha" aria-hidden="true"></span><h3 class="capitulo-nome">No Brasil</h3></div>
-        <div class="marco" style="--cor:#4fdc8a"><span class="ponto-linha" aria-hidden="true"></span><p class="ano">1929</p><p class="marco-texto">Cerca de 1.200 refugiados menonitas vindos da Rússia começam a chegar a Ibirama, em Santa Catarina.</p></div>
-        <div class="marco" style="--cor:#45d0b0"><span class="ponto-linha" aria-hidden="true"></span><p class="ano">1934</p><p class="marco-texto">Começa a expansão para Curitiba e, depois, para o Rio Grande do Sul, Santa Catarina, São Paulo e o interior do Paraná.</p></div>
-        <div class="marco" style="--cor:#4cbcdc"><span class="ponto-linha" aria-hidden="true"></span><p class="ano">1960 · 1966</p><p class="marco-texto">As igrejas de língua alemã formam a AIIMB, e as de língua portuguesa, a CBIIM.</p></div>
-        <div class="marco" style="--cor:#5aa8f0"><span class="ponto-linha" aria-hidden="true"></span><p class="ano">1995</p><p class="marco-texto">As duas se unem e nasce a COBIM, Convenção Brasileira das Igrejas Evangélicas Irmãos Menonitas.</p></div>
+  <section class="secao quem" aria-labelledby="titulo-quem">
+    <div class="conteudo quem-grade">
+      <div class="revelar">
+        <span class="sobre">Quem somos</span>
+        <h2 id="titulo-quem">Raízes na Reforma do século XVI. <span>Presentes hoje em Campo Grande.</span></h2>
+        <p>Conheça nossa história, no que cremos e quem cuida da igreja.</p>
+        <a class="botao botao-escuro" href="/quem-somos/">Conheça a IEIM<svg class="seta" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+      </div>
+      <div class="metal revelar" style="--d:2" aria-hidden="true">
+        <img src="/img/logo_ieim_simbolo_preto.svg" alt="" width="738" height="488" loading="lazy">
+        <span class="metal-sombra"></span>
+      </div>
+    </div>
+  </section>
 
-        <div class="capitulo" style="--cor:#6c9bff"><span class="ponto-linha" aria-hidden="true"></span><h3 class="capitulo-nome">Em Campo Grande</h3></div>
-        <div class="marco intro" style="--cor:#6c9bff"><p class="marco-texto">Aqui, a igreja não nasceu de uma colônia de imigrantes, mas da missão.</p></div>
-        <div class="marco" style="--cor:#6c9bff"><span class="ponto-linha" aria-hidden="true"></span><p class="ano">1985</p><p class="marco-texto">A Convenção envia o casal Dietrich e Aganeta Reimer para plantar uma igreja em Campo Grande. Os primeiros encontros acontecem na casa deles.</p></div>
-        <div class="marco" style="--cor:#7d8cff"><span class="ponto-linha" aria-hidden="true"></span><p class="ano">1987</p><p class="marco-texto">Acontece o primeiro batismo.</p></div>
-        <div class="marco" style="--cor:#8e7fff"><span class="ponto-linha" aria-hidden="true"></span><p class="ano">1991</p><p class="marco-texto">Em 1º de janeiro, a igreja é fundada oficialmente, ligada à Convenção, com o casal Reimer como pastores.</p></div>
-        <div class="marco" style="--cor:#9a78ff"><span class="ponto-linha" aria-hidden="true"></span><p class="ano">Anos 1990</p><p class="marco-texto">A igreja compra o terreno da Rua Camapuã e começa a construir a sede.</p></div>
-        <!-- São Conrado: entra aqui quando o ano for confirmado
-        <div class="marco" style="--cor:#a072ff"><span class="ponto-linha" aria-hidden="true"></span><p class="ano">ANO</p><p class="marco-texto">Começa a Igreja do São Conrado.</p></div>
-        -->
-        <div class="marco" style="--cor:#a472ff"><span class="ponto-linha" aria-hidden="true"></span><p class="ano">2025</p><p class="marco-texto">Começa a Igreja do Los Angeles.</p></div>
-        <div class="final">
-          <img class="final-simbolo" src="/img/logo_ieim_simbolo_branco.svg" alt="" width="64" height="42" aria-hidden="true">
-          <p class="final-texto">Em Campo Grande, caminhamos junto com a <a href="https://cobim.com.br/" target="_blank" rel="noopener">COBIM</a>, como parte da <a href="https://cobim.com.br/regionais/" target="_blank" rel="noopener">Regional Mato Grosso do Sul</a>.</p>
+  <section class="secao ministerios" aria-labelledby="titulo-ministerios">
+    <div class="conteudo">
+      <button class="som-botao" type="button" aria-pressed="true" aria-label="Som dos ministérios">
+        <svg class="som-on" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H3v6h3l5 4V5z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M18.5 5.5a9 9 0 0 1 0 13"/></svg>
+        <svg class="som-off" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H3v6h3l5 4V5z"/><path d="m16 9 6 6M22 9l-6 6"/></svg>
+      </button>
+      <div class="cabeca revelar">
+        <span class="sobre">Ministérios</span>
+        <h2 id="titulo-ministerios">Um lugar para servir e pertencer</h2>
+        <p>Toque em um ministério para conhecer.</p>
+      </div>
+      <div class="mapa">
+        <svg class="mapa-linhas" aria-hidden="true"></svg>
+        <div class="lado-mapa lado-esq">
+          <div class="ramo" data-lado="esq" style="--ordem:0">
+            <p class="ramo-no">Famílias e gerações</p>
+            <ul class="chips">
+              <li><button class="chip" type="button" style="--cor:#F5B700" data-nome="Infantil" data-desc="A Palavra de Deus ensinada às crianças." data-lider="" aria-pressed="false"><span class="chip-ponto"></span>Infantil</button></li>
+              <li><button class="chip" type="button" style="--cor:#35C46A" data-nome="Exploradores do Rei" data-desc="Juniores e adolescentes, na Igreja do Los Angeles." data-lider="" aria-pressed="false"><span class="chip-ponto"></span>Exploradores do Rei</button></li>
+              <li><button class="chip" type="button" style="--cor:#2FB8FF" data-nome="Nova Geração" data-desc="Jovens e adolescentes." data-lider="" aria-pressed="false"><span class="chip-ponto"></span>Nova Geração</button></li>
+              <li><button class="chip" type="button" style="--cor:#FF6A5C" data-nome="Casais" data-desc="Cuidado e fortalecimento dos casais." data-lider="" aria-pressed="false"><span class="chip-ponto"></span>Casais</button></li>
+              <li><button class="chip" type="button" style="--cor:#4F7DFF" data-nome="Homens" data-desc="Ministério de homens." data-lider="" aria-pressed="false"><span class="chip-ponto"></span>Homens</button></li>
+              <li><button class="chip" type="button" style="--cor:#FF2E93" data-nome="Mulheres" data-desc="Ministério de mulheres." data-lider="" aria-pressed="false"><span class="chip-ponto"></span>Mulheres</button></li>
+            </ul>
+          </div>
+          <div class="ramo" data-lado="esq" style="--ordem:2">
+            <p class="ramo-no">Acolhimento e ensino</p>
+            <ul class="chips">
+              <li><button class="chip" type="button" style="--cor:#FF8A3D" data-nome="Ministério Abraço" data-desc="Recepção e integração de quem chega à igreja." data-lider="" aria-pressed="false"><span class="chip-ponto"></span>Ministério Abraço</button></li>
+              <li><button class="chip" type="button" style="--cor:#5BE38F" data-nome="Ensino Logos" data-desc="Ensino bíblico." data-lider="" aria-pressed="false"><span class="chip-ponto"></span>Ensino Logos</button></li>
+              <li><button class="chip" type="button" style="--cor:#FFD24D" data-nome="Cozinha" data-desc="Equipe que serve na cozinha da igreja." data-lider="" aria-pressed="false"><span class="chip-ponto"></span>Cozinha</button></li>
+            </ul>
+          </div>
+        </div>
+        <div class="nucleo" aria-live="polite">
+          <div class="nucleo-padrao">
+            <img src="/img/logo_ieim_simbolo_branco.svg" alt="" width="104" height="69">
+            <span>17 ministérios</span>
+          </div>
+          <div class="nucleo-info">
+            <p class="info-nome"></p>
+            <p class="info-desc"></p>
+            <p class="info-lider"></p>
+          </div>
+        </div>
+        <div class="lado-mapa lado-dir">
+          <div class="ramo" data-lado="dir" style="--ordem:1">
+            <p class="ramo-no">Culto e adoração</p>
+            <ul class="chips">
+              <li><button class="chip" type="button" style="--cor:#A472FF" data-nome="Louvor" data-desc="Música e adoração nos cultos." data-lider="" aria-pressed="false"><span class="chip-ponto"></span>Louvor</button></li>
+              <li><button class="chip" type="button" style="--cor:#7E8BFF" data-nome="Intercessão" data-desc="Oração pela igreja e pela cidade." data-lider="" aria-pressed="false"><span class="chip-ponto"></span>Intercessão</button></li>
+              <li><button class="chip" type="button" style="--cor:#FF55C8" data-nome="Artes" data-desc="Dança e teatro." data-lider="" aria-pressed="false"><span class="chip-ponto"></span>Artes</button></li>
+              <li><button class="chip" type="button" style="--cor:#22D3C5" data-nome="Sonoplastia" data-desc="O som dos cultos e eventos." data-lider="" aria-pressed="false"><span class="chip-ponto"></span>Sonoplastia</button></li>
+              <li><button class="chip" type="button" style="--cor:#3DA5FF" data-nome="Mídia" data-desc="Comunicação e transmissões da igreja." data-lider="" aria-pressed="false"><span class="chip-ponto"></span>Mídia</button></li>
+              <li><button class="chip" type="button" style="--cor:#FFAE5C" data-nome="Decoração" data-desc="Ambientação dos cultos e eventos." data-lider="" aria-pressed="false"><span class="chip-ponto"></span>Decoração</button></li>
+            </ul>
+          </div>
+          <div class="ramo" data-lado="dir" style="--ordem:3">
+            <p class="ramo-no">Comunidade e missão</p>
+            <ul class="chips">
+              <li><button class="chip" type="button" style="--cor:#4DD0FF" data-nome="INC" data-desc="Igrejas nas Casas. Pequenos grupos que se reúnem nas casas durante a semana para comunhão, Palavra e oração." data-lider="" aria-pressed="false"><span class="chip-ponto"></span>INC</button></li>
+              <li><button class="chip" type="button" style="--cor:#3FD17A" data-nome="SOMAR" data-desc="A organização social da IEIM. Soma forças com a comunidade do São Conrado em serviço social e educacional, com ações como a Escolinha de Futebol." data-lider="" aria-pressed="false"><span class="chip-ponto"></span>SOMAR</button></li>
+            </ul>
+          </div>
         </div>
       </div>
-      <p class="fontes revelar">Fontes: <a href="https://cobim.com.br/a-cobim/" target="_blank" rel="noopener">COBIM</a> e <a href="https://cobim.com.br/wp-content/uploads/2024/02/materiais-livro-Livro-Refugiados-e-Embaixadores.pdf" target="_blank" rel="noopener"><em>Refugiados e Embaixadores</em></a>, de Victor Wiens.</p>
     </div>
   </section>
 
-  <section class="secao missao" aria-labelledby="titulo-missao">
-    <div class="conteudo">
-      <h2 class="sobre revelar" id="titulo-missao">Missão</h2>
-      <p class="missao-texto">Ser uma força de transformação em Campo Grande-MS, comprometendo-nos a ensinar a Palavra de Deus, fortalecer laços de fraternidade e estender nossas mãos em serviço social e educacional.</p>
+  <section class="secao contribua" aria-labelledby="titulo-contribua">
+    <div class="conteudo contribua-grade">
+      <div class="cabeca revelar">
+        <span class="sobre">Contribua</span>
+        <h2 id="titulo-contribua">Dízimos e ofertas</h2>
+        <p>Contribua pelo PIX. A chave é o CNPJ da igreja.</p>
+      </div>
+      <div class="pix revelar" style="--d:2">
+        <p class="pix-rotulo">Chave PIX · CNPJ</p>
+        <p class="pix-chave">26.856.633/0001-90</p>
+        <p class="pix-favorecido">Igreja Evangélica Irmãos Menonitas</p>
+        <button class="botao botao-escuro" id="copiar-pix" type="button" data-chave="26856633000190">
+          <svg class="ic-copiar" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="12" height="12" rx="2.5"/><path d="M5 15H4.5A1.5 1.5 0 0 1 3 13.5v-9A1.5 1.5 0 0 1 4.5 3h9A1.5 1.5 0 0 1 15 4.5V5"/></svg>
+          <svg class="ic-ok" style="display:none" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>
+          <span aria-live="polite">Copiar chave PIX</span>
+        </button>
+      </div>
     </div>
   </section>
 
-  <section class="secao escura valores grao" aria-labelledby="titulo-valores">
-    <div class="luzes" aria-hidden="true"><span></span><span></span></div>
+  <section class="secao contato" aria-labelledby="titulo-contato">
     <div class="conteudo">
       <div class="cabeca revelar">
-        <span class="sobre">Valores</span>
-        <h2 id="titulo-valores">O que nos move</h2>
+        <span class="sobre">Contato</span>
+        <h2 id="titulo-contato">Fale com a gente</h2>
       </div>
-      <ol class="grade-valores">
-        <li class="valor" style="--i:0;--cor:#ff5cb0"><span class="valor-num">01</span><h3>Transformação</h3><p>Mudança positiva, espiritual e social, na comunidade.</p></li>
-        <li class="valor" style="--i:1;--cor:#ff8a5c"><span class="valor-num">02</span><h3>Ensino Bíblico</h3><p>A Palavra de Deus em primeiro lugar, ensinada e vivida.</p></li>
-        <li class="valor" style="--i:2;--cor:#ffc93d"><span class="valor-num">03</span><h3>Fraternidade</h3><p>Laços de amor, apoio e cuidado mútuo.</p></li>
-        <li class="valor" style="--i:3;--cor:#a6e05a"><span class="valor-num">04</span><h3>Presença Comunitária</h3><p>Presentes e ativos em cada lar e em cada vida de Campo Grande.</p></li>
-        <li class="valor" style="--i:4;--cor:#4fdc8a"><span class="valor-num">05</span><h3>Serviço</h3><p>Servir ao próximo nas necessidades espirituais, educacionais e sociais.</p></li>
-        <li class="valor" style="--i:5;--cor:#3fd1c8"><span class="valor-num">06</span><h3>Saúde Espiritual</h3><p>Crescimento de todos no relacionamento com Deus.</p></li>
-        <li class="valor" style="--i:6;--cor:#4cb8ff"><span class="valor-num">07</span><h3>Compromisso</h3><p>Dedicação à missão e à visão.</p></li>
-        <li class="valor" style="--i:7;--cor:#6c9bff"><span class="valor-num">08</span><h3>Integridade</h3><p>Honestidade, transparência e verdade, com base nos ensinamentos de Cristo.</p></li>
-        <li class="valor" style="--i:8;--cor:#a472ff"><span class="valor-num">09</span><h3>Inclusão</h3><p>Acolher todas as pessoas, independente de passado, presente ou condição.</p></li>
-        <li class="valor" style="--i:9;--cor:#e86bff"><span class="valor-num">10</span><h3>Crescimento Contínuo</h3><p>Sempre aprender e melhorar como comunidade de fé.</p></li>
-      </ol>
-    </div>
-  </section>
-
-  <section class="secao cremos" aria-labelledby="titulo-cremos">
-    <div class="conteudo cremos-grade">
-      <div class="revelar">
-        <span class="sobre">No que cremos</span>
-        <h2 id="titulo-cremos">Declaração de fé</h2>
-        <p class="cremos-abertura">Cremos no único Deus verdadeiro, Espírito eterno, criador do céu e da terra, que governa sobre todas as coisas visíveis e invisíveis. Confessamos que Deus é Amoroso, Santo, Misericordioso, Justo, Poderoso, Sábio, Tardio para se irar, e Fiel cumpridor de sua Aliança com o homem, de acordo com o Novo Testamento.</p>
-        <p class="cremos-fonte">Declaração de Fé dos Irmãos Menonitas no Brasil · <a href="https://cobim.com.br/a-cobim/" target="_blank" rel="noopener">COBIM</a></p>
+      <div class="contatos">
+        <a class="contato-cartao revelar" href="https://api.whatsapp.com/send?phone=5567998131900&amp;text=Ol%C3%A1%2C%20pastor%21%20Vim%20atrav%C3%A9s%20do%20site%20da%20igreja." target="_blank" rel="noopener">
+          <span class="contato-icone"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><use href="#wa"/></svg></span>
+          <span><strong>Fale com o pastor</strong><span class="sub">Pr. Reginaldo Valim · Pastor coordenador</span></span>
+          <span class="contato-seta"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+        </a>
+        <a class="contato-cartao revelar" style="--d:1" href="https://chat.whatsapp.com/K2lynhJGzAXKZrjBjL7HGr?mode=gi_t" target="_blank" rel="noopener">
+          <span class="contato-icone"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><use href="#wa"/></svg></span>
+          <span><strong>Grupo de comunicação oficial</strong><span class="sub">Avisos da igreja no WhatsApp</span></span>
+          <span class="contato-seta"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+        </a>
       </div>
-      <ul class="sanfona revelar" style="--d:2">
-        <li>
-          <button class="sanfona-botao" type="button" aria-expanded="false" aria-controls="cremos-pai" id="b-cremos-pai">Deus, o Pai<span class="sanfona-icone" aria-hidden="true"></span></button>
-          <div class="sanfona-painel" id="cremos-pai" role="region" aria-labelledby="b-cremos-pai"><div><p>Cremos em Deus o Pai, criador dos céus e da terra. Ele pode ser conhecido na medida em que Ele mesmo se revelou em palavra e ação. O Pai adota todos os que respondem em fé, crendo em Jesus Cristo como Salvador e Senhor e arrependem-se de seus pecados.</p></div></div>
-        </li>
-        <li>
-          <button class="sanfona-botao" type="button" aria-expanded="false" aria-controls="cremos-filho" id="b-cremos-filho">Deus, o Filho, Jesus Cristo<span class="sanfona-icone" aria-hidden="true"></span></button>
-          <div class="sanfona-painel" id="cremos-filho" role="region" aria-labelledby="b-cremos-filho"><div><p>Cremos em Deus o Filho que assumiu natureza humana, através de Jesus Cristo, concebido pelo Espírito Santo e nascido da virgem Maria a quem o Pai enviou para salvar os pecadores. Ele é verdadeiro Deus e verdadeiro ser humano, de acordo com a Bíblia. Veio a este mundo, viveu uma vida santa e sem pecado, morreu pelos nossos pecados e ressuscitou dentre os mortos para garantir nossa justificação e subiu aos céus onde, assentado à destra do Pai, intercede por todos os que creem. Ele voltará em glória para julgar vivos e mortos e para estabelecer seu Reino eterno.</p></div></div>
-        </li>
-        <li>
-          <button class="sanfona-botao" type="button" aria-expanded="false" aria-controls="cremos-espirito" id="b-cremos-espirito">Deus, o Espírito Santo<span class="sanfona-icone" aria-hidden="true"></span></button>
-          <div class="sanfona-painel" id="cremos-espirito" role="region" aria-labelledby="b-cremos-espirito"><div><p>Cremos no Espírito Santo, um com o Pai e com o Filho, enviado por eles para tornar efetiva a redenção no homem. Ele tem a missão de convencer o homem do pecado, da justiça e do juízo. O Espírito Santo batiza em um só Corpo todos os que creem, regenera, guia, dá dons, produz fruto, repreende, habita, dá poder, conforta, intercede, une os cristãos num só corpo e glorifica o Filho e o Pai.</p></div></div>
-        </li>
-      </ul>
-    </div>
-  </section>
-
-  <section class="secao pastores" aria-labelledby="titulo-pastores">
-    <div class="conteudo">
-      <div class="cabeca revelar">
-        <span class="sobre">Pastores</span>
-        <h2 id="titulo-pastores">Quem cuida de cada igreja</h2>
+      <div class="redes revelar" style="--d:2">
+        <span>Também estamos no</span>
+        <a href="https://www.facebook.com/ieimcampograndems" target="_blank" rel="noopener" aria-label="Facebook"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg></a>
+        <a href="https://www.youtube.com/@ieimcampograndems" target="_blank" rel="noopener" aria-label="YouTube"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg></a>
       </div>
-      <div class="igrejas-pastores">
-        <article class="igreja" style="--i:0">
-          <img class="igreja-marca" src="/img/logo_ieim_simbolo_preto.svg" alt="" width="230" height="152" loading="lazy" aria-hidden="true">
-          <h3>Igreja do Centro</h3>
-          <ul class="casais">
-            <li><span class="funcao">Pastores coordenadores gerais</span><span class="nomes">Reginaldo Valim e Cinara Valim</span></li>
-            <li><span class="funcao">Pastores coordenadores de ministérios</span><span class="nomes">Alexandre Amaral e Jhenifer</span></li>
-            <li><span class="funcao">Pastores auxiliares</span><span class="nomes">Raphael e Claudeane</span></li>
-            <li><span class="funcao">Pastores auxiliares</span><span class="nomes">Cristiano Barros e Milca Katherine</span></li>
-          </ul>
-          <a class="botao botao-escuro" href="https://api.whatsapp.com/send?phone=5567998131900&amp;text=Ol%C3%A1%2C%20pastor%21%20Vim%20atrav%C3%A9s%20do%20site%20da%20igreja." target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><use href="#wa"/></svg>Falar com o Pr. Reginaldo</a>
-        </article>
-        <article class="igreja" style="--i:1">
-          <img class="igreja-marca" src="/img/logo_ieim_simbolo_preto.svg" alt="" width="230" height="152" loading="lazy" aria-hidden="true">
-          <h3>Igreja do São Conrado</h3>
-          <ul class="casais">
-            <li><span class="funcao">Pastores coordenadores gerais</span><span class="nomes">Leandro Gonçalves e Carol</span></li>
-          </ul>
-          <a class="botao botao-escuro" href="https://api.whatsapp.com/send?phone=5541999981359&amp;text=Ol%C3%A1%2C%20pastor%21%20Vim%20atrav%C3%A9s%20do%20site%20da%20igreja." target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><use href="#wa"/></svg>Falar com o Pr. Leandro</a>
-        </article>
-        <article class="igreja" style="--i:2">
-          <img class="igreja-marca" src="/img/logo_ieim_simbolo_preto.svg" alt="" width="230" height="152" loading="lazy" aria-hidden="true">
-          <h3>Igreja do Los Angeles</h3>
-          <ul class="casais">
-            <li><span class="funcao">Pastores coordenadores gerais</span><span class="nomes">Ap. Paulo Sergio e Marlene</span></li>
-          </ul>
-          <a class="botao botao-escuro" href="https://api.whatsapp.com/send?phone=5567992411995&amp;text=Ol%C3%A1%2C%20pastor%21%20Vim%20atrav%C3%A9s%20do%20site%20da%20igreja." target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><use href="#wa"/></svg>Falar com o Ap. Paulo Sergio</a>
-        </article>
-      </div>
-    </div>
-  </section>
-
-  <section class="secao escura junta grao" aria-labelledby="titulo-junta">
-    <div class="luzes" aria-hidden="true"><span></span><span></span></div>
-    <div class="conteudo">
-      <div class="cabeca revelar">
-        <span class="sobre">Junta Administrativa</span>
-        <h2 id="titulo-junta">Quem administra a igreja</h2>
-      </div>
-      <ul class="grade-junta">
-        <li class="membro" style="--i:0"><span class="cargo">Presidente</span><strong>Pr. Reginaldo de Almeida Valim</strong></li>
-        <li class="membro" style="--i:1"><span class="cargo">Vice-presidente</span><strong>José Roberto Borges Guimarães</strong></li>
-        <li class="membro" style="--i:2"><span class="cargo">1ª Tesoureira</span><strong>Nataly Sandim Vianna</strong></li>
-        <li class="membro" style="--i:3"><span class="cargo">2ª Tesoureira</span><strong>Marilene Aparecida Petrarcha</strong></li>
-        <li class="membro" style="--i:4"><span class="cargo">Secretária</span><strong>Elizandra Alfonso Gonçalves Nunes</strong></li>
-      </ul>
     </div>
   </section>
 </main>
@@ -584,18 +853,15 @@
       o.observe(el);
     }
 
-    // Revelar ao rolar
+
+    // Revelar elementos ao rolar
     document.querySelectorAll('.revelar').forEach(function (el) {
       quandoVisivel(el, function () { el.classList.add('revelado'); }, 0.12);
     });
-    ['.grade-valores', '.igrejas-pastores', '.grade-junta'].forEach(function (s) {
-      var el = document.querySelector(s);
-      quandoVisivel(el, function () { el.classList.add('visivel'); }, 0.08);
-    });
 
-    // Reflexo que segue o mouse
+    // Reflexo que segue o mouse (cards, PIX, contato)
     if (window.matchMedia('(hover: hover)').matches) {
-      document.querySelectorAll('.valor, .igreja, .membro').forEach(function (el) {
+      document.querySelectorAll('.frente, .pix, .contato-cartao').forEach(function (el) {
         el.addEventListener('pointermove', function (e) {
           var r = el.getBoundingClientRect();
           el.style.setProperty('--mx', (e.clientX - r.left) + 'px');
@@ -604,70 +870,433 @@
       });
     }
 
-    /* ───── No que cremos: abre e fecha ───── */
-    document.querySelectorAll('.sanfona-botao').forEach(function (b) {
-      var painel = document.getElementById(b.getAttribute('aria-controls'));
-      b.addEventListener('click', function () {
-        var abrir = b.getAttribute('aria-expanded') !== 'true';
-        b.setAttribute('aria-expanded', abrir ? 'true' : 'false');
-        painel.classList.toggle('aberto', abrir);
+    /* ───── Som (sintetizado no navegador, sem arquivos). Só toca depois de um toque/clique da pessoa ───── */
+    var som = (function () {
+      var ctx = null, ligado = true;
+      try { ligado = localStorage.getItem('ieim-som') !== 'off'; } catch (e) {}
+      var TIMBRES = [1100, 1500, 1900, 2400]; // um timbre de toque por bloco de ministérios
+      function ac() {
+        if (!ctx) { var C = window.AudioContext || window.webkitAudioContext; if (!C) return null; ctx = new C(); }
+        if (ctx.state === 'suspended') ctx.resume();
+        return ctx;
+      }
+      function tom(f, dur, tipo, vol, ate, atraso) {
+        var c = ac(); if (!c || !ligado) return;
+        var t = c.currentTime + (atraso || 0), o = c.createOscillator(), g = c.createGain();
+        o.type = tipo || 'sine'; o.frequency.setValueAtTime(f, t);
+        if (ate) o.frequency.exponentialRampToValueAtTime(ate, t + dur);
+        g.gain.setValueAtTime(0.0001, t);
+        g.gain.exponentialRampToValueAtTime(vol, t + .012);
+        g.gain.exponentialRampToValueAtTime(0.0001, t + dur);
+        o.connect(g); g.connect(c.destination); o.start(t); o.stop(t + dur + .03);
+      }
+      function sopro(f1, f2, dur, vol, atraso) {
+        var c = ac(); if (!c || !ligado) return;
+        var t = c.currentTime + (atraso || 0), n = Math.floor(c.sampleRate * dur);
+        var buf = c.createBuffer(1, n, c.sampleRate), d = buf.getChannelData(0);
+        for (var i = 0; i < n; i++) d[i] = Math.random() * 2 - 1;
+        var src = c.createBufferSource(), f = c.createBiquadFilter(), g = c.createGain();
+        src.buffer = buf; f.type = 'bandpass'; f.Q.value = 1.4;
+        f.frequency.setValueAtTime(f1, t); f.frequency.exponentialRampToValueAtTime(f2, t + dur);
+        g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(vol, t + dur * .4); g.gain.exponentialRampToValueAtTime(0.0001, t + dur);
+        src.connect(f); f.connect(g); g.connect(c.destination); src.start(t); src.stop(t + dur + .02);
+      }
+      // toque suave de interface: estalo curto de ar + batida grave, sem nota musical
+      function toque(f, vol) {
+        sopro(f, f * 1.15, .045, vol);
+        tom(150, .09, 'sine', vol * .9, 60);
+      }
+      function laser() {
+        var c = ac(); if (!c || !ligado) return;
+        var t = c.currentTime, o = c.createOscillator(), o2 = c.createOscillator(), fl = c.createBiquadFilter(), g = c.createGain();
+        o.type = 'sawtooth'; o2.type = 'sine';
+        o.frequency.setValueAtTime(2200, t); o.frequency.exponentialRampToValueAtTime(160, t + .32);
+        o2.frequency.setValueAtTime(1500, t); o2.frequency.exponentialRampToValueAtTime(90, t + .32);
+        fl.type = 'lowpass'; fl.frequency.setValueAtTime(3200, t); fl.frequency.exponentialRampToValueAtTime(600, t + .32);
+        g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(.05, t + .015); g.gain.exponentialRampToValueAtTime(0.0001, t + .34);
+        o.connect(fl); o2.connect(fl); fl.connect(g); g.connect(c.destination);
+        o.start(t); o2.start(t); o.stop(t + .36); o2.stop(t + .36);
+      }
+      return {
+        // card virando: sopro de ar + toque suave quando o lado troca
+        virar: function (volta) {
+          if (volta) sopro(3000, 700, .4, .08); else sopro(700, 3000, .4, .08);
+          setTimeout(function () { toque(volta ? 1300 : 1700, .05); }, 290);
+        },
+        // ministério escolhido: o mesmo toque, com timbre próprio de cada bloco
+        escolher: function (bloco) { toque(TIMBRES[bloco % TIMBRES.length], .07); },
+        // giro da roda: laser
+        girar: function () { laser(); },
+        voltar: function () { toque(800, .05); },
+        passar: function () { if (ctx && ctx.state === 'running') sopro(3500, 3800, .025, .012); },
+        ligado: function () { return ligado; },
+        alternar: function () { ligado = !ligado; try { localStorage.setItem('ieim-som', ligado ? 'on' : 'off'); } catch (e) {} if (ligado) { ac(); toque(1500, .06); } return ligado; }
+      };
+    })();
+
+    /* ───── Igrejas ───── */
+    var grade = document.querySelector('.cartoes');
+    quandoVisivel(grade, function () { grade.classList.add('visivel'); });
+    var cartoes = Array.prototype.slice.call(grade.querySelectorAll('.cartao'));
+    function virar(cartao, paraVerso) {
+      var frente = cartao.querySelector('.frente'), verso = cartao.querySelector('.verso');
+      cartao.classList.toggle('virado', paraVerso);
+      cartao.querySelector('.virar').setAttribute('aria-expanded', paraVerso ? 'true' : 'false');
+      verso.setAttribute('aria-hidden', paraVerso ? 'false' : 'true');
+      frente.setAttribute('aria-hidden', paraVerso ? 'true' : 'false');
+      if (paraVerso) { verso.removeAttribute('inert'); frente.setAttribute('inert', ''); }
+      else { frente.removeAttribute('inert'); verso.setAttribute('inert', ''); }
+      setTimeout(function () {
+        (paraVerso ? cartao.querySelector('.voltar') : cartao.querySelector('.virar')).focus({ preventScroll: true });
+      }, semMovimento ? 0 : 400);
+    }
+    cartoes.forEach(function (cartao) {
+      cartao.querySelector('.virar').addEventListener('click', function () {
+        cartoes.forEach(function (c) { if (c !== cartao && c.classList.contains('virado')) virar(c, false); });
+        virar(cartao, true); som.virar(false);
       });
+      cartao.querySelector('.voltar').addEventListener('click', function () { virar(cartao, false); som.virar(true); });
+    });
+    document.addEventListener('keydown', function (e) {
+      if (e.key !== 'Escape') return;
+      cartoes.forEach(function (c) { if (c.classList.contains('virado')) virar(c, false); });
     });
 
-    /* ───── Missão: palavras acendem em sequência ───── */
-    var missao = document.querySelector('.missao-texto');
-    var frase = missao.textContent.trim();
-    missao.innerHTML = '<span class="sr" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap">' + frase + '</span>'
-      + frase.split(/\s+/).map(function (p) { return '<span class="p" aria-hidden="true">' + p + '</span>'; }).join(' ');
-    var palavras = Array.prototype.slice.call(missao.querySelectorAll('.p'));
-
-    /* ───── Linha do tempo: a luz desce conforme a rolagem ───── */
-    var linha = document.querySelector('.linha');
-    var luz = linha.querySelector('.trilho-luz');
-    var trilho = linha.querySelector('.trilho');
-    var etapas = Array.prototype.slice.call(linha.querySelectorAll('.capitulo, .marco, .final')).map(function (el) {
-      return { el: el, alvo: el.querySelector('.ponto-linha, .final-simbolo') || el };
-    });
-
-    // o trilho termina exatamente no símbolo da igreja
-    var simbolo = linha.querySelector('.final-simbolo');
-    function medir() {
-      var l = linha.getBoundingClientRect(), sb = simbolo.getBoundingClientRect();
-      if (sb.height) trilho.style.bottom = Math.max(0, l.bottom - sb.top - 2) + 'px';
-    }
-    medir();
-    simbolo.addEventListener('load', medir);
-    window.addEventListener('resize', medir);
-    if (document.fonts && document.fonts.ready) document.fonts.ready.then(medir);
-
-    if (semMovimento) {
-      luz.style.setProperty('--p', 1);
-      etapas.forEach(function (e) { e.el.classList.add('aceso'); });
-      palavras.forEach(function (s) { s.classList.add('acesa'); });
-      return;
-    }
-
-    var pedido = null;
+    // Próximo culto, pelo horário de Campo Grande (UTC-4, sem horário de verão)
+    function agoraCG() { var n = new Date(); return new Date(n.getTime() + (n.getTimezoneOffset() - 240) * 60000); }
+    var NOMES = ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'];
+    function horaTexto(h) { var p = h.split(':'); return parseInt(p[0], 10) + 'h' + (p[1] === '00' ? '' : p[1]); }
     function atualizar() {
-      pedido = null;
-      var vh = window.innerHeight, marca = vh * 0.62;
-
-      var r = trilho.getBoundingClientRect();
-      var p = Math.max(0, Math.min(1, (marca - r.top) / r.height));
-      luz.style.setProperty('--p', p.toFixed(4));
-      etapas.forEach(function (e) { e.el.classList.toggle('aceso', e.alvo.getBoundingClientRect().top < marca); });
-
-      var m = missao.getBoundingClientRect();
-      var ini = vh * 0.9, fim = vh * 0.4;
-      var q = Math.max(0, Math.min(1, (ini - m.top) / (ini - fim)));
-      var n = Math.round(q * palavras.length);
-      palavras.forEach(function (s, i) { s.classList.toggle('acesa', i < n); });
+      var agora = agoraCG(), hoje = agora.getDay(), minAgora = agora.getHours() * 60 + agora.getMinutes();
+      cartoes.forEach(function (cartao) {
+        var melhor = null;
+        cartao.querySelectorAll('.horarios li').forEach(function (li) {
+          var dia = parseInt(li.dataset.dia, 10), p = li.dataset.hora.split(':');
+          var ini = parseInt(p[0], 10) * 60 + parseInt(p[1], 10);
+          for (var d = 0; d < 8; d++) {
+            if ((hoje + d) % 7 !== dia) continue;
+            var dist = d * 1440 + ini - minAgora;
+            if (dist < -120) continue;
+            if (!melhor || dist < melhor.dist) melhor = { dist: dist, d: d, dia: dia, hora: li.dataset.hora, nome: li.querySelector('.nome').textContent };
+            break;
+          }
+        });
+        var el = cartao.querySelector('.proximo');
+        if (!melhor) { el.hidden = true; return; }
+        var quando;
+        if (melhor.dist <= 0) quando = 'Acontecendo agora';
+        else if (melhor.d === 0) quando = 'Hoje, ' + horaTexto(melhor.hora);
+        else if (melhor.d === 1) quando = 'Amanhã, ' + horaTexto(melhor.hora);
+        else quando = NOMES[melhor.dia] + ', ' + horaTexto(melhor.hora);
+        el.querySelector('.proximo-texto').innerHTML = '<strong>' + quando + '</strong> · ' + melhor.nome;
+        el.classList.toggle('ao-vivo', melhor.dist <= 0);
+        el.hidden = false;
+      });
     }
-    function agendar() { if (!pedido) pedido = requestAnimationFrame(atualizar); }
-    window.addEventListener('scroll', agendar, { passive: true });
-    window.addEventListener('resize', agendar);
-    window.addEventListener('load', agendar);
-    atualizar();
+    atualizar(); setInterval(atualizar, 60000);
+
+    /* ───── Ministérios: mapa mental ───── */
+    var mapa = document.querySelector('.mapa');
+    var svg = mapa.querySelector('.mapa-linhas');
+    var nucleo = mapa.querySelector('.nucleo');
+    var chips = Array.prototype.slice.call(mapa.querySelectorAll('.chip'));
+    var NS = 'http://www.w3.org/2000/svg';
+    var largo = window.matchMedia('(min-width: 1021px)');
+    var linhasChip = new Map();
+    var auto = null, parado = false, indice = 0;
+
+    var botaoSom = document.querySelector('.som-botao');
+    function pintarSom() { botaoSom.setAttribute('aria-pressed', som.ligado() ? 'true' : 'false'); botaoSom.setAttribute('aria-label', som.ligado() ? 'Desligar os sons da página' : 'Ligar os sons da página'); }
+    pintarSom();
+    botaoSom.addEventListener('click', function (e) { e.stopPropagation(); som.alternar(); pintarSom(); });
+    function pulsar(el) { el.classList.remove('pulsa'); void el.offsetWidth; el.classList.add('pulsa'); }
+    function parar() { parado = true; clearInterval(auto); clearTimeout(auto); }
+
+    function caminho(alvoSvg, d, classe, atraso) {
+      var p = document.createElementNS(NS, 'path');
+      p.setAttribute('d', d); p.setAttribute('pathLength', '1');
+      if (classe) p.setAttribute('class', classe);
+      p.style.setProperty('--atraso', atraso + 's');
+      alvoSvg.appendChild(p); return p;
+    }
+    function curva(x1, y1, x2, y2) {
+      var mx = (x1 + x2) / 2;
+      return 'M' + x1 + ' ' + y1 + ' C' + mx + ' ' + y1 + ' ' + mx + ' ' + y2 + ' ' + x2 + ' ' + y2;
+    }
+    function ponto(alvoSvg, idCaminho, dur, inicio) {
+      if (semMovimento) return;
+      var c = document.createElementNS(NS, 'circle');
+      c.setAttribute('r', '2.6');
+      c.innerHTML = '<animateMotion dur="' + dur + 's" begin="' + inicio + 's" repeatCount="indefinite" keyPoints="0;1" keyTimes="0;1" calcMode="linear"><mpath href="#' + idCaminho + '"/></animateMotion>';
+      alvoSvg.appendChild(c);
+    }
+
+    /* Computador: mapa completo */
+    var selecionado = null;
+    function desenhar() {
+      svg.innerHTML = ''; linhasChip.clear();
+      if (!largo.matches) return;
+      var base = mapa.getBoundingClientRect();
+      var n = nucleo.getBoundingClientRect();
+      var cx = n.left + n.width / 2 - base.left, cy = n.top + n.height / 2 - base.top, raio = n.width / 2 + 9;
+      mapa.querySelectorAll('.ramo').forEach(function (ramo, i) {
+        var esq = ramo.dataset.lado === 'esq';
+        var no = ramo.querySelector('.ramo-no').getBoundingClientRect();
+        var ry = no.top + no.height / 2 - base.top;
+        var rxPerto = (esq ? no.right : no.left) - base.left;
+        var rxLonge = (esq ? no.left : no.right) - base.left;
+        var ang = Math.atan2(ry - cy, rxPerto - cx);
+        var sx = cx + Math.cos(ang) * raio, sy = cy + Math.sin(ang) * raio;
+        var tronco = caminho(svg, curva(sx, sy, rxPerto, ry), 'tronco', i * .15);
+        tronco.id = 'tronco-' + i;
+        ponto(svg, 'tronco-' + i, 3.2 + i * .4, 1.6 + i * .5);
+        ramo.querySelectorAll('.chip').forEach(function (chip, j) {
+          var r = chip.getBoundingClientRect();
+          var x = (esq ? r.right : r.left) - base.left, y = r.top + r.height / 2 - base.top;
+          var p = caminho(svg, curva(rxLonge, ry, x, y), '', .5 + i * .15 + j * .05);
+          p.style.setProperty('--cor', chip.style.getPropertyValue('--cor'));
+          linhasChip.set(chip, p);
+        });
+      });
+      if (selecionado) acender(selecionado);
+    }
+    function acender(chip) { linhasChip.forEach(function (p, c) { p.classList.toggle('aceso', c === chip); }); }
+    function preencher(alvo, d) {
+      alvo.querySelector('.info-nome').textContent = d.nome;
+      alvo.querySelector('.info-desc').textContent = d.desc;
+      alvo.querySelector('.info-lider').textContent = d.lider ? 'Líder: ' + d.lider : '';
+    }
+    function mostrar(chip) {
+      chips.forEach(function (c) { c.setAttribute('aria-pressed', c === chip ? 'true' : 'false'); });
+      selecionado = chip;
+      nucleo.style.setProperty('--cor-nucleo', chip.style.getPropertyValue('--cor'));
+      preencher(nucleo, chip.dataset);
+      nucleo.classList.add('mostrando'); pulsar(nucleo);
+      acender(chip);
+    }
+    function limpar() {
+      chips.forEach(function (c) { c.setAttribute('aria-pressed', 'false'); });
+      selecionado = null; nucleo.classList.remove('mostrando'); nucleo.style.removeProperty('--cor-nucleo');
+      acender(null);
+    }
+    chips.forEach(function (chip) {
+      chip.addEventListener('click', function (e) {
+        e.stopPropagation(); parar();
+        if (chip.getAttribute('aria-pressed') === 'true') { limpar(); som.voltar(); }
+        else { mostrar(chip); som.escolher(parseInt(chip.closest('.ramo').style.getPropertyValue('--ordem'), 10)); }
+      });
+      chip.addEventListener('mouseenter', function () { if (largo.matches) som.passar(); });
+    });
+    // Tocar no círculo ou fora dos ministérios volta ao logo
+    mapa.closest('.ministerios').addEventListener('click', function (e) {
+      if (!largo.matches || e.target.closest('.chip, .som-botao')) return;
+      parar(); if (selecionado) som.voltar(); limpar();
+    });
+
+    /* Celular: roda em semicírculo */
+    var grupos = Array.prototype.slice.call(mapa.querySelectorAll('.ramo'))
+      .sort(function (a, b) { return parseInt(a.style.getPropertyValue('--ordem'), 10) - parseInt(b.style.getPropertyValue('--ordem'), 10); })
+      .map(function (ramo) {
+        return {
+          nome: ramo.querySelector('.ramo-no').textContent,
+          itens: Array.prototype.slice.call(ramo.querySelectorAll('.chip')).map(function (c) {
+            return { nome: c.dataset.nome, desc: c.dataset.desc, lider: c.dataset.lider, cor: c.style.getPropertyValue('--cor') };
+          })
+        };
+      });
+    var roda = document.createElement('div');
+    roda.className = 'roda';
+    roda.innerHTML = '<svg class="roda-linhas" aria-hidden="true"></svg>'
+      + '<button class="roda-nucleo" type="button" aria-label="Voltar ao início dos ministérios"><img src="/img/logo_ieim_simbolo_branco.svg" alt="" width="50" height="33"></button>';
+    var info = document.createElement('div');
+    info.className = 'roda-info'; info.setAttribute('aria-live', 'polite');
+    info.innerHTML = '<p class="info-nome"></p><p class="info-desc"></p><p class="info-lider"></p>';
+    mapa.appendChild(roda); mapa.appendChild(info);
+    var rSvg = roda.querySelector('.roda-linhas');
+    var rNucleo = roda.querySelector('.roda-nucleo');
+    var botoesGrupo = grupos.map(function (g, i) {
+      var b = document.createElement('button');
+      b.type = 'button'; b.className = 'roda-grupo'; b.textContent = g.nome;
+      b.addEventListener('click', function (e) { e.stopPropagation(); parar(); if (i !== gAtivo) { girarPara(i); som.girar(); } limparRoda(); });
+      roda.appendChild(b); return b;
+    });
+    var N = grupos.length, PASSO = 52, pos = 0, gAtivo = 0, rSel = null, animando = null;
+    var R0 = 92, R1, R2, cy;
+    function dif(d) { d = ((d % N) + N) % N; if (d >= N / 2) d -= N; return d; }
+    function medidas() {
+      var W = roda.clientWidth; cy = roda.clientHeight / 2;
+      R2 = Math.min(224, W * .6); R1 = Math.max(R0 + 56, R2 * .67);
+    }
+    function posicionarGrupos() {
+      botoesGrupo.forEach(function (b, i) {
+        var graus = dif(i - pos) * PASSO, a = graus * Math.PI / 180;
+        b.style.left = (R1 * Math.cos(a)) + 'px';
+        b.style.top = (cy + R1 * Math.sin(a)) + 'px';
+        var v = Math.max(0, 1 - Math.abs(graus) / 80);
+        b.style.opacity = i === gAtivo ? 1 : Math.min(.65, v * 1.6);
+        b.style.visibility = v <= 0 ? 'hidden' : 'visible';
+        b.classList.toggle('ativo', i === gAtivo);
+        b.setAttribute('aria-pressed', i === gAtivo ? 'true' : 'false');
+      });
+    }
+    function angulos(k) {
+      if (k === 1) return [0];
+      var abre = Math.min(124, (k - 1) * 26), lista = [];
+      for (var j = 0; j < k; j++) lista.push(-abre / 2 + j * abre / (k - 1));
+      return lista;
+    }
+    function montarItens() {
+      roda.querySelectorAll('.roda-chip').forEach(function (c) {
+        c.classList.add('sai'); setTimeout(function () { c.remove(); }, 450);
+      });
+      var g = grupos[gAtivo], ang = angulos(g.itens.length);
+      g.itens.forEach(function (d, j) {
+        var b = document.createElement('button');
+        b.type = 'button'; b.className = 'chip roda-chip entra'; b.setAttribute('aria-pressed', 'false');
+        b.style.setProperty('--cor', d.cor);
+        b.innerHTML = '<span class="chip-ponto"></span>';
+        b.appendChild(document.createTextNode(d.nome));
+        var a = ang[j] * Math.PI / 180;
+        b.style.left = (R2 * Math.cos(a)) + 'px';
+        b.style.top = (cy + R2 * Math.sin(a)) + 'px';
+        b.style.transitionDelay = (j * .06 + .15) + 's';
+        b._dados = d;
+        b.addEventListener('click', function (e) {
+          e.stopPropagation(); parar();
+          if (rSel === b) { limparRoda(); som.voltar(); }
+          else { selecionarRoda(b); som.escolher(gAtivo); }
+        });
+        roda.appendChild(b);
+      });
+      requestAnimationFrame(function () { requestAnimationFrame(function () {
+        roda.querySelectorAll('.roda-chip.entra').forEach(function (c) { c.classList.remove('entra'); });
+      }); });
+    }
+    function linhasRoda() {
+      rSvg.innerHTML = '';
+      var gb = botoesGrupo[gAtivo];
+      var gx = parseFloat(gb.style.left), gy = parseFloat(gb.style.top), gw = gb.offsetWidth / 2;
+      var t = caminho(rSvg, curva(R0 + 8, cy, gx - gw, gy), 'tronco', 0);
+      t.id = 'roda-tronco';
+      ponto(rSvg, 'roda-tronco', 2.4, 0);
+      roda.querySelectorAll('.roda-chip:not(.sai)').forEach(function (c, j) {
+        var p = caminho(rSvg, curva(gx + gw, gy, parseFloat(c.style.left) - 2, parseFloat(c.style.top)), '', .1 + j * .05);
+        p.style.setProperty('--cor', c.style.getPropertyValue('--cor'));
+        p._chip = c;
+        if (c === rSel) p.classList.add('aceso');
+      });
+      rSvg.getBoundingClientRect();
+      roda.classList.add('desenhada');
+    }
+    function girarPara(i, depois) {
+      var inicio = pos, fim = pos + dif(i - pos), t0 = null, dur = semMovimento ? 0 : 750;
+      gAtivo = i;
+      roda.classList.remove('desenhada'); rSvg.innerHTML = '';
+      montarItens(); posicionarGrupos();
+      cancelAnimationFrame(animando);
+      function passo(t) {
+        if (!t0) t0 = t;
+        var k = dur ? Math.min(1, (t - t0) / dur) : 1;
+        var e = k < .5 ? 4 * k * k * k : 1 - Math.pow(-2 * k + 2, 3) / 2;
+        pos = inicio + (fim - inicio) * e;
+        rNucleo.style.setProperty('--giro', (pos * -PASSO) + 'deg');
+        posicionarGrupos();
+        if (k < 1) animando = requestAnimationFrame(passo);
+        else { pos = ((fim % N) + N) % N; posicionarGrupos(); setTimeout(function () { linhasRoda(); if (depois) depois(); }, 120); }
+      }
+      animando = requestAnimationFrame(passo);
+    }
+    function selecionarRoda(b) {
+      rSel = b;
+      roda.querySelectorAll('.roda-chip').forEach(function (c) { c.setAttribute('aria-pressed', c === b ? 'true' : 'false'); });
+      rSvg.querySelectorAll('path').forEach(function (p) { p.classList.toggle('aceso', p._chip === b); });
+      var cor = b.style.getPropertyValue('--cor');
+      roda.style.setProperty('--cor-nucleo', cor); info.style.setProperty('--cor-nucleo', cor);
+      preencher(info, b._dados);
+      info.classList.add('escolhido'); pulsar(rNucleo);
+    }
+    function limparRoda() {
+      rSel = null;
+      roda.querySelectorAll('.roda-chip').forEach(function (c) { c.setAttribute('aria-pressed', 'false'); });
+      rSvg.querySelectorAll('path').forEach(function (p) { p.classList.remove('aceso'); });
+      roda.style.removeProperty('--cor-nucleo'); info.style.removeProperty('--cor-nucleo');
+      preencher(info, { nome: grupos[gAtivo].nome, desc: 'Toque em um ministério para conhecer.', lider: '' });
+      info.classList.remove('escolhido');
+    }
+    rNucleo.addEventListener('click', function (e) { e.stopPropagation(); parar(); if (rSel) som.voltar(); limparRoda(); });
+    roda.addEventListener('click', function () { parar(); if (rSel) som.voltar(); limparRoda(); });
+    info.addEventListener('click', function () { parar(); });
+    function iniciarRoda() {
+      medidas(); posicionarGrupos(); montarItens(); limparRoda();
+      setTimeout(linhasRoda, 500);
+    }
+
+    /* Passeio automático até a pessoa tocar */
+    function passeio() {
+      if (parado || semMovimento) return;
+      clearInterval(auto);
+      auto = setInterval(function () {
+        if (largo.matches) { mostrar(chips[indice++ % chips.length]); return; }
+        var itens = roda.querySelectorAll('.roda-chip:not(.sai)');
+        var atualIdx = rSel ? Array.prototype.indexOf.call(itens, rSel) : -1;
+        if (atualIdx < itens.length - 1) selecionarRoda(itens[atualIdx + 1]);
+        else {
+          limparRoda();
+          girarPara((gAtivo + 1) % N, function () {
+            var primeiro = roda.querySelector('.roda-chip:not(.sai)');
+            if (primeiro && !parado) selecionarRoda(primeiro);
+          });
+        }
+      }, 2600);
+    }
+    if (temObs) {
+      new IntersectionObserver(function (es) {
+        es.forEach(function (e) {
+          if (e.isIntersecting) { mapa.classList.add('visivel'); passeio(); }
+          else clearInterval(auto);
+        });
+      }, { threshold: 0.25 }).observe(mapa);
+    } else mapa.classList.add('visivel');
+
+    var tmr;
+    function redesenhar() {
+      clearTimeout(tmr);
+      tmr = setTimeout(function () {
+        desenhar();
+        if (!largo.matches) { medidas(); posicionarGrupos(); var ang = angulos(grupos[gAtivo].itens.length);
+          roda.querySelectorAll('.roda-chip:not(.sai)').forEach(function (c, j) { var a = ang[j] * Math.PI / 180; c.style.left = (R2 * Math.cos(a)) + 'px'; c.style.top = (cy + R2 * Math.sin(a)) + 'px'; });
+          linhasRoda(); }
+      }, 150);
+    }
+    window.addEventListener('resize', redesenhar);
+    if (largo.addEventListener) largo.addEventListener('change', redesenhar);
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(redesenhar);
+    window.addEventListener('load', redesenhar);
+    desenhar();
+    iniciarRoda();
+
+    /* ───── PIX: copiar chave ───── */
+    var botaoPix = document.getElementById('copiar-pix');
+    var rotulo = botaoPix.querySelector('span');
+    function copiado() {
+      botaoPix.classList.add('copiado'); rotulo.textContent = 'Chave copiada';
+      botaoPix.querySelector('.ic-copiar').style.display = 'none'; botaoPix.querySelector('.ic-ok').style.display = '';
+      setTimeout(function () {
+        botaoPix.classList.remove('copiado'); rotulo.textContent = 'Copiar chave PIX';
+        botaoPix.querySelector('.ic-copiar').style.display = ''; botaoPix.querySelector('.ic-ok').style.display = 'none';
+      }, 2600);
+    }
+    botaoPix.addEventListener('click', function () {
+      var chave = botaoPix.dataset.chave;
+      if (navigator.clipboard && window.isSecureContext) {
+        navigator.clipboard.writeText(chave).then(copiado, reserva);
+      } else reserva();
+      function reserva() {
+        var t = document.createElement('textarea'); t.value = chave; t.setAttribute('readonly', '');
+        t.style.position = 'fixed'; t.style.opacity = '0'; document.body.appendChild(t);
+        t.select(); try { document.execCommand('copy'); copiado(); } catch (e) {} document.body.removeChild(t);
+      }
+    });
   })();
 </script>
 </body>
