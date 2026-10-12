@@ -3,61 +3,160 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="robots" content="noindex, nofollow">
-<title>Em construção · IEIM Campo Grande</title>
+<title>Termos de Uso · IEIM Campo Grande</title>
+<meta name="description" content="Regras de uso do site da Igreja Evangélica Irmãos Menonitas de Campo Grande.">
 <link rel="icon" href="/img/favicon.svg" type="image/svg+xml">
 <link rel="icon" href="/img/favicon-32.png" sizes="32x32" type="image/png">
 <link rel="apple-touch-icon" href="/img/apple-touch-icon.png">
+<meta property="og:title" content="Termos de Uso · IEIM Campo Grande">
+<meta property="og:description" content="Regras de uso do site da Igreja Evangélica Irmãos Menonitas de Campo Grande.">
+<meta property="og:image" content="https://www.irmaosmenonitas.com.br/img/og_ieim.jpg">
+<meta property="og:url" content="https://www.irmaosmenonitas.com.br/termos/">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="pt_BR">
+<meta name="twitter:card" content="summary_large_image">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Raleway:wght@500&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Raleway:wght@500;600;700&display=swap">
 <style>
-  :root { --preto: #000; --branco: #fff; --linha: #e6e6e6; }
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  html, body { height: 100%; }
-  body {
-    background: var(--branco);
-    color: var(--preto);
-    font-family: "Raleway", system-ui, sans-serif;
-    font-weight: 500;
-    display: grid;
-    place-items: center;
-    padding: 24px 16px;
-  }
-  main { display: grid; justify-items: center; gap: 40px; text-align: center; }
-  img { width: clamp(140px, 36vw, 220px); height: auto; display: block; }
-  h1 { font-size: clamp(1.05rem, 3.2vw, 1.3rem); font-weight: 500; letter-spacing: 0.04em; }
-  .barra {
-    width: clamp(160px, 40vw, 240px);
-    height: 3px;
-    background: var(--linha);
-    border-radius: 3px;
-    overflow: hidden;
-  }
-  .barra span {
-    display: block;
-    width: 40%;
-    height: 100%;
-    background: var(--preto);
-    border-radius: 3px;
-    animation: carregar 1.6s ease-in-out infinite;
-  }
-  @keyframes carregar {
-    0%   { transform: translateX(-100%); opacity: .35; }
-    50%  { opacity: 1; }
-    100% { transform: translateX(250%); opacity: .35; }
-  }
-  @media (prefers-reduced-motion: reduce) {
-    .barra span { animation: pulsar 2s ease-in-out infinite; width: 100%; transform: none; }
-    @keyframes pulsar { 0%, 100% { opacity: .25; } 50% { opacity: 1; } }
+  :root { --preto:#000; --branco:#fff; --cinza:#5f5f5f; --linha:#e4e4e4; --fundo:#f6f6f6; }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+  body { background: var(--branco); color: var(--preto); font-family: "Raleway", system-ui, sans-serif;
+         font-weight: 500; font-variant-numeric: lining-nums; line-height: 1.7; overflow-x: hidden; }
+  a { color: inherit; }
+  :focus-visible { outline: 2px solid var(--preto); outline-offset: 3px; border-radius: 4px; }
+  img { display: block; max-width: 100%; height: auto; }
+  .topo { border-bottom: 1px solid var(--linha); }
+  .topo-interno { max-width: 1040px; margin: 0 auto; padding: 18px 16px; display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+  .topo img { width: 110px; }
+  .topo nav a { font-size: 0.9rem; font-weight: 600; text-decoration: none; padding: 8px 0; }
+  .topo nav a:hover { text-decoration: underline; text-underline-offset: 4px; }
+  main { max-width: 760px; margin: 0 auto; padding: 56px 16px 72px; }
+  h1 { font-size: clamp(1.8rem, 5vw, 2.4rem); font-weight: 700; line-height: 1.2; }
+  .data { color: var(--cinza); font-size: 0.92rem; margin-top: 10px; }
+  .intro { font-size: 1.08rem; margin-top: 28px; }
+  .sumario { background: var(--fundo); border-radius: 14px; padding: 20px 22px; margin: 36px 0 8px; }
+  .sumario p { font-weight: 700; margin-bottom: 8px; }
+  .sumario ol { padding-left: 1.3rem; display: grid; gap: 4px; }
+  .sumario a { text-decoration: none; }
+  .sumario a:hover { text-decoration: underline; text-underline-offset: 3px; }
+  h2 { font-size: 1.3rem; font-weight: 700; line-height: 1.3; margin: 48px 0 14px; scroll-margin-top: 16px; }
+  h3 { font-size: 1.05rem; font-weight: 700; margin: 24px 0 8px; }
+  p + p { margin-top: 12px; }
+  main ul { padding-left: 1.3rem; margin-top: 10px; display: grid; gap: 6px; }
+  main ul + p { margin-top: 12px; }
+  strong { font-weight: 700; }
+  .tabela { overflow-x: auto; margin-top: 14px; border: 1px solid var(--linha); border-radius: 12px; }
+  table { width: 100%; border-collapse: collapse; font-size: 0.92rem; min-width: 560px; }
+  th, td { text-align: left; vertical-align: top; padding: 12px 14px; border-bottom: 1px solid var(--linha); }
+  th { font-weight: 700; background: var(--fundo); }
+  tr:last-child td { border-bottom: none; }
+  .contato { border: 1.5px solid var(--preto); border-radius: 14px; padding: 20px 22px; margin-top: 16px; }
+  footer { background: var(--preto); color: var(--branco); padding: 44px 16px 36px; }
+  .rodape { max-width: 1040px; margin: 0 auto; display: grid; justify-items: center; gap: 20px; text-align: center; }
+  .rodape img { width: 150px; }
+  .rodape nav { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px 22px; }
+  .rodape nav a { color: var(--branco); font-size: 0.9rem; text-decoration: none; }
+  .rodape nav a:hover, .rodape nav a[aria-current] { text-decoration: underline; text-underline-offset: 4px; }
+  .rodape p { color: #b5b5b5; font-size: 0.85rem; line-height: 1.7; }
+  @media (max-width: 640px) {
+    .tabela { border: none; overflow: visible; }
+    table { min-width: 0; }
+    thead { display: none; }
+    tr { display: block; border: 1px solid var(--linha); border-radius: 12px; padding: 6px 0; margin-bottom: 12px; }
+    td { display: grid; grid-template-columns: 7.5rem 1fr; gap: 10px; border-bottom: none; padding: 7px 14px; }
+    td::before { content: attr(data-label); font-weight: 700; }
   }
 </style>
 </head>
 <body>
+<header class="topo">
+  <div class="topo-interno">
+    <a href="/" aria-label="Página inicial"><img src="/img/logo_ieim_completo_preto.svg" alt="Igreja Evangélica Irmãos Menonitas" width="110" height="97"></a>
+    <nav><a href="/">Voltar ao início</a></nav>
+  </div>
+</header>
 <main>
-  <img src="/img/logo_ieim_simbolo_preto.svg" alt="IEIM" width="220" height="145">
-  <h1>Página em construção</h1>
-  <div class="barra" role="progressbar" aria-label="Carregando"><span></span></div>
+<h1>Termos de Uso</h1>
+<p class="data">Última atualização: 12 de outubro de 2026</p>
+<p class="intro">Estes termos explicam as regras para usar o site irmaosmenonitas.com.br, mantido pela Igreja Evangélica Irmãos Menonitas de Campo Grande, e valem para todas as suas páginas.</p>
+<nav class="sumario" aria-label="Nesta página">
+  <p>Nesta página</p>
+  <ol>
+    <li><a href="#aceitacao">Aceitação</a></li>
+    <li><a href="#site">Sobre o site</a></li>
+    <li><a href="#uso">Uso do site</a></li>
+    <li><a href="#marca">Marca e conteúdo</a></li>
+    <li><a href="#eventos">Inscrições em eventos</a></li>
+    <li><a href="#contribuicoes">Contribuições</a></li>
+    <li><a href="#links">Links para outros sites</a></li>
+    <li><a href="#responsabilidade">Disponibilidade e responsabilidade</a></li>
+    <li><a href="#privacidade">Privacidade</a></li>
+    <li><a href="#mudancas">Mudanças nestes termos</a></li>
+    <li><a href="#foro">Lei aplicável e foro</a></li>
+    <li><a href="#contato">Fale conosco</a></li>
+  </ol>
+</nav>
+
+<h2 id="aceitacao">1. Aceitação</h2>
+<p>Ao usar este site, você concorda com estes Termos de Uso e com a nossa <a href="/privacidade/">Política de Privacidade</a>. Se não concordar, por favor não use o site.</p>
+
+<h2 id="site">2. Sobre o site</h2>
+<p>Este é o site institucional da Igreja Evangélica Irmãos Menonitas de Campo Grande. Nele você encontra informações sobre a igreja, suas unidades, horários, ministérios, calendário, eventos, formas de contribuição e canais de contato.</p>
+
+<h2 id="uso">3. Uso do site</h2>
+<p>Você se compromete a usar o site de forma lícita e respeitosa, e a não:</p>
+<ul>
+  <li>informar dados falsos ou de outra pessoa em inscrições e formulários;</li>
+  <li>tentar acessar áreas restritas, interferir no funcionamento do site ou enviar programas maliciosos;</li>
+  <li>usar o conteúdo do site para fins ofensivos, enganosos ou comerciais sem autorização.</li>
+</ul>
+
+<h2 id="marca">4. Marca e conteúdo</h2>
+<p>O nome, o símbolo e o logotipo da igreja, os textos, as imagens e o visual deste site pertencem à Igreja Evangélica Irmãos Menonitas de Campo Grande ou são usados com autorização. Você pode compartilhar links e conteúdos do site citando a fonte. Para outros usos da marca ou do conteúdo, peça autorização pelo e-mail <a href="mailto:ieimcampograndems@gmail.com">ieimcampograndems@gmail.com</a>.</p>
+
+<h2 id="eventos">5. Inscrições em eventos</h2>
+<p>Cada evento tem a sua própria página, com data, local, valores, prazos e regras de participação. Ao se inscrever, você concorda com as condições informadas na página do evento.</p>
+<ul>
+  <li>Inscrições pagas são processadas pela plataforma de pagamento indicada na página do evento, de acordo com as condições dessa plataforma.</li>
+  <li>Cancelamento e reembolso seguem as regras divulgadas na página de cada evento e a legislação de defesa do consumidor, quando aplicável.</li>
+  <li>A igreja pode alterar ou cancelar um evento por motivo de força maior. Nesse caso, os inscritos serão avisados pelos contatos informados na inscrição.</li>
+</ul>
+
+<h2 id="contribuicoes">6. Contribuições</h2>
+<p>Dízimos e ofertas são contribuições voluntárias, feitas por PIX diretamente para a conta da igreja, inscrita no CNPJ 26.856.633/0001-90. Confira sempre o nome do favorecido antes de confirmar a transferência. Em caso de erro no valor ou no envio, fale conosco pelo e-mail <a href="mailto:ieimcampograndems@gmail.com">ieimcampograndems@gmail.com</a>.</p>
+
+<h2 id="links">7. Links para outros sites</h2>
+<p>O site tem links para serviços de outras empresas, como Instagram, Facebook, YouTube, WhatsApp, Google Maps e plataformas de pagamento. Esses serviços têm termos e políticas próprios, e a igreja não responde pelo conteúdo ou funcionamento deles.</p>
+
+<h2 id="responsabilidade">8. Disponibilidade e responsabilidade</h2>
+<p>Fazemos o possível para manter o site no ar e as informações corretas e atualizadas. Ainda assim, o site pode ficar fora do ar por manutenção ou falhas técnicas, e horários e eventos podem mudar. Em caso de dúvida sobre uma informação importante, confirme com a igreja pelos canais oficiais.</p>
+
+<h2 id="privacidade">9. Privacidade</h2>
+<p>O tratamento de dados pessoais é explicado na <a href="/privacidade/">Política de Privacidade</a> e o uso de cookies, na <a href="/cookies/">Política de Cookies</a>.</p>
+
+<h2 id="mudancas">10. Mudanças nestes termos</h2>
+<p>Estes termos podem ser atualizados a qualquer momento. A data da última atualização fica sempre no topo desta página, e a versão publicada aqui é a que vale.</p>
+
+<h2 id="foro">11. Lei aplicável e foro</h2>
+<p>Estes termos seguem as leis brasileiras. Fica eleito o foro da Comarca de Campo Grande/MS para resolver qualquer questão relacionada a eles, respeitado o direito do consumidor de propor ação no foro do seu domicílio.</p>
+
+<h2 id="contato">12. Fale conosco</h2>
+<div class="contato">
+  <p><strong>Igreja Evangélica Irmãos Menonitas de Campo Grande</strong><br>CNPJ 26.856.633/0001-90<br>Rua Camapuã, 141, Amambaí, Campo Grande/MS, CEP 79008-270<br>E-mail: <a href="mailto:ieimcampograndems@gmail.com">ieimcampograndems@gmail.com</a></p>
+</div>
 </main>
+<footer>
+  <div class="rodape">
+    <img src="/img/logo_ieim_completo_branco.svg" alt="Igreja Evangélica Irmãos Menonitas" width="150" height="132">
+    <nav aria-label="Políticas">
+      <a href="/privacidade/">Política de Privacidade</a>
+      <a href="/cookies/">Política de Cookies</a>
+      <a href="/termos/" aria-current="page">Termos de Uso</a>
+    </nav>
+    <p>Igreja Evangélica Irmãos Menonitas de Campo Grande<br>CNPJ 26.856.633/0001-90<br>Rua Camapuã, 141, Amambaí, Campo Grande/MS, CEP 79008-270</p>
+  </div>
+</footer>
 </body>
 </html>
