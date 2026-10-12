@@ -331,11 +331,11 @@
   .nucleo {
     position: relative; z-index: 1; width: 290px; height: 290px; border-radius: 50%;
     display: grid; place-items: center; text-align: center; padding: 34px;
-    background: radial-gradient(circle at 30% 20%, rgba(255,255,255,.16), rgba(255,255,255,.04) 60%);
-    border: 1px solid rgba(255,255,255,.22);
+    background: radial-gradient(circle at 30% 20%, rgba(255,255,255,.16), color-mix(in srgb, var(--cor-nucleo, transparent) 16%, rgba(255,255,255,.04)) 70%);
+    border: 1px solid color-mix(in srgb, var(--cor-nucleo, rgba(255,255,255,.22)) 60%, rgba(255,255,255,.18));
     -webkit-backdrop-filter: blur(16px) saturate(140%); backdrop-filter: blur(16px) saturate(140%);
-    box-shadow: inset 0 1px 0 rgba(255,255,255,.25), 0 0 80px -20px var(--cor-nucleo, rgba(255,255,255,.25));
-    transition: box-shadow .5s;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,.25), inset 0 0 50px -20px var(--cor-nucleo, transparent), 0 0 90px -16px var(--cor-nucleo, rgba(255,255,255,.25));
+    transition: box-shadow .5s, border-color .5s;
   }
   .nucleo::before { /* anel que gira */
     content: ""; position: absolute; inset: -9px; border-radius: 50%; padding: 1px;
@@ -345,6 +345,23 @@
     animation: girar 6s linear infinite;
   }
   @keyframes girar { to { transform: rotate(360deg); } }
+  .nucleo::after, .roda-nucleo::after { /* onda que sai do círculo ao escolher um ministério */
+    content: ""; position: absolute; inset: 0; border-radius: 50%; pointer-events: none; opacity: 0;
+    border: 2px solid var(--cor-nucleo, #fff);
+  }
+  .nucleo.pulsa::after, .roda-nucleo.pulsa::after { animation: onda 1s cubic-bezier(.2,.7,.3,1); }
+  @keyframes onda { from { opacity: .9; transform: scale(1); } to { opacity: 0; transform: scale(1.45); } }
+  .ministerios .conteudo { position: relative; }
+  .som-botao {
+    position: absolute; top: -56px; right: 24px; z-index: 3; width: 40px; height: 40px; border-radius: 50%; cursor: pointer;
+    display: grid; place-items: center; color: rgba(255,255,255,.75);
+    background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.16);
+    transition: background-color .3s, color .3s;
+  }
+  .som-botao:hover { background: rgba(255,255,255,.14); color: #fff; }
+  .som-botao svg { width: 18px; height: 18px; }
+  .som-botao .som-off, .som-botao[aria-pressed="false"] .som-on { display: none; }
+  .som-botao[aria-pressed="false"] .som-off { display: block; }
   .nucleo-padrao, .nucleo-info { grid-area: 1 / 1; transition: opacity .4s, transform .4s var(--curva); }
   .nucleo-padrao { display: grid; justify-items: center; gap: 14px; }
   .nucleo-padrao img { width: 104px; }
@@ -440,6 +457,7 @@
     html:not(.js) .lado-mapa { display: grid; gap: 24px; margin-top: 24px; } html:not(.js) .ramo { flex-direction: column !important; align-items: flex-start; gap: 10px; } html:not(.js) .chips { display: flex; flex-wrap: wrap; gap: 8px; } html:not(.js) .mapa > .nucleo, html:not(.js) .mapa-linhas { display: none; }
     .ministerios .cabeca { margin-bottom: 8px; }
     .ministerios .cabeca p { display: none; }
+    .som-botao { top: -48px; right: 16px; width: 36px; height: 36px; }
     .roda { display: block; position: relative; height: 470px; margin: 0 -16px; overflow: hidden; }
     .roda-linhas { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; pointer-events: none; }
     .roda-linhas path { fill: none; stroke: rgba(255,255,255,.16); stroke-width: 1.3; stroke-linecap: round; stroke-dasharray: 1; stroke-dashoffset: 1; transition: stroke .4s, stroke-width .4s; }
@@ -449,11 +467,11 @@
     .roda-linhas circle { fill: #fff; filter: drop-shadow(0 0 5px rgba(255,255,255,.9)); }
     .roda-nucleo {
       position: absolute; left: -92px; top: 50%; width: 184px; height: 184px; margin-top: -92px; border-radius: 50%; cursor: pointer;
-      background: radial-gradient(circle at 70% 30%, rgba(255,255,255,.16), rgba(255,255,255,.04) 60%);
-      border: 1px solid rgba(255,255,255,.22);
+      background: radial-gradient(circle at 70% 30%, rgba(255,255,255,.16), color-mix(in srgb, var(--cor-nucleo, transparent) 18%, rgba(255,255,255,.04)) 70%);
+      border: 1px solid color-mix(in srgb, var(--cor-nucleo, rgba(255,255,255,.22)) 60%, rgba(255,255,255,.18));
       -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px);
-      box-shadow: inset 0 1px 0 rgba(255,255,255,.22), 0 0 70px -14px var(--cor-nucleo, rgba(255,255,255,.25));
-      transition: box-shadow .5s;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.22), inset 0 0 44px -16px var(--cor-nucleo, transparent), 0 0 80px -10px var(--cor-nucleo, rgba(255,255,255,.25));
+      transition: box-shadow .5s, border-color .5s;
     }
     .roda-nucleo::before {
       content: ""; position: absolute; inset: -8px; border-radius: 50%; padding: 1px;
@@ -696,6 +714,10 @@
 
   <section class="secao ministerios" aria-labelledby="titulo-ministerios">
     <div class="conteudo">
+      <button class="som-botao" type="button" aria-pressed="true" aria-label="Som dos ministérios">
+        <svg class="som-on" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H3v6h3l5 4V5z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M18.5 5.5a9 9 0 0 1 0 13"/></svg>
+        <svg class="som-off" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H3v6h3l5 4V5z"/><path d="m16 9 6 6M22 9l-6 6"/></svg>
+      </button>
       <div class="cabeca revelar">
         <span class="sobre">Ministérios</span>
         <h2 id="titulo-ministerios">Um lugar para servir e pertencer</h2>
@@ -918,6 +940,44 @@
     var largo = window.matchMedia('(min-width: 1021px)');
     var linhasChip = new Map();
     var auto = null, parado = false, indice = 0;
+
+    /* ───── Som (sintetizado no navegador, sem arquivos). Só toca depois de um toque/clique da pessoa ───── */
+    var som = (function () {
+      var ctx = null, ligado = true;
+      try { ligado = localStorage.getItem('ieim-som') !== 'off'; } catch (e) {}
+      var NOTAS = [523.25, 587.33, 659.25, 783.99, 880, 1046.5, 1174.66, 1318.51, 1567.98];
+      function ac() {
+        if (!ctx) { var C = window.AudioContext || window.webkitAudioContext; if (!C) return null; ctx = new C(); }
+        if (ctx.state === 'suspended') ctx.resume();
+        return ctx;
+      }
+      function tom(f, dur, tipo, vol, ate, atraso) {
+        var c = ac(); if (!c || !ligado) return;
+        var t = c.currentTime + (atraso || 0), o = c.createOscillator(), g = c.createGain();
+        o.type = tipo || 'sine'; o.frequency.setValueAtTime(f, t);
+        if (ate) o.frequency.exponentialRampToValueAtTime(ate, t + dur);
+        g.gain.setValueAtTime(0.0001, t);
+        g.gain.exponentialRampToValueAtTime(vol, t + .012);
+        g.gain.exponentialRampToValueAtTime(0.0001, t + dur);
+        o.connect(g); g.connect(c.destination); o.start(t); o.stop(t + dur + .03);
+      }
+      return {
+        // cada ministério tem a sua nota (escala pentatônica: sempre soa harmônico)
+        escolher: function (i) { var f = NOTAS[i % NOTAS.length]; tom(f, .22, 'sine', .07); tom(f * 2, .14, 'triangle', .018, 0, .01); },
+        // giro da roda: varredura subindo + estalos de engrenagem
+        girar: function () { tom(260, .5, 'sine', .045, 900); for (var k = 0; k < 6; k++) tom(1900 + k * 120, .025, 'triangle', .02, 0, .06 + k * .075); },
+        voltar: function () { tom(700, .25, 'sine', .045, 300); },
+        passar: function () { if (ctx && ctx.state === 'running') tom(2600, .02, 'sine', .008); },
+        ligado: function () { return ligado; },
+        alternar: function () { ligado = !ligado; try { localStorage.setItem('ieim-som', ligado ? 'on' : 'off'); } catch (e) {} if (ligado) { ac(); tom(880, .12, 'sine', .05); } return ligado; }
+      };
+    })();
+    var botaoSom = document.querySelector('.som-botao');
+    function pintarSom() { botaoSom.setAttribute('aria-pressed', som.ligado() ? 'true' : 'false'); botaoSom.setAttribute('aria-label', som.ligado() ? 'Desligar o som dos ministérios' : 'Ligar o som dos ministérios'); }
+    pintarSom();
+    botaoSom.addEventListener('click', function (e) { e.stopPropagation(); som.alternar(); pintarSom(); });
+    function pulsar(el) { el.classList.remove('pulsa'); void el.offsetWidth; el.classList.add('pulsa'); }
+    var nomesMin = chips.map(function (c) { return c.dataset.nome; });
     function parar() { parado = true; clearInterval(auto); clearTimeout(auto); }
 
     function caminho(alvoSvg, d, classe, atraso) {
@@ -979,7 +1039,7 @@
       selecionado = chip;
       nucleo.style.setProperty('--cor-nucleo', chip.style.getPropertyValue('--cor'));
       preencher(nucleo, chip.dataset);
-      nucleo.classList.add('mostrando');
+      nucleo.classList.add('mostrando'); pulsar(nucleo);
       acender(chip);
     }
     function limpar() {
@@ -990,13 +1050,15 @@
     chips.forEach(function (chip) {
       chip.addEventListener('click', function (e) {
         e.stopPropagation(); parar();
-        if (chip.getAttribute('aria-pressed') === 'true') limpar(); else mostrar(chip);
+        if (chip.getAttribute('aria-pressed') === 'true') { limpar(); som.voltar(); }
+        else { mostrar(chip); som.escolher(chips.indexOf(chip)); }
       });
+      chip.addEventListener('mouseenter', function () { if (largo.matches) som.passar(); });
     });
     // Tocar no círculo ou fora dos ministérios volta ao logo
     mapa.closest('.ministerios').addEventListener('click', function (e) {
-      if (!largo.matches || e.target.closest('.chip')) return;
-      parar(); limpar();
+      if (!largo.matches || e.target.closest('.chip, .som-botao')) return;
+      parar(); if (selecionado) som.voltar(); limpar();
     });
 
     /* Celular: roda em semicírculo */
@@ -1023,7 +1085,7 @@
     var botoesGrupo = grupos.map(function (g, i) {
       var b = document.createElement('button');
       b.type = 'button'; b.className = 'roda-grupo'; b.textContent = g.nome;
-      b.addEventListener('click', function (e) { e.stopPropagation(); parar(); if (i !== gAtivo) girarPara(i); limparRoda(); });
+      b.addEventListener('click', function (e) { e.stopPropagation(); parar(); if (i !== gAtivo) { girarPara(i); som.girar(); } limparRoda(); });
       roda.appendChild(b); return b;
     });
     var N = grupos.length, PASSO = 52, pos = 0, gAtivo = 0, rSel = null, animando = null;
@@ -1069,7 +1131,8 @@
         b._dados = d;
         b.addEventListener('click', function (e) {
           e.stopPropagation(); parar();
-          if (rSel === b) limparRoda(); else selecionarRoda(b);
+          if (rSel === b) { limparRoda(); som.voltar(); }
+          else { selecionarRoda(b); som.escolher(nomesMin.indexOf(d.nome)); }
         });
         roda.appendChild(b);
       });
@@ -1118,7 +1181,7 @@
       var cor = b.style.getPropertyValue('--cor');
       roda.style.setProperty('--cor-nucleo', cor); info.style.setProperty('--cor-nucleo', cor);
       preencher(info, b._dados);
-      info.classList.add('escolhido');
+      info.classList.add('escolhido'); pulsar(rNucleo);
     }
     function limparRoda() {
       rSel = null;
@@ -1128,8 +1191,8 @@
       preencher(info, { nome: grupos[gAtivo].nome, desc: 'Toque em um ministério para conhecer.', lider: '' });
       info.classList.remove('escolhido');
     }
-    rNucleo.addEventListener('click', function (e) { e.stopPropagation(); parar(); limparRoda(); });
-    roda.addEventListener('click', function () { parar(); limparRoda(); });
+    rNucleo.addEventListener('click', function (e) { e.stopPropagation(); parar(); if (rSel) som.voltar(); limparRoda(); });
+    roda.addEventListener('click', function () { parar(); if (rSel) som.voltar(); limparRoda(); });
     info.addEventListener('click', function () { parar(); });
     function iniciarRoda() {
       medidas(); posicionarGrupos(); montarItens(); limparRoda();
