@@ -126,7 +126,7 @@
           nome: quando + ': ' + ev.titulo,
           lembrete: true,
           _ordem: quando === 'Amanhã' ? 1 : 0,
-          logo: '/img/logo_ieim_simbolo_branco.svg',
+          logo: '/img/aviso_lembrete_logo.svg',
           fraseHtml: '<strong style="color:' + cor + '">' + quando + '</strong> · ' + esc(ev.titulo) + (extra ? ' · <span style="opacity:.75">' + esc(extra) + '</span>' : ''),
           botao: ev.link ? 'Saiba mais' : 'Ver no calendário',
           link: ev.link || '/calendario/',
