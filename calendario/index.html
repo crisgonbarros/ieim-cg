@@ -2,62 +2,589 @@
 <html lang="pt-BR">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="robots" content="noindex, nofollow">
-<title>Em construção · IEIM Campo Grande</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Calendário · Igreja Evangélica Irmãos Menonitas · Campo Grande/MS</title>
+<meta name="description" content="Calendário da Igreja Evangélica Irmãos Menonitas em Campo Grande/MS: eventos, reuniões e o tema de cada mês.">
+<meta name="theme-color" content="#040405">
+
 <link rel="icon" href="/img/favicon.svg" type="image/svg+xml">
 <link rel="icon" href="/img/favicon-32.png" sizes="32x32" type="image/png">
 <link rel="apple-touch-icon" href="/img/apple-touch-icon.png">
+
+<meta property="og:title" content="Calendário · Igreja Evangélica Irmãos Menonitas · Campo Grande/MS">
+<meta property="og:description" content="Eventos, reuniões e o tema de cada mês da IEIM Campo Grande.">
+<meta property="og:image" content="https://www.irmaosmenonitas.com.br/img/og_ieim.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:url" content="https://www.irmaosmenonitas.com.br/calendario/">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="pt_BR">
+<meta name="twitter:card" content="summary_large_image">
+
+<script>document.documentElement.classList.add('js');</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Raleway:wght@500&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;500;600;700&display=swap">
+
 <style>
-  :root { --preto: #000; --branco: #fff; --linha: #e6e6e6; }
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  html, body { height: 100%; }
+  :root {
+    --preto: #000;
+    --branco: #fff;
+    --cinza: #5f5f5f;
+    --cinza-claro: #a8a8a8;
+    --linha: #e6e6e6;
+    --fundo-claro: #f6f6f4;
+    --largura: 1120px;
+    --topo: 68px;
+    --curva: cubic-bezier(.2, .75, .2, 1);
+    --rosa: #e6007e; --azul: #2f5fe0; --amarelo: #f5b700; --verde: #2e9e4f;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; scroll-padding-top: calc(var(--topo) + 16px); }
   body {
-    background: var(--branco);
-    color: var(--preto);
-    font-family: "Raleway", system-ui, sans-serif;
-    font-weight: 500;
-    display: grid;
-    place-items: center;
-    padding: 24px 16px;
+    background: var(--branco); color: var(--preto);
+    font-family: "Raleway", system-ui, sans-serif; font-weight: 500;
+    font-variant-numeric: lining-nums; line-height: 1.55; overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
   }
-  main { display: grid; justify-items: center; gap: 40px; text-align: center; }
-  img { width: clamp(140px, 36vw, 220px); height: auto; display: block; }
-  h1 { font-size: clamp(1.05rem, 3.2vw, 1.3rem); font-weight: 500; letter-spacing: 0.04em; }
-  .barra {
-    width: clamp(160px, 40vw, 240px);
-    height: 3px;
-    background: var(--linha);
-    border-radius: 3px;
-    overflow: hidden;
+  img { display: block; max-width: 100%; height: auto; }
+  a { color: inherit; }
+  button { font: inherit; color: inherit; background: none; border: 0; }
+  :focus-visible { outline: 2px solid currentColor; outline-offset: 3px; border-radius: 8px; }
+  .conteudo { width: 100%; max-width: var(--largura); margin: 0 auto; padding: 0 24px; }
+  .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+  .sobre { display: block; font-size: .78rem; font-weight: 700; letter-spacing: .22em; text-transform: uppercase; margin-bottom: 14px; color: var(--cinza); }
+
+  /* ── Abertura + ano (escuro) ── */
+  .topo-cal {
+    position: relative; overflow: hidden; isolation: isolate;
+    margin-top: calc(var(--topo) * -1);
+    padding: calc(var(--topo) + 64px) 0 88px;
+    background: #040405; color: var(--branco);
   }
-  .barra span {
-    display: block;
-    width: 40%;
-    height: 100%;
-    background: var(--preto);
-    border-radius: 3px;
-    animation: carregar 1.6s ease-in-out infinite;
+  .aurora { position: absolute; inset: -10%; z-index: -2; pointer-events: none; }
+  .aurora span {
+    position: absolute; width: 62vmax; height: 62vmax; border-radius: 50%;
+    background: radial-gradient(circle, var(--c) 0%, transparent 62%);
+    opacity: var(--o); mix-blend-mode: screen; will-change: transform;
   }
-  @keyframes carregar {
-    0%   { transform: translateX(-100%); opacity: .35; }
-    50%  { opacity: 1; }
-    100% { transform: translateX(250%); opacity: .35; }
+  .aurora span:nth-child(1) { --c: var(--rosa); --o: .42; left: -22%; top: -30%; animation: deriva1 26s ease-in-out infinite alternate; }
+  .aurora span:nth-child(2) { --c: var(--azul); --o: .62; right: -24%; top: -18%; animation: deriva2 30s ease-in-out infinite alternate; }
+  .aurora span:nth-child(3) { --c: var(--amarelo); --o: .2; left: 4%; bottom: -46%; animation: deriva3 34s ease-in-out infinite alternate; }
+  .aurora span:nth-child(4) { --c: var(--verde); --o: .3; right: -8%; bottom: -42%; animation: deriva4 28s ease-in-out infinite alternate; }
+  @keyframes deriva1 { to { transform: translate(18vw, 14vh) scale(1.15); } }
+  @keyframes deriva2 { to { transform: translate(-16vw, 18vh) scale(.9); } }
+  @keyframes deriva3 { to { transform: translate(20vw, -16vh) scale(1.1); } }
+  @keyframes deriva4 { to { transform: translate(-22vw, -12vh) scale(1.2); } }
+  .topo-cal::before { /* véu para leitura */
+    content: ""; position: absolute; inset: 0; z-index: -1;
+    background: linear-gradient(180deg, rgba(4,4,5,.15) 0%, rgba(4,4,5,.4) 60%, rgba(4,4,5,.72) 100%);
   }
+  .topo-cal::after { /* grão fino */
+    content: ""; position: absolute; inset: 0; z-index: -1; opacity: .07; pointer-events: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+  .topo-cal .sobre { color: rgba(255,255,255,.55); }
+  .titulo-cal { font-size: clamp(2.4rem, 6.4vw, 4.4rem); font-weight: 700; line-height: 1.02; letter-spacing: -.02em; text-wrap: balance; }
+  .titulo-cal .ano-num {
+    background: linear-gradient(90deg, #ff5cb0, #ffc93d, #4fdc8a, #6c9bff, #ff5cb0);
+    background-size: 220% 100%;
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+    animation: correr 9s linear infinite;
+  }
+  @keyframes correr { to { background-position: -220% 0; } }
+  .indisponivel .titulo-cal { font-size: clamp(1.9rem, 5vw, 3.2rem); }
+  .tema-atual {
+    position: relative; overflow: hidden; display: inline-grid; gap: 4px; margin-top: 28px; max-width: 640px;
+    padding: 16px 22px 17px; border-radius: 20px;
+    background: rgba(255,255,255,.07); border: 1px solid rgba(255,255,255,.16);
+    -webkit-backdrop-filter: blur(16px) saturate(150%); backdrop-filter: blur(16px) saturate(150%);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,.16), 0 0 60px -24px var(--luz, transparent);
+  }
+  .tema-atual::after {
+    content: ""; position: absolute; inset: 0; pointer-events: none;
+    background: linear-gradient(110deg, transparent 30%, rgba(255,255,255,.14) 50%, transparent 70%);
+    transform: translateX(-130%); animation: varrer 7s ease-in-out 1.4s infinite;
+  }
+  @keyframes varrer { 0% { transform: translateX(-130%); } 30%, 100% { transform: translateX(130%); } }
+  .tema-rotulo { display: flex; align-items: center; gap: 9px; font-size: .72rem; font-weight: 700; letter-spacing: .2em; text-transform: uppercase; color: rgba(255,255,255,.6); }
+  .tema-rotulo::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--luz, #fff); box-shadow: 0 0 12px var(--luz, #fff); }
+  .tema-texto { font-size: clamp(1.02rem, 2.2vw, 1.2rem); font-weight: 600; line-height: 1.35; text-wrap: balance; }
+  .tema-atual[hidden] { display: none; }
+
+  /* Entrada da abertura */
+  .js .entra { opacity: 0; transform: translateY(22px); filter: blur(6px); animation: entrar 1.1s var(--curva) forwards; animation-delay: calc(var(--d) * .14s + .15s); }
+  @keyframes entrar { to { opacity: 1; transform: none; filter: none; } }
+
+  /* ── Os 12 meses ── */
+  .ano { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-top: 56px; }
+  .ano[hidden] { display: none; }
+  .mes {
+    --luz: #fff;
+    position: relative; overflow: hidden; border-radius: 22px; padding: 18px 16px 14px;
+    background: rgba(255,255,255,.045); border: 1px solid rgba(255,255,255,.11);
+    -webkit-backdrop-filter: blur(14px) saturate(140%); backdrop-filter: blur(14px) saturate(140%);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,.1);
+    transition: border-color .4s, box-shadow .4s, background-color .4s;
+  }
+  .mes::before { /* reflexo que segue o mouse */
+    content: ""; position: absolute; inset: 0; pointer-events: none; opacity: 0; transition: opacity .4s;
+    background: radial-gradient(260px circle at var(--mx, 50%) var(--my, 0%), rgba(255,255,255,.1), transparent 50%);
+  }
+  .mes:hover::before { opacity: 1; }
+  .mes::after { /* brilho que passa uma vez ao aparecer */
+    content: ""; position: absolute; inset: 0; pointer-events: none;
+    background: linear-gradient(115deg, transparent 35%, rgba(255,255,255,.09) 50%, transparent 65%);
+    transform: translateX(-120%);
+  }
+  .ano.visivel .mes::after { animation: brilho 1.4s ease calc(var(--i) * .07s + .3s) 1 both; }
+  @keyframes brilho { from { transform: translateX(-120%); } to { transform: translateX(120%); } }
+  .mes.atual {
+    background: color-mix(in srgb, var(--luz) 9%, rgba(255,255,255,.05));
+    border-color: color-mix(in srgb, var(--luz) 60%, transparent);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,.18), 0 0 70px -22px var(--luz);
+  }
+  .mes.passado { background: rgba(255,255,255,.025); border-color: rgba(255,255,255,.07); }
+  .mes-cabeca { position: relative; display: grid; gap: 3px; min-height: 52px; margin-bottom: 12px; }
+  .mes-nome { display: flex; align-items: center; justify-content: space-between; gap: 8px; font-weight: 700; font-size: 1.02rem; text-align: left; }
+  .mes.passado .mes-nome { color: rgba(255,255,255,.4); }
+  button.mes-nome { cursor: pointer; width: 100%; }
+  button.mes-nome svg { width: 16px; height: 16px; opacity: .4; transition: transform .35s var(--curva), opacity .3s; }
+  button.mes-nome:hover svg { opacity: 1; transform: translateY(2px); }
+  .mes-tema { font-size: .72rem; line-height: 1.4; color: rgba(255,255,255,.58); display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+  .semana, .dias { position: relative; display: grid; grid-template-columns: repeat(7, 1fr); text-align: center; }
+  .semana { font-size: .56rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: rgba(255,255,255,.38); margin-bottom: 4px; }
+  .dias { row-gap: 2px; }
+  .dia {
+    position: relative; display: grid; place-items: center; aspect-ratio: 1; min-height: 30px;
+    font-size: .8rem; font-weight: 500; color: rgba(255,255,255,.82); border-radius: 50%;
+  }
+  .dia.foi { color: rgba(255,255,255,.2); }
+  .dia.hoje { color: #fff; font-weight: 700; }
+  .dia.hoje::before { /* anel de luz girando no dia de hoje */
+    content: ""; position: absolute; inset: 2px; border-radius: 50%; padding: 1.5px;
+    background: conic-gradient(from 0deg, rgba(255,255,255,.15) 0 55%, var(--luz) 85%, rgba(255,255,255,.15) 100%);
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); -webkit-mask-composite: xor;
+    mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0);
+    animation: girar 5s linear infinite;
+  }
+  @keyframes girar { to { transform: rotate(360deg); } }
+  button.dia { cursor: pointer; color: #fff; font-weight: 700; transition: background-color .3s, box-shadow .3s; }
+  button.dia::after { /* ponto de luz no dia com evento */
+    content: ""; position: absolute; left: 50%; bottom: 3px; width: 4px; height: 4px; margin-left: -2px; border-radius: 50%;
+    background: var(--luz); box-shadow: 0 0 6px var(--luz), 0 0 12px var(--luz);
+  }
+  @media (hover: hover) { button.dia:hover { background: color-mix(in srgb, var(--luz) 24%, transparent); box-shadow: 0 0 18px -4px var(--luz); } }
+  button.dia:active { background: color-mix(in srgb, var(--luz) 30%, transparent); }
+
+  /* ── Agenda (claro) ── */
+  .agenda { position: relative; padding: 104px 0 120px; background: var(--branco); overflow: hidden; isolation: isolate; }
+  .agenda[hidden] { display: none; }
+  .agenda .cabeca { margin-bottom: 52px; }
+  .agenda h2 { font-size: clamp(1.7rem, 4.2vw, 2.6rem); font-weight: 700; line-height: 1.12; letter-spacing: -.01em; }
+  .blocos { display: grid; gap: 72px; }
+  .bloco { --luz: var(--azul); position: relative; display: grid; grid-template-columns: 280px 1fr; gap: 44px; align-items: start; }
+  .bloco-cabeca { position: sticky; top: calc(var(--topo) + 28px); display: grid; gap: 10px; isolation: isolate; }
+  .bloco-cabeca::before { /* luz do mês */
+    content: ""; position: absolute; z-index: -1; left: -60px; top: -50px; width: 260px; height: 200px; pointer-events: none;
+    background: radial-gradient(closest-side, color-mix(in srgb, var(--luz) 26%, transparent), transparent);
+    filter: blur(8px); animation: respirar 10s ease-in-out infinite alternate;
+  }
+  @keyframes respirar { to { transform: translate(24px, 14px) scale(1.12); } }
+  .bloco-mes { font-size: clamp(2rem, 4vw, 2.7rem); font-weight: 700; line-height: 1; letter-spacing: -.02em; }
+  .bloco-tema { color: var(--cinza); font-size: .98rem; line-height: 1.45; max-width: 30ch; }
+  .bloco-tema:empty { display: none; }
+  .bloco-linha { width: 44px; height: 3px; border-radius: 3px; background: var(--luz); box-shadow: 0 0 14px var(--luz); }
+  .eventos { list-style: none; display: grid; gap: 12px; }
+  .evento {
+    position: relative; overflow: hidden; display: grid; grid-template-columns: 88px 1fr auto; align-items: center; gap: 20px;
+    padding: 18px 22px 18px 18px; border-radius: 22px; text-decoration: none;
+    background: var(--branco); border: 1px solid var(--linha);
+    box-shadow: 0 1px 0 rgba(255,255,255,.9) inset, 0 18px 40px -32px rgba(0,0,0,.35);
+    transition: transform .35s var(--curva), box-shadow .35s, border-color .35s;
+  }
+  .evento::before {
+    content: ""; position: absolute; inset: 0; pointer-events: none; opacity: 0; transition: opacity .35s;
+    background: radial-gradient(360px circle at var(--mx, 50%) var(--my, 50%), color-mix(in srgb, var(--luz) 9%, transparent), transparent 55%);
+  }
+  .evento::after { /* reflexo */
+    content: ""; position: absolute; inset: 0; pointer-events: none;
+    background: linear-gradient(110deg, transparent 35%, rgba(255,255,255,.7) 50%, transparent 65%);
+    transform: translateX(-120%);
+  }
+  @media (hover: hover) {
+    .evento:hover { transform: translateY(-2px); border-color: color-mix(in srgb, var(--luz) 45%, var(--linha)); box-shadow: 0 26px 50px -32px rgba(0,0,0,.45), 0 0 0 1px color-mix(in srgb, var(--luz) 18%, transparent); }
+    .evento:hover::before { opacity: 1; }
+    .evento:hover::after { transform: translateX(120%); transition: transform 1s ease; }
+  }
+  .evento > * { position: relative; }
+  .data {
+    display: grid; justify-items: center; align-content: center; gap: 2px; min-height: 84px; padding: 8px 4px; border-radius: 16px; text-align: center;
+    background: var(--fundo-claro);
+  }
+  .data-dia { font-size: 1.85rem; font-weight: 700; line-height: 1; letter-spacing: -.02em; white-space: nowrap; margin-bottom: 4px; }
+  .data-dia.longo { font-size: 1.3rem; letter-spacing: -.03em; }
+  .data-mes { display: inline-flex; align-items: center; gap: 5px; font-size: .68rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; white-space: nowrap; }
+  .data-mes::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: var(--luz); box-shadow: 0 0 8px var(--luz); flex-shrink: 0; }
+  .data-sem { font-size: .62rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--cinza); white-space: nowrap; }
+  .ev-texto { display: grid; gap: 4px; min-width: 0; }
+  .ev-titulo { font-size: 1.1rem; font-weight: 700; line-height: 1.3; }
+  .ev-info { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 12px; color: var(--cinza); font-size: .92rem; }
+  .ev-info span { display: inline-flex; align-items: center; gap: 6px; }
+  .ev-info svg { width: 15px; height: 15px; flex-shrink: 0; opacity: .7; }
+  .marcador {
+    justify-self: start; display: inline-flex; align-items: center; gap: 7px; margin-bottom: 2px;
+    padding: 3px 10px 3px 8px; border-radius: 999px; background: var(--preto); color: var(--branco);
+    font-size: .68rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase;
+  }
+  .marcador i { width: 6px; height: 6px; border-radius: 50%; background: #fff; }
+  .marcador.agora i { animation: pulsar-ponto 1.8s ease-in-out infinite; }
+  @keyframes pulsar-ponto { 0%, 100% { box-shadow: 0 0 0 0 rgba(255,255,255,.6); } 70% { box-shadow: 0 0 0 7px rgba(255,255,255,0); } }
+  .ev-acao {
+    display: inline-flex; align-items: center; gap: 8px; min-height: 42px; padding: 0 18px; border-radius: 999px;
+    background: var(--preto); color: var(--branco); font-weight: 700; font-size: .88rem; white-space: nowrap;
+    transition: box-shadow .3s;
+  }
+  .ev-acao svg { width: 16px; height: 16px; transition: transform .3s var(--curva); }
+  a.evento:hover .ev-acao svg { transform: translateX(4px); }
+  a.evento:hover .ev-acao { box-shadow: 0 10px 24px -10px color-mix(in srgb, var(--luz) 70%, #000); }
+  .evento.destaque { animation: destacar 2.6s var(--curva) 1; }
+  @keyframes destacar {
+    0% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--luz) 70%, transparent), 0 0 0 1px var(--luz); border-color: var(--luz); background: color-mix(in srgb, var(--luz) 8%, #fff); }
+    40% { box-shadow: 0 0 0 10px transparent, 0 0 0 1px var(--luz); border-color: var(--luz); background: color-mix(in srgb, var(--luz) 6%, #fff); }
+    100% { box-shadow: 0 18px 40px -32px rgba(0,0,0,.35); border-color: var(--linha); background: #fff; }
+  }
+
+  /* Revelar ao rolar */
+  .js .revelar { opacity: 0; transform: translateY(34px); transition: opacity .9s ease, transform 1.1s var(--curva); transition-delay: calc(var(--d, 0) * .08s); }
+  .js .revelar.revelado { opacity: 1; transform: none; }
+
+  /* ── Rodapé ── */
+  footer { background: var(--preto); color: var(--branco); padding: 56px 16px 40px; }
+  .rodape { display: grid; gap: 22px; justify-items: center; text-align: center; }
+  .rodape img { width: 150px; }
+  .rodape nav { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px 22px; }
+  .rodape nav a { color: var(--branco); font-size: .9rem; text-decoration: none; }
+  .rodape nav a:hover { text-decoration: underline; text-underline-offset: 4px; }
+  .rodape p { color: #b5b5b5; font-size: .85rem; line-height: 1.7; }
+
+  /* ── Tablet ── */
+  @media (max-width: 1020px) {
+    .ano { grid-template-columns: repeat(3, 1fr); }
+    .bloco { grid-template-columns: 220px 1fr; gap: 32px; }
+  }
+
+  /* ── Celular ── */
+  @media (max-width: 860px) {
+    :root { --topo: 60px; }
+    .conteudo { padding: 0 16px; }
+    .topo-cal { padding: calc(var(--topo) + 40px) 0 56px; }
+    .tema-atual { margin-top: 22px; padding: 14px 18px 15px; border-radius: 18px; }
+    /* os meses viram uma fileira que desliza para os lados */
+    .ano {
+      display: flex; gap: 12px; margin: 36px -16px 0; padding: 4px 16px 10px;
+      overflow-x: auto; overscroll-behavior-x: contain; -webkit-overflow-scrolling: touch;
+      scroll-snap-type: x mandatory; scroll-padding: 0 16px; scrollbar-width: none;
+    }
+    .ano::-webkit-scrollbar { display: none; }
+    .mes { flex: 0 0 min(300px, 82vw); scroll-snap-align: center; padding: 18px 16px 14px; }
+    .dia { font-size: .86rem; min-height: 34px; }
+    .agenda { padding: 72px 0 88px; }
+    .agenda .cabeca { margin-bottom: 36px; }
+    .blocos { gap: 52px; }
+    .bloco { grid-template-columns: 1fr; gap: 20px; }
+    .bloco-cabeca { position: relative; top: auto; }
+    .bloco-cabeca::before { left: -40px; top: -40px; }
+    .evento { grid-template-columns: 70px 1fr; gap: 14px; padding: 14px 16px 14px 14px; border-radius: 20px; }
+    .data { min-height: 70px; border-radius: 14px; }
+    .data-dia { font-size: 1.6rem; }
+    .data-dia.longo { font-size: 1.08rem; }
+    .data-mes { font-size: .62rem; letter-spacing: .1em; }
+    .data-sem { font-size: .58rem; letter-spacing: .08em; }
+    .ev-titulo { font-size: 1.02rem; }
+    .ev-info { font-size: .86rem; }
+    .ev-acao { grid-column: 1 / -1; justify-content: center; min-height: 40px; font-size: .86rem; }
+  }
+
   @media (prefers-reduced-motion: reduce) {
-    .barra span { animation: pulsar 2s ease-in-out infinite; width: 100%; transform: none; }
-    @keyframes pulsar { 0%, 100% { opacity: .25; } 50% { opacity: 1; } }
+    html { scroll-behavior: auto; }
+    .aurora span, .titulo-cal .ano-num, .tema-atual::after, .dia.hoje::before, .bloco-cabeca::before, .marcador.agora i { animation: none !important; }
+    .tema-atual::after, .mes::after, .evento::after { display: none; }
+    .js .entra { opacity: 1; transform: none; filter: none; animation: none; }
+    .js .revelar { opacity: 1 !important; transform: none !important; transition: none !important; }
+    .evento, .mes { transition: none; }
+    .evento.destaque { animation-duration: .01s; }
   }
 </style>
 </head>
 <body>
+<script src="/avisos.js"></script>
+<script src="/menu.js"></script>
+
 <main>
-  <img src="/img/logo_ieim_simbolo_preto.svg" alt="IEIM" width="220" height="145">
-  <h1>Página em construção</h1>
-  <div class="barra" role="progressbar" aria-label="Carregando"><span></span></div>
+  <section class="topo-cal" aria-labelledby="titulo-cal">
+    <div class="aurora" aria-hidden="true"><span></span><span></span><span></span><span></span></div>
+    <div class="conteudo">
+      <span class="sobre entra" style="--d:0">Calendário</span>
+      <h1 id="titulo-cal" class="titulo-cal entra" style="--d:1">Agenda <span class="ano-num"></span></h1>
+      <div class="tema-atual entra" style="--d:2" hidden>
+        <span class="tema-rotulo"></span>
+        <span class="tema-texto"></span>
+      </div>
+      <div class="ano entra" style="--d:3" aria-label="Meses do ano"></div>
+    </div>
+  </section>
+
+  <section class="agenda" aria-labelledby="titulo-agenda" hidden>
+    <div class="conteudo">
+      <div class="cabeca revelar">
+        <span class="sobre">Agenda</span>
+        <h2 id="titulo-agenda">Próximos eventos</h2>
+      </div>
+      <div class="blocos"></div>
+    </div>
+  </section>
 </main>
+
+<footer>
+  <div class="conteudo rodape">
+    <img src="/img/logo_ieim_completo_branco.svg" alt="Igreja Evangélica Irmãos Menonitas" width="150" height="132" loading="lazy">
+    <nav aria-label="Políticas">
+      <a href="/privacidade/">Política de Privacidade</a>
+      <a href="/cookies/">Política de Cookies</a>
+      <a href="/termos/">Termos de Uso</a>
+    </nav>
+    <p>Igreja Evangélica Irmãos Menonitas de Campo Grande<br>CNPJ 26.856.633/0001-90<br>Rua Camapuã, 141, Amambaí, Campo Grande/MS, CEP 79008-270</p>
+  </div>
+</footer>
+
+<script src="/calendario/eventos.js"></script>
+<script>
+  (function () {
+    var DADOS = window.IEIM_CALENDARIO || {};
+    var semMovimento = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var temObs = 'IntersectionObserver' in window;
+
+    var MESES = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'];
+    var MES_CURTO = ['jan', 'fev', 'mar', 'abr', 'mai', 'jun', 'jul', 'ago', 'set', 'out', 'nov', 'dez'];
+    var SEMANA = ['Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb', 'Dom'];
+    var SEMANA_LONGA = ['domingo', 'segunda', 'terça', 'quarta', 'quinta', 'sexta', 'sábado'];
+    // a cor entra como luz: cada mês acende uma das cores da página inicial
+    var LUZ_ESCURO = ['#ff5cb0', '#6c9bff', '#ffc93d', '#4fdc8a'];
+    var LUZ_CLARO = ['#e6007e', '#2f5fe0', '#f5b700', '#2e9e4f'];
+
+    var SETA_BAIXO = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M6 13l6 6 6-6"/></svg>';
+    var SETA = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>';
+    var ICONE_HORA = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>';
+    var ICONE_LOCAL = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-7-6.1-7-11.5A7 7 0 0 1 19 9.5C19 14.9 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg>';
+
+    function esc(t) { return String(t).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
+    function dois(n) { return (n < 10 ? '0' : '') + n; }
+    // Horário de Campo Grande (UTC-4, sem horário de verão)
+    function agoraCG() { var n = new Date(); return new Date(n.getTime() + (n.getTimezoneOffset() - 240) * 60000); }
+    function chave(a, m, d) { return a + '-' + dois(m) + '-' + dois(d); }
+    function partes(k) { var p = k.split('-'); return { a: +p[0], m: +p[1], d: +p[2] }; }
+    function diaSemana(k) { var p = partes(k); return new Date(Date.UTC(p.a, p.m - 1, p.d)).getUTCDay(); }
+    function somaDias(k, n) { var p = partes(k), d = new Date(Date.UTC(p.a, p.m - 1, p.d + n)); return chave(d.getUTCFullYear(), d.getUTCMonth() + 1, d.getUTCDate()); }
+    function diasNoMes(a, m) { return new Date(Date.UTC(a, m, 0)).getUTCDate(); }
+
+    var topoCal = document.querySelector('.topo-cal');
+    var titulo = document.getElementById('titulo-cal');
+    var temaBox = document.querySelector('.tema-atual');
+    var anoEl = document.querySelector('.ano');
+    var agenda = document.querySelector('.agenda');
+    var blocos = agenda.querySelector('.blocos');
+    var diaMontado = null;
+
+    function montar() {
+      var agora = agoraCG();
+      var ano = agora.getFullYear(), mesHoje = agora.getMonth() + 1;
+      var hojeK = chave(ano, mesHoje, agora.getDate());
+      var amanhaK = somaDias(hojeK, 1);
+      diaMontado = hojeK;
+      var dados = DADOS[ano] || DADOS[String(ano)];
+
+      /* Ano sem calendário publicado */
+      if (!dados) {
+        topoCal.classList.add('indisponivel');
+        titulo.textContent = 'Calendário ' + ano + ' indisponível';
+        temaBox.hidden = true; anoEl.hidden = true; anoEl.innerHTML = '';
+        agenda.hidden = true; blocos.innerHTML = '';
+        document.title = 'Calendário ' + ano + ' indisponível · Igreja Evangélica Irmãos Menonitas · Campo Grande/MS';
+        return;
+      }
+      topoCal.classList.remove('indisponivel');
+      titulo.innerHTML = 'Agenda <span class="ano-num">' + ano + '</span>';
+      anoEl.hidden = false;
+      var temas = dados.temas || {};
+
+      /* Só o que vai de hoje em diante (nenhum histórico) */
+      var eventos = (dados.eventos || []).map(function (e, i) {
+        return { data: e.data, fim: e.ate || e.data, hora: e.hora || '', titulo: e.titulo, local: e.local || '', link: e.link || '', ordem: i };
+      }).filter(function (e) { return e.data && e.titulo && e.fim >= hojeK; });
+      eventos.forEach(function (e) { e.inicio = e.data < hojeK ? hojeK : e.data; });
+      eventos.sort(function (a, b) { return a.inicio < b.inicio ? -1 : a.inicio > b.inicio ? 1 : (a.hora < b.hora ? -1 : a.hora > b.hora ? 1 : a.ordem - b.ordem); });
+      eventos.forEach(function (e, i) { e.id = 'evento-' + (i + 1); });
+
+      var porDia = {};
+      eventos.forEach(function (e) {
+        for (var k = e.inicio; k <= e.fim; k = somaDias(k, 1)) { (porDia[k] = porDia[k] || []).push(e); }
+      });
+      var mesesComEvento = {};
+      eventos.forEach(function (e) { mesesComEvento[partes(e.inicio).m] = true; });
+
+      /* Tema do mês atual */
+      var temaHoje = temas[mesHoje] || temas[String(mesHoje)];
+      if (temaHoje) {
+        temaBox.hidden = false;
+        temaBox.style.setProperty('--luz', LUZ_ESCURO[(mesHoje - 1) % 4]);
+        temaBox.querySelector('.tema-rotulo').textContent = 'Tema de ' + MESES[mesHoje - 1].toLowerCase();
+        temaBox.querySelector('.tema-texto').textContent = temaHoje;
+      } else temaBox.hidden = true;
+
+      /* Os 12 meses */
+      var html = '';
+      for (var m = 1; m <= 12; m++) {
+        var passado = m < mesHoje, atual = m === mesHoje;
+        var tema = !passado ? (temas[m] || temas[String(m)] || '') : '';
+        var nome = esc(MESES[m - 1]);
+        var cab = mesesComEvento[m]
+          ? '<button class="mes-nome" type="button" data-ir="mes-' + m + '" aria-label="Ver os eventos de ' + nome.toLowerCase() + '">' + nome + SETA_BAIXO + '</button>'
+          : '<h3 class="mes-nome">' + nome + '</h3>';
+        html += '<section class="mes' + (passado ? ' passado' : '') + (atual ? ' atual' : '') + '" style="--i:' + (m - 1) + ';--luz:' + LUZ_ESCURO[(m - 1) % 4] + '" aria-label="' + nome + ' de ' + ano + '"' + (atual ? ' aria-current="date"' : '') + '>'
+          + '<div class="mes-cabeca">' + cab + (tema ? '<p class="mes-tema">' + esc(tema) + '</p>' : '') + '</div>'
+          + '<div class="semana" aria-hidden="true">' + SEMANA.map(function (s) { return '<span>' + s + '</span>'; }).join('') + '</div>'
+          + '<div class="dias">';
+        var primeiro = (diaSemana(chave(ano, m, 1)) + 6) % 7; // semana começando na segunda, como no calendário da igreja
+        for (var v = 0; v < primeiro; v++) html += '<span aria-hidden="true"></span>';
+        var total = diasNoMes(ano, m);
+        for (var d = 1; d <= total; d++) {
+          var k = chave(ano, m, d), lista = porDia[k];
+          var cls = 'dia' + (k < hojeK ? ' foi' : '') + (k === hojeK ? ' hoje' : '');
+          if (lista) {
+            var rotulo = d + ' de ' + MESES[m - 1].toLowerCase() + (k === hojeK ? ', hoje' : '') + ': ' + lista.map(function (e) { return e.titulo; }).join(', ');
+            html += '<button class="' + cls + '" type="button" data-ir="' + lista[0].id + '" aria-label="' + esc(rotulo) + '">' + d + '</button>';
+          } else {
+            html += '<span class="' + cls + '"' + (k === hojeK ? ' aria-label="' + d + ', hoje"' : '') + '>' + d + '</span>';
+          }
+        }
+        html += '</div></section>';
+      }
+      anoEl.innerHTML = html;
+
+      /* Agenda: do mês atual em diante */
+      var grupos = [];
+      eventos.forEach(function (e) {
+        var m = partes(e.inicio).m, g = grupos[grupos.length - 1];
+        if (!g || g.m !== m) grupos.push(g = { m: m, itens: [] });
+        g.itens.push(e);
+      });
+      agenda.hidden = !grupos.length;
+      blocos.innerHTML = grupos.map(function (g) {
+        var tema = temas[g.m] || temas[String(g.m)] || '';
+        return '<section class="bloco" id="mes-' + g.m + '" style="--luz:' + LUZ_CLARO[(g.m - 1) % 4] + '" aria-labelledby="titulo-mes-' + g.m + '">'
+          + '<div class="bloco-cabeca revelar"><span class="bloco-linha" aria-hidden="true"></span>'
+          + '<h3 class="bloco-mes" id="titulo-mes-' + g.m + '">' + esc(MESES[g.m - 1]) + '</h3>'
+          + '<p class="bloco-tema">' + esc(tema) + '</p></div>'
+          + '<ul class="eventos">' + g.itens.map(function (e, j) { return cartao(e, j, hojeK, amanhaK); }).join('') + '</ul>'
+          + '</section>';
+      }).join('');
+
+      ligarEfeitos();
+      centralizarMesAtual();
+    }
+
+    function cartao(e, j, hojeK, amanhaK) {
+      var a = partes(e.data), b = partes(e.fim), varios = e.fim !== e.data;
+      var sem = function (k) { return SEMANA[(diaSemana(k) + 6) % 7]; };
+      var diaTxt, mesTxt, semTxt;
+      if (!varios) { diaTxt = String(a.d); mesTxt = MES_CURTO[a.m - 1]; semTxt = sem(e.data); }
+      else {
+        diaTxt = a.d + '–' + b.d;
+        mesTxt = a.m === b.m ? MES_CURTO[a.m - 1] : MES_CURTO[a.m - 1] + '–' + MES_CURTO[b.m - 1];
+        semTxt = sem(e.data) + '–' + sem(e.fim);
+      }
+      var marca = '';
+      if (varios && e.data < hojeK) marca = '<span class="marcador agora"><i></i>Acontecendo</span>';
+      else if (e.data === hojeK) marca = '<span class="marcador agora"><i></i>Hoje</span>';
+      else if (e.data === amanhaK) marca = '<span class="marcador"><i></i>Amanhã</span>';
+      var info = '';
+      if (e.hora) info += '<span>' + ICONE_HORA + esc(e.hora) + '</span>';
+      if (e.local) info += '<span>' + ICONE_LOCAL + esc(e.local) + '</span>';
+      var quando = varios
+        ? 'De ' + a.d + ' de ' + MESES[a.m - 1].toLowerCase() + ' a ' + b.d + ' de ' + MESES[b.m - 1].toLowerCase()
+        : SEMANA_LONGA[diaSemana(e.data)] + ', ' + a.d + ' de ' + MESES[a.m - 1].toLowerCase();
+      var corpo = '<div class="data" aria-hidden="true"><span class="data-dia' + (varios ? ' longo' : '') + '">' + diaTxt + '</span><span class="data-mes">' + mesTxt + '</span><span class="data-sem">' + semTxt + '</span></div>'
+        + '<div class="ev-texto"><span class="sr">' + esc(quando) + '. </span>' + marca
+        + '<span class="ev-titulo">' + esc(e.titulo) + '</span>'
+        + (info ? '<span class="ev-info">' + info + '</span>' : '') + '</div>';
+      var estilo = ' style="--d:' + Math.min(j, 6) + '"';
+      if (e.link) {
+        return '<li><a class="evento revelar" id="' + e.id + '" href="' + esc(e.link) + '"' + estilo + '>' + corpo
+          + '<span class="ev-acao">Saiba mais' + SETA + '</span></a></li>';
+      }
+      return '<li><div class="evento revelar" id="' + e.id + '"' + estilo + '>' + corpo + '</div></li>';
+    }
+
+    /* Celular: a fileira de meses abre já no mês atual (sem mexer na rolagem da página) */
+    function centralizarMesAtual() {
+      var atual = anoEl.querySelector('.mes.atual');
+      if (!atual || anoEl.scrollWidth <= anoEl.clientWidth + 2) return;
+      anoEl.scrollLeft = atual.offsetLeft - anoEl.offsetLeft - (anoEl.clientWidth - atual.offsetWidth) / 2;
+    }
+
+    function quandoVisivel(el, fn, limiar) {
+      if (semMovimento || !temObs) { fn(); return; }
+      var o = new IntersectionObserver(function (es) {
+        es.forEach(function (e) { if (e.isIntersecting) { fn(); o.disconnect(); } });
+      }, { threshold: limiar || 0.12 });
+      o.observe(el);
+    }
+
+    function ligarEfeitos() {
+      document.querySelectorAll('.revelar:not(.revelado)').forEach(function (el) {
+        quandoVisivel(el, function () { el.classList.add('revelado'); }, 0.08);
+      });
+      quandoVisivel(anoEl, function () { anoEl.classList.add('visivel'); }, 0.1);
+      if (window.matchMedia('(hover: hover)').matches) {
+        document.querySelectorAll('.mes, .evento').forEach(function (el) {
+          el.addEventListener('pointermove', function (ev) {
+            var r = el.getBoundingClientRect();
+            el.style.setProperty('--mx', (ev.clientX - r.left) + 'px');
+            el.style.setProperty('--my', (ev.clientY - r.top) + 'px');
+          });
+        });
+      }
+    }
+
+    /* Tocar num dia ou num mês leva até os eventos na agenda */
+    anoEl.addEventListener('click', function (ev) {
+      var alvo = ev.target.closest('[data-ir]');
+      if (!alvo) return;
+      var el = document.getElementById(alvo.getAttribute('data-ir'));
+      if (!el) return;
+      el.classList.add('revelado');
+      if (el.classList.contains('evento')) {
+        el.scrollIntoView({ behavior: semMovimento ? 'auto' : 'smooth', block: 'center' });
+        el.classList.remove('destaque'); void el.offsetWidth; el.classList.add('destaque');
+        setTimeout(function () { el.setAttribute('tabindex', '-1'); el.focus({ preventScroll: true }); }, semMovimento ? 0 : 500);
+      } else {
+        el.querySelectorAll('.revelar').forEach(function (r) { r.classList.add('revelado'); });
+        el.scrollIntoView({ behavior: semMovimento ? 'auto' : 'smooth', block: 'start' });
+      }
+    });
+    document.addEventListener('animationend', function (ev) { if (ev.animationName === 'destacar') ev.target.classList.remove('destaque'); });
+
+    montar();
+    window.addEventListener('load', centralizarMesAtual);
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(centralizarMesAtual);
+
+    /* Virou o dia (página aberta): monta de novo sozinha */
+    setInterval(function () {
+      var a = agoraCG();
+      if (chave(a.getFullYear(), a.getMonth() + 1, a.getDate()) !== diaMontado) montar();
+    }, 60000);
+  })();
+</script>
 </body>
 </html>
