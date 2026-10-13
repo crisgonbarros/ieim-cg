@@ -445,12 +445,23 @@
       topoCal.classList.remove('indisponivel');
       titulo.innerHTML = 'Agenda <span class="ano-num">' + ano + '</span>';
       anoArea.hidden = false;
-      var temas = dados.temas || {};
+      /* Ano seguinte: entra no carrossel e na agenda só quando já estiver no eventos.js */
+      var seguinte = DADOS[ano + 1] || DADOS[String(ano + 1)];
+      var anos = seguinte ? [{ a: ano, d: dados }, { a: ano + 1, d: seguinte }] : [{ a: ano, d: dados }];
+      function temaDe(a, m) {
+        var t = (a === ano ? dados : seguinte).temas || {};
+        return t[m] || t[String(m)] || '';
+      }
+      function nomeMes(a, m) { return MESES[m - 1] + (a !== ano ? ' ' + a : ''); }
 
       /* Só o que vai de hoje em diante (nenhum histórico) */
-      var eventos = (dados.eventos || []).map(function (e, i) {
-        return { data: e.data, fim: e.ate || e.data, hora: e.hora || '', titulo: e.titulo, local: e.local || '', link: e.link || '', ordem: i };
-      }).filter(function (e) { return e.data && e.titulo && e.fim >= hojeK; });
+      var eventos = [];
+      anos.forEach(function (x, ia) {
+        (x.d.eventos || []).forEach(function (e, i) {
+          eventos.push({ data: e.data, fim: e.ate || e.data, hora: e.hora || '', titulo: e.titulo, local: e.local || '', link: e.link || '', ordem: ia * 100000 + i });
+        });
+      });
+      eventos = eventos.filter(function (e) { return e.data && e.titulo && e.fim >= hojeK; });
       eventos.forEach(function (e) { e.inicio = e.data < hojeK ? hojeK : e.data; });
       eventos.sort(function (a, b) { return a.inicio < b.inicio ? -1 : a.inicio > b.inicio ? 1 : (a.hora < b.hora ? -1 : a.hora > b.hora ? 1 : a.ordem - b.ordem); });
       eventos.forEach(function (e, i) { e.id = 'evento-' + (i + 1); });
@@ -460,10 +471,10 @@
         for (var k = e.inicio; k <= e.fim; k = somaDias(k, 1)) { (porDia[k] = porDia[k] || []).push(e); }
       });
       var mesesComEvento = {};
-      eventos.forEach(function (e) { mesesComEvento[partes(e.inicio).m] = true; });
+      eventos.forEach(function (e) { var p = partes(e.inicio); mesesComEvento[p.a + '-' + p.m] = true; });
 
       /* Tema do mês atual */
-      var temaHoje = temas[mesHoje] || temas[String(mesHoje)];
+      var temaHoje = temaDe(ano, mesHoje);
       if (temaHoje) {
         temaBox.hidden = false;
         temaBox.style.setProperty('--luz', LUZ_ESCURO[(mesHoje - 1) % 4]);
@@ -471,51 +482,54 @@
         temaBox.querySelector('.tema-texto').textContent = temaHoje;
       } else temaBox.hidden = true;
 
-      /* Os 12 meses */
-      var html = '';
-      for (var m = 1; m <= 12; m++) {
-        var passado = m < mesHoje, atual = m === mesHoje;
-        var tema = !passado ? (temas[m] || temas[String(m)] || '') : '';
-        var nome = esc(MESES[m - 1]);
-        var cab = mesesComEvento[m]
-          ? '<button class="mes-nome" type="button" data-ir="mes-' + m + '" aria-label="Ver os eventos de ' + nome.toLowerCase() + '">' + nome + SETA_BAIXO + '</button>'
-          : '<h3 class="mes-nome">' + nome + '</h3>';
-        html += '<section class="mes' + (passado ? ' passado' : '') + (atual ? ' atual' : '') + '" style="--i:' + (m - 1) + ';--luz:' + LUZ_ESCURO[(m - 1) % 4] + '" aria-label="' + nome + ' de ' + ano + '"' + (atual ? ' aria-current="date"' : '') + '>'
-          + '<div class="mes-cabeca">' + cab + (tema ? '<p class="mes-tema">' + esc(tema) + '</p>' : '') + '</div>'
-          + '<div class="semana" aria-hidden="true">' + SEMANA.map(function (s) { return '<span>' + s + '</span>'; }).join('') + '</div>'
-          + '<div class="dias">';
-        var primeiro = (diaSemana(chave(ano, m, 1)) + 6) % 7; // semana começando na segunda, como no calendário da igreja
-        for (var v = 0; v < primeiro; v++) html += '<span aria-hidden="true"></span>';
-        var total = diasNoMes(ano, m);
-        for (var d = 1; d <= total; d++) {
-          var k = chave(ano, m, d), lista = porDia[k];
-          var cls = 'dia' + (k < hojeK ? ' foi' : '') + (k === hojeK ? ' hoje' : '');
-          if (lista) {
-            var rotulo = d + ' de ' + MESES[m - 1].toLowerCase() + (k === hojeK ? ', hoje' : '') + ': ' + lista.map(function (e) { return e.titulo; }).join(', ');
-            html += '<button class="' + cls + '" type="button" data-ir="' + lista[0].id + '" aria-label="' + esc(rotulo) + '">' + d + '</button>';
-          } else {
-            html += '<span class="' + cls + '"' + (k === hojeK ? ' aria-label="' + d + ', hoje"' : '') + '>' + d + '</span>';
+      /* Os meses: o ano inteiro desde janeiro (e o ano seguinte, se já publicado) */
+      var html = '', n = 0;
+      anos.forEach(function (x) {
+        var a = x.a;
+        for (var m = 1; m <= 12; m++) {
+          var passado = a === ano && m < mesHoje, atual = a === ano && m === mesHoje;
+          var tema = !passado ? temaDe(a, m) : '';
+          var nome = esc(nomeMes(a, m));
+          var cab = mesesComEvento[a + '-' + m]
+            ? '<button class="mes-nome" type="button" data-ir="mes-' + a + '-' + m + '" aria-label="Ver os eventos de ' + esc(MESES[m - 1].toLowerCase()) + ' de ' + a + '">' + nome + SETA_BAIXO + '</button>'
+            : '<h3 class="mes-nome">' + nome + '</h3>';
+          html += '<section class="mes' + (passado ? ' passado' : '') + (atual ? ' atual' : '') + '" style="--i:' + Math.min(n++, 12) + ';--luz:' + LUZ_ESCURO[(m - 1) % 4] + '" aria-label="' + esc(MESES[m - 1]) + ' de ' + a + '"' + (atual ? ' aria-current="date"' : '') + '>'
+            + '<div class="mes-cabeca">' + cab + (tema ? '<p class="mes-tema">' + esc(tema) + '</p>' : '') + '</div>'
+            + '<div class="semana" aria-hidden="true">' + SEMANA.map(function (s) { return '<span>' + s + '</span>'; }).join('') + '</div>'
+            + '<div class="dias">';
+          var primeiro = (diaSemana(chave(a, m, 1)) + 6) % 7; // semana começando na segunda, como no calendário da igreja
+          for (var v = 0; v < primeiro; v++) html += '<span aria-hidden="true"></span>';
+          var total = diasNoMes(a, m);
+          for (var d = 1; d <= total; d++) {
+            var k = chave(a, m, d), lista = porDia[k];
+            var cls = 'dia' + (k < hojeK ? ' foi' : '') + (k === hojeK ? ' hoje' : '');
+            if (lista) {
+              var rotulo = d + ' de ' + MESES[m - 1].toLowerCase() + (a !== ano ? ' de ' + a : '') + (k === hojeK ? ', hoje' : '') + ': ' + lista.map(function (e) { return e.titulo; }).join(', ');
+              html += '<button class="' + cls + '" type="button" data-ir="' + lista[0].id + '" aria-label="' + esc(rotulo) + '">' + d + '</button>';
+            } else {
+              html += '<span class="' + cls + '"' + (k === hojeK ? ' aria-label="' + d + ', hoje"' : '') + '>' + d + '</span>';
+            }
           }
+          html += '</div></section>';
         }
-        html += '</div></section>';
-      }
+      });
       anoEl.innerHTML = html;
 
       /* Agenda: do mês atual em diante */
       var grupos = [];
       eventos.forEach(function (e) {
-        var m = partes(e.inicio).m, g = grupos[grupos.length - 1];
-        if (!g || g.m !== m) grupos.push(g = { m: m, itens: [] });
+        var p = partes(e.inicio), g = grupos[grupos.length - 1];
+        if (!g || g.m !== p.m || g.a !== p.a) grupos.push(g = { a: p.a, m: p.m, itens: [] });
         g.itens.push(e);
       });
       agenda.hidden = !grupos.length;
       blocos.innerHTML = grupos.map(function (g) {
-        var tema = temas[g.m] || temas[String(g.m)] || '';
-        return '<section class="bloco" id="mes-' + g.m + '" style="--luz:' + LUZ_CLARO[(g.m - 1) % 4] + '" aria-labelledby="titulo-mes-' + g.m + '">'
+        var id = g.a + '-' + g.m;
+        return '<section class="bloco" id="mes-' + id + '" style="--luz:' + LUZ_CLARO[(g.m - 1) % 4] + '" aria-labelledby="titulo-mes-' + id + '">'
           + '<div class="bloco-cabeca revelar"><span class="bloco-linha" aria-hidden="true"></span>'
-          + '<h3 class="bloco-mes" id="titulo-mes-' + g.m + '">' + esc(MESES[g.m - 1]) + '</h3>'
-          + '<p class="bloco-tema">' + esc(tema) + '</p></div>'
-          + '<ul class="eventos">' + g.itens.map(function (e, j) { return cartao(e, j, hojeK, amanhaK); }).join('') + '</ul>'
+          + '<h3 class="bloco-mes" id="titulo-mes-' + id + '">' + esc(nomeMes(g.a, g.m)) + '</h3>'
+          + '<p class="bloco-tema">' + esc(temaDe(g.a, g.m)) + '</p></div>'
+          + '<ul class="eventos">' + g.itens.map(function (e, j) { return cartao(e, j, hojeK, amanhaK, ano); }).join('') + '</ul>'
           + '</section>';
       }).join('');
 
@@ -523,7 +537,7 @@
       centralizarMesAtual();
     }
 
-    function cartao(e, j, hojeK, amanhaK) {
+    function cartao(e, j, hojeK, amanhaK, ano) {
       var a = partes(e.data), b = partes(e.fim), varios = e.fim !== e.data;
       var sem = function (k) { return SEMANA[(diaSemana(k) + 6) % 7]; };
       var diaTxt, mesTxt, semTxt;
@@ -541,8 +555,8 @@
       if (e.hora) info += '<span>' + ICONE_HORA + esc(e.hora) + '</span>';
       if (e.local) info += '<span>' + ICONE_LOCAL + esc(e.local) + '</span>';
       var quando = varios
-        ? 'De ' + a.d + ' de ' + MESES[a.m - 1].toLowerCase() + ' a ' + b.d + ' de ' + MESES[b.m - 1].toLowerCase()
-        : SEMANA_LONGA[diaSemana(e.data)] + ', ' + a.d + ' de ' + MESES[a.m - 1].toLowerCase();
+        ? 'De ' + a.d + ' de ' + MESES[a.m - 1].toLowerCase() + (a.a !== b.a ? ' de ' + a.a : '') + ' a ' + b.d + ' de ' + MESES[b.m - 1].toLowerCase() + (b.a !== ano ? ' de ' + b.a : '')
+        : SEMANA_LONGA[diaSemana(e.data)] + ', ' + a.d + ' de ' + MESES[a.m - 1].toLowerCase() + (a.a !== ano ? ' de ' + a.a : '');
       var corpo = '<div class="data" aria-hidden="true"><span class="data-dia' + (varios ? ' longo' : '') + '">' + diaTxt + '</span><span class="data-mes">' + mesTxt + '</span><span class="data-sem">' + semTxt + '</span></div>'
         + '<div class="ev-texto"><span class="sr">' + esc(quando) + '. </span>' + marca
         + '<span class="ev-titulo">' + esc(e.titulo) + '</span>'
