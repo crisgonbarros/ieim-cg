@@ -17,6 +17,15 @@
      texto       cor do texto
      destaque    cor do botão
      textoBotao  cor do texto do botão
+
+   LEMBRETES AUTOMÁTICOS DO CALENDÁRIO
+   Todo evento cadastrado em /calendario/eventos.js aparece sozinho nesta faixa na véspera
+   ("Amanhã") e no dia ("Hoje"); evento de vários dias aparece também enquanto acontece.
+     - evento sem página própria: botão "Ver no calendário"
+     - evento com link (página própria): botão "Saiba mais", que leva à página
+     - evento que já tem aviso com arte própria aqui embaixo (mesmo link): o lembrete
+       automático não aparece, para não duplicar
+   Não precisa mexer neste arquivo para os lembretes: basta cadastrar o evento no calendário.
 */
 (function () {
   var AVISOS = [
@@ -92,8 +101,44 @@
     }
     return true;
   });
-  if (!ativos.length || !script) return;
+  if (!script) return;
 
+  /* ───── Lembretes automáticos a partir do calendário ───── */
+  var LUZ = ['#ff5cb0', '#6c9bff', '#ffc93d', '#4fdc8a']; // mesma luz por mês usada no calendário
+  function diaUTC(txt) { var p = txt.split('-'); return Date.UTC(+p[0], +p[1] - 1, +p[2]); }
+  function lembretes() {
+    var cal = window.IEIM_CALENDARIO, lista = [];
+    if (!cal) return lista;
+    var comArte = {};
+    AVISOS.forEach(function (a) { if (a.link) comArte[a.link] = true; });
+    Object.keys(cal).forEach(function (ano) {
+      (cal[ano].eventos || []).forEach(function (ev) {
+        if (!ev || !ev.data || !ev.titulo) return;
+        if (ev.link && comArte[ev.link]) return;
+        var ini = diaUTC(ev.data), fim = ev.ate ? diaUTC(ev.ate) : ini, quando;
+        if (hoje === ini - DIA) quando = 'Amanhã';
+        else if (hoje === ini || (hoje > ini && hoje <= fim && fim === ini)) quando = 'Hoje';
+        else if (hoje > ini && hoje <= fim) quando = 'Acontecendo';
+        else return;
+        var cor = LUZ[new Date(ini).getUTCMonth() % 4];
+        var extra = [ev.hora, ev.local].filter(Boolean).join(' · ');
+        lista.push({
+          nome: quando + ': ' + ev.titulo,
+          lembrete: true,
+          _ordem: quando === 'Amanhã' ? 1 : 0,
+          logo: '/img/logo_ieim_simbolo_branco.svg',
+          fraseHtml: '<strong style="color:' + cor + '">' + quando + '</strong> · ' + esc(ev.titulo) + (extra ? ' · <span style="opacity:.75">' + esc(extra) + '</span>' : ''),
+          botao: ev.link ? 'Saiba mais' : 'Ver no calendário',
+          link: ev.link || '/calendario/',
+          fundo: 'radial-gradient(70% 160% at 12% 50%, ' + cor + '40 0%, transparent 70%), linear-gradient(90deg, #08080a, #111114)',
+          texto: '#FFFFFF',
+          destaque: cor,
+          textoBotao: '#0a0a0c'
+        });
+      });
+    });
+    return lista.sort(function (a, b) { return a._ordem - b._ordem; });
+  }
   var css = ''
     + '.faixa-avisos{position:relative;overflow:hidden;font-family:"Raleway",system-ui,sans-serif;font-variant-numeric:lining-nums;z-index:60}'
     + '.faixa-avisos *{box-sizing:border-box;margin:0;padding:0}'
@@ -128,73 +173,89 @@
   var SETA = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>';
   function esc(t) { return String(t).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
 
-  var faixa = document.createElement('aside');
-  faixa.className = 'faixa-avisos';
-  faixa.setAttribute('aria-label', 'Avisos');
-  var trilho = document.createElement('div');
-  trilho.className = 'fa-trilho';
-  faixa.appendChild(trilho);
+  var atualFaixa = null, timer = null;
+  function montar(lista) {
+    if (!lista.length) { if (atualFaixa) { atualFaixa.remove(); atualFaixa = null; } return; }
+    var faixa = document.createElement('aside');
+    faixa.className = 'faixa-avisos';
+    faixa.setAttribute('aria-label', 'Avisos');
+    var trilho = document.createElement('div');
+    trilho.className = 'fa-trilho';
+    faixa.appendChild(trilho);
 
-  ativos.forEach(function (a, i) {
-    var el = document.createElement(a.link ? 'a' : 'div');
-    el.className = 'fa-slide' + (i === 0 ? ' ativo' : '');
-    if (a.link) el.href = a.link;
-    if (a.link && a.externo) { el.target = '_blank'; el.rel = 'noopener'; }
-    el.style.background = a.fundo || '#000';
-    if (a.imagemFundo) el.style.backgroundImage = 'url(' + a.imagemFundo + ')';
-    el.style.color = a.texto || '#fff';
-    if (i !== 0) el.setAttribute('aria-hidden', 'true');
-    el.innerHTML = (a.logo ? '<img class="fa-logo" src="' + esc(a.logo) + '" alt="" height="52">' : '')
-      + '<p class="fa-frase">' + esc(a.frase).replace('{data}', '<strong style="color:' + esc(a.destaque || 'inherit') + '">' + esc(a._data || '') + '</strong>') + '</p>'
-      + (a.botao && a.link ? '<span class="fa-botao" style="background:' + esc(a.destaque || '#fff') + ';color:' + esc(a.textoBotao || '#000') + '">' + esc(a.botao) + SETA + '</span>' : '');
-    trilho.appendChild(el);
-  });
+    lista.forEach(function (a, i) {
+      var el = document.createElement(a.link ? 'a' : 'div');
+      el.className = 'fa-slide' + (i === 0 ? ' ativo' : '');
+      if (a.link) el.href = a.link;
+      if (a.link && a.externo) { el.target = '_blank'; el.rel = 'noopener'; }
+      el.style.background = a.fundo || '#000';
+      if (a.imagemFundo) el.style.backgroundImage = 'url(' + a.imagemFundo + ')';
+      el.style.color = a.texto || '#fff';
+      if (i !== 0) el.setAttribute('aria-hidden', 'true');
+      el.innerHTML = (a.logo ? '<img class="fa-logo" src="' + esc(a.logo) + '" alt="" height="52">' : '')
+        + '<p class="fa-frase">' + (a.fraseHtml ? a.fraseHtml : esc(a.frase).replace('{data}', '<strong style="color:' + esc(a.destaque || 'inherit') + '">' + esc(a._data || '') + '</strong>')) + '</p>'
+        + (a.botao && a.link ? '<span class="fa-botao" style="background:' + esc(a.destaque || '#fff') + ';color:' + esc(a.textoBotao || '#000') + '">' + esc(a.botao) + SETA + '</span>' : '');
+      trilho.appendChild(el);
+    });
 
-  script.parentNode.insertBefore(faixa, script);
+    if (atualFaixa) atualFaixa.parentNode.replaceChild(faixa, atualFaixa);
+    else script.parentNode.insertBefore(faixa, script);
+    atualFaixa = faixa;
 
-  if (ativos.length < 2) return;
+    if (lista.length < 2) return;
 
-  var slides = trilho.children, atual = 0, timer = null, pausado = false;
-  var pontos = document.createElement('div');
-  pontos.className = 'fa-pontos';
-  pontos.style.color = ativos[0].texto || '#fff';
-  ativos.forEach(function (a, i) {
-    var b = document.createElement('button');
-    b.type = 'button';
-    b.setAttribute('aria-label', 'Aviso ' + (i + 1) + ': ' + a.nome);
-    if (i === 0) b.setAttribute('aria-current', 'true');
-    b.addEventListener('click', function () { ir(i); reiniciar(); });
-    pontos.appendChild(b);
-  });
-  faixa.appendChild(pontos);
-  faixa.classList.add('varios');
-
-  function ir(n) {
-    n = (n + slides.length) % slides.length;
-    slides[atual].classList.remove('ativo'); slides[atual].setAttribute('aria-hidden', 'true');
-    pontos.children[atual].removeAttribute('aria-current');
-    atual = n;
-    slides[atual].classList.add('ativo'); slides[atual].removeAttribute('aria-hidden');
-    pontos.children[atual].setAttribute('aria-current', 'true');
-    pontos.style.color = ativos[atual].texto || '#fff';
-  }
-  function reiniciar() {
+    var slides = trilho.children, atual = 0, pausado = false;
     clearInterval(timer);
-    timer = setInterval(function () { if (!pausado) ir(atual + 1); }, 5000);
-  }
-  faixa.addEventListener('mouseenter', function () { pausado = true; });
-  faixa.addEventListener('mouseleave', function () { pausado = false; });
-  faixa.addEventListener('focusin', function () { pausado = true; });
-  faixa.addEventListener('focusout', function () { pausado = false; });
-  var x0 = null;
-  faixa.addEventListener('touchstart', function (e) { pausado = true; x0 = e.touches[0].clientX; }, { passive: true });
-  faixa.addEventListener('touchend', function (e) {
-    if (x0 !== null) {
-      var dx = e.changedTouches[0].clientX - x0;
-      if (Math.abs(dx) > 40) { ir(atual + (dx < 0 ? 1 : -1)); reiniciar(); }
+    var pontos = document.createElement('div');
+    pontos.className = 'fa-pontos';
+    pontos.style.color = lista[0].texto || '#fff';
+    lista.forEach(function (a, i) {
+      var b = document.createElement('button');
+      b.type = 'button';
+      b.setAttribute('aria-label', 'Aviso ' + (i + 1) + ': ' + a.nome);
+      if (i === 0) b.setAttribute('aria-current', 'true');
+      b.addEventListener('click', function () { ir(i); reiniciar(); });
+      pontos.appendChild(b);
+    });
+    faixa.appendChild(pontos);
+    faixa.classList.add('varios');
+
+    function ir(n) {
+      n = (n + slides.length) % slides.length;
+      slides[atual].classList.remove('ativo'); slides[atual].setAttribute('aria-hidden', 'true');
+      pontos.children[atual].removeAttribute('aria-current');
+      atual = n;
+      slides[atual].classList.add('ativo'); slides[atual].removeAttribute('aria-hidden');
+      pontos.children[atual].setAttribute('aria-current', 'true');
+      pontos.style.color = lista[atual].texto || '#fff';
     }
-    x0 = null;
-    setTimeout(function () { pausado = false; }, 4000);
-  }, { passive: true });
-  reiniciar();
+    function reiniciar() {
+      clearInterval(timer);
+      timer = setInterval(function () { if (!pausado) ir(atual + 1); }, 5000);
+    }
+    faixa.addEventListener('mouseenter', function () { pausado = true; });
+    faixa.addEventListener('mouseleave', function () { pausado = false; });
+    faixa.addEventListener('focusin', function () { pausado = true; });
+    faixa.addEventListener('focusout', function () { pausado = false; });
+    var x0 = null;
+    faixa.addEventListener('touchstart', function (e) { pausado = true; x0 = e.touches[0].clientX; }, { passive: true });
+    faixa.addEventListener('touchend', function (e) {
+      if (x0 !== null) {
+        var dx = e.changedTouches[0].clientX - x0;
+        if (Math.abs(dx) > 40) { ir(atual + (dx < 0 ? 1 : -1)); reiniciar(); }
+      }
+      x0 = null;
+      setTimeout(function () { pausado = false; }, 4000);
+    }, { passive: true });
+    reiniciar();
+  }
+
+  montar(lembretes().concat(ativos));
+  // carrega os eventos do calendário (se a página ainda não carregou) e refaz a faixa com os lembretes
+  if (!window.IEIM_CALENDARIO) {
+    var cal = document.createElement('script');
+    cal.src = '/calendario/eventos.js';
+    cal.onload = function () { var l = lembretes(); if (l.length) montar(l.concat(ativos)); };
+    document.head.appendChild(cal);
+  }
 })();
