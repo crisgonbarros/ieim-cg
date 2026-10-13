@@ -117,8 +117,32 @@
   @keyframes entrar { to { opacity: 1; transform: none; filter: none; } }
 
   /* ── Os 12 meses ── */
-  .ano { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-top: 56px; }
-  .ano[hidden] { display: none; }
+  /* os meses ficam numa fileira só, que anda para os lados (4 por vez no computador) */
+  .ano-area { position: relative; margin-top: 44px; }
+  .ano-area[hidden] { display: none; }
+  .ano-controles { display: flex; justify-content: flex-end; gap: 10px; margin-bottom: 4px; }
+  .ano-seta {
+    width: 46px; height: 46px; border-radius: 50%; display: grid; place-items: center; cursor: pointer; color: #fff;
+    background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.2);
+    -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,.16);
+    transition: background-color .3s, opacity .3s, transform .3s var(--curva);
+  }
+  .ano-seta svg { width: 20px; height: 20px; transition: transform .35s var(--curva); }
+  .ano-seta:hover:not(:disabled) { background: rgba(255,255,255,.18); }
+  .ano-seta.ant:hover:not(:disabled) svg { transform: translateX(-3px); }
+  .ano-seta.prox:hover:not(:disabled) svg { transform: translateX(3px); }
+  .ano-seta:active:not(:disabled) { transform: scale(.94); }
+  .ano-seta:disabled { opacity: .28; cursor: default; }
+  .ano {
+    display: flex; gap: 16px; margin: 0 -24px; padding: 16px 24px 30px;
+    overflow-x: auto; overscroll-behavior-x: contain; -webkit-overflow-scrolling: touch;
+    scroll-snap-type: x mandatory; scroll-padding: 0 24px; scrollbar-width: none;
+    -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 24px, #000 calc(100% - 24px), transparent 100%);
+    mask-image: linear-gradient(90deg, transparent 0, #000 24px, #000 calc(100% - 24px), transparent 100%);
+  }
+  .ano::-webkit-scrollbar { display: none; }
+  .ano > .mes { flex: 0 0 calc((100% - 48px) / 4); scroll-snap-align: start; }
   .mes {
     --luz: #fff;
     position: relative; overflow: hidden; border-radius: 22px; padding: 18px 16px 14px;
@@ -145,7 +169,7 @@
     box-shadow: inset 0 1px 0 rgba(255,255,255,.18), 0 0 70px -22px var(--luz);
   }
   .mes.passado { background: rgba(255,255,255,.025); border-color: rgba(255,255,255,.07); }
-  .mes-cabeca { position: relative; display: grid; gap: 3px; min-height: 52px; margin-bottom: 12px; }
+  .mes-cabeca { position: relative; display: grid; gap: 3px; align-content: start; min-height: 62px; margin-bottom: 12px; }
   .mes-nome { display: flex; align-items: center; justify-content: space-between; gap: 8px; font-weight: 700; font-size: 1.02rem; text-align: left; }
   .mes.passado .mes-nome { color: rgba(255,255,255,.4); }
   button.mes-nome { cursor: pointer; width: 100%; }
@@ -270,7 +294,7 @@
 
   /* ── Tablet ── */
   @media (max-width: 1020px) {
-    .ano { grid-template-columns: repeat(3, 1fr); }
+    .ano > .mes { flex-basis: calc((100% - 32px) / 3); }
     .bloco { grid-template-columns: 220px 1fr; gap: 32px; }
   }
 
@@ -281,13 +305,10 @@
     .topo-cal { padding: calc(var(--topo) + 40px) 0 56px; }
     .tema-atual { margin-top: 22px; padding: 14px 18px 15px; border-radius: 18px; }
     /* os meses viram uma fileira que desliza para os lados */
-    .ano {
-      display: flex; gap: 12px; margin: 36px -16px 0; padding: 4px 16px 10px;
-      overflow-x: auto; overscroll-behavior-x: contain; -webkit-overflow-scrolling: touch;
-      scroll-snap-type: x mandatory; scroll-padding: 0 16px; scrollbar-width: none;
-    }
-    .ano::-webkit-scrollbar { display: none; }
-    .mes { flex: 0 0 min(300px, 82vw); scroll-snap-align: center; padding: 18px 16px 14px; }
+    .ano-area { margin-top: 36px; }
+    .ano-controles { display: none; }
+    .ano { gap: 12px; margin: 0 -16px; padding: 4px 16px 10px; scroll-padding: 0 16px; -webkit-mask-image: none; mask-image: none; }
+    .ano > .mes { flex: 0 0 min(300px, 82vw); scroll-snap-align: center; padding: 18px 16px 14px; }
     .dia { font-size: .86rem; min-height: 34px; }
     .agenda { padding: 72px 0 88px; }
     .agenda .cabeca { margin-bottom: 36px; }
@@ -331,7 +352,13 @@
         <span class="tema-rotulo"></span>
         <span class="tema-texto"></span>
       </div>
-      <div class="ano entra" style="--d:3" aria-label="Meses do ano"></div>
+      <div class="ano-area entra" style="--d:3">
+        <div class="ano-controles">
+          <button class="ano-seta ant" type="button" aria-controls="meses" aria-label="Mês anterior"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"/></svg></button>
+          <button class="ano-seta prox" type="button" aria-controls="meses" aria-label="Próximo mês"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+        </div>
+        <div class="ano" id="meses" aria-label="Meses do ano"></div>
+      </div>
     </div>
   </section>
 
@@ -392,6 +419,8 @@
     var titulo = document.getElementById('titulo-cal');
     var temaBox = document.querySelector('.tema-atual');
     var anoEl = document.querySelector('.ano');
+    var anoArea = document.querySelector('.ano-area');
+    var setaAnt = anoArea.querySelector('.ant'), setaProx = anoArea.querySelector('.prox');
     var agenda = document.querySelector('.agenda');
     var blocos = agenda.querySelector('.blocos');
     var diaMontado = null;
@@ -408,14 +437,14 @@
       if (!dados) {
         topoCal.classList.add('indisponivel');
         titulo.textContent = 'Calendário ' + ano + ' indisponível';
-        temaBox.hidden = true; anoEl.hidden = true; anoEl.innerHTML = '';
+        temaBox.hidden = true; anoArea.hidden = true; anoEl.innerHTML = '';
         agenda.hidden = true; blocos.innerHTML = '';
         document.title = 'Calendário ' + ano + ' indisponível · Igreja Evangélica Irmãos Menonitas · Campo Grande/MS';
         return;
       }
       topoCal.classList.remove('indisponivel');
       titulo.innerHTML = 'Agenda <span class="ano-num">' + ano + '</span>';
-      anoEl.hidden = false;
+      anoArea.hidden = false;
       var temas = dados.temas || {};
 
       /* Só o que vai de hoje em diante (nenhum histórico) */
@@ -526,12 +555,41 @@
       return '<li><div class="evento revelar" id="' + e.id + '"' + estilo + '>' + corpo + '</div></li>';
     }
 
-    /* Celular: a fileira de meses abre já no mês atual (sem mexer na rolagem da página) */
-    function centralizarMesAtual() {
-      var atual = anoEl.querySelector('.mes.atual');
-      if (!atual || anoEl.scrollWidth <= anoEl.clientWidth + 2) return;
-      anoEl.scrollLeft = atual.offsetLeft - anoEl.offsetLeft - (anoEl.clientWidth - atual.offsetWidth) / 2;
+    /* A fileira de meses abre já no mês atual (sem mexer na rolagem da página).
+       Computador: o mês atual fica em segundo, com o mês anterior à esquerda. Celular: no centro. */
+    function passo() {
+      var c = anoEl.children;
+      return c.length > 1 ? c[1].offsetLeft - c[0].offsetLeft : anoEl.clientWidth;
     }
+    function centralizarMesAtual() {
+      var atual = anoEl.querySelector('.mes.atual'), primeiro = anoEl.firstElementChild;
+      if (atual && anoEl.scrollWidth > anoEl.clientWidth + 2) {
+        var x = atual.offsetLeft - primeiro.offsetLeft;
+        anoEl.scrollLeft = setaProx.offsetParent ? x - passo() : x + parseFloat(getComputedStyle(anoEl).paddingLeft) - (anoEl.clientWidth - atual.offsetWidth) / 2;
+      }
+      atualizarSetas();
+    }
+    function atualizarSetas() {
+      var max = anoEl.scrollWidth - anoEl.clientWidth;
+      setaAnt.disabled = anoEl.scrollLeft <= 4;
+      setaProx.disabled = anoEl.scrollLeft >= max - 4;
+    }
+    function andar(lado) {
+      anoEl.scrollBy({ left: lado * passo(), behavior: semMovimento ? 'auto' : 'smooth' });
+    }
+    setaAnt.addEventListener('click', function () { andar(-1); });
+    setaProx.addEventListener('click', function () { andar(1); });
+    var quadro = null;
+    anoEl.addEventListener('scroll', function () {
+      if (quadro) return;
+      quadro = requestAnimationFrame(function () { quadro = null; atualizarSetas(); });
+    }, { passive: true });
+    var tmrTela;
+    var larguraTela = window.innerWidth; // no iPhone a barra do Safari dispara resize ao rolar: só recentra se a largura mudar
+    window.addEventListener('resize', function () {
+      clearTimeout(tmrTela);
+      tmrTela = setTimeout(function () { if (window.innerWidth !== larguraTela) { larguraTela = window.innerWidth; centralizarMesAtual(); } else atualizarSetas(); }, 200);
+    });
 
     function quandoVisivel(el, fn, limiar) {
       if (semMovimento || !temObs) { fn(); return; }
