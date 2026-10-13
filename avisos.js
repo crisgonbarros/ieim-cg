@@ -9,6 +9,7 @@
      frase       a chamada do aviso (obrigatória)
      botao       texto do botão (opcional; só quando o aviso leva a uma página)
      link        endereço da página do evento (opcional)
+     externo     true quando o link é de fora do site (abre em outra aba)
      fundo       cor de fundo da faixa
      imagemFundo imagem de fundo (opcional, na pasta /img/)
      texto       cor do texto
@@ -28,6 +29,18 @@
       texto: '#F2F0EC',
       destaque: '#6B85AA',
       textoBotao: '#080810'
+    },
+    {
+      nome: 'Grupo de comunicação oficial',
+      logo: '/img/aviso_grupo_comunicacao_logo.webp',
+      frase: 'Fique por dentro de tudo o que acontece na nossa comunidade: participe do Grupo de comunicação oficial',
+      botao: 'Entrar no Grupo',
+      link: 'https://chat.whatsapp.com/K2lynhJGzAXKZrjBjL7HGr?mode=gi_t',
+      externo: true,
+      fundo: 'linear-gradient(90deg, #020c24 0%, #062259 50%, #020c24 100%)',
+      texto: '#FFFFFF',
+      destaque: '#1E9BFF',
+      textoBotao: '#FFFFFF'
     }
   ];
 
@@ -64,7 +77,8 @@
     + '.fa-logo{height:42px}'
     + '.fa-frase{font-size:.9rem}'
     + '.fa-botao{grid-column:1/-1;justify-content:center;min-height:38px;font-size:.85rem}'
-    + '.fa-pontos{top:10px;bottom:auto}'
+    + '.fa-pontos{left:50%;right:auto;bottom:6px;transform:translateX(-50%)}'
+    + '.faixa-avisos.varios .fa-slide{padding-bottom:22px}'
     + '}'
     + '@media (prefers-reduced-motion:reduce){.fa-slide,.fa-slide.ativo{transition:none}.fa-slide::after{display:none}.fa-botao,.fa-botao svg{transition:none}}';
   var estilo = document.createElement('style');
@@ -85,6 +99,7 @@
     var el = document.createElement(a.link ? 'a' : 'div');
     el.className = 'fa-slide' + (i === 0 ? ' ativo' : '');
     if (a.link) el.href = a.link;
+    if (a.link && a.externo) { el.target = '_blank'; el.rel = 'noopener'; }
     el.style.background = a.fundo || '#000';
     if (a.imagemFundo) el.style.backgroundImage = 'url(' + a.imagemFundo + ')';
     el.style.color = a.texto || '#fff';
@@ -112,6 +127,7 @@
     pontos.appendChild(b);
   });
   faixa.appendChild(pontos);
+  faixa.classList.add('varios');
 
   function ir(n) {
     n = (n + slides.length) % slides.length;
