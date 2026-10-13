@@ -6,7 +6,9 @@
      nome        nome do aviso (uso interno e leitor de tela)
      de, ate     período em que aparece (AAAA-MM-DD, horário de Campo Grande). "de" é opcional
      logo        imagem do logo do evento, na pasta /img/
-     frase       a chamada do aviso (obrigatória)
+     frase       a chamada do aviso (obrigatória). Pode usar {data}: vira a data calculada pela repetição
+     repete      repetição automática (opcional). 'domingos-1-2' = aparece desde a segunda-feira
+                 antes do 1º domingo do mês até o 2º domingo; {data} mostra o próximo desses domingos
      botao       texto do botão (opcional; só quando o aviso leva a uma página)
      link        endereço da página do evento (opcional)
      externo     true quando o link é de fora do site (abre em outra aba)
@@ -41,15 +43,53 @@
       texto: '#FFFFFF',
       destaque: '#1E9BFF',
       textoBotao: '#FFFFFF'
+    },
+    {
+      nome: 'Projeto 1 Quilo com Amor',
+      repete: 'domingos-1-2',
+      logo: '/img/aviso_1kg_com_amor_logo.webp',
+      frase: 'Domingo, {data}, traga 1 kg de alimento não perecível para a igreja e apoie o trabalho da ONG SOMAR',
+      fundo: 'linear-gradient(90deg, #f4f3f8 0%, #ecebf2 100%)',
+      texto: '#151518',
+      destaque: '#D7193F'
     }
   ];
 
   /* ───────── daqui para baixo não precisa mexer ───────── */
   var script = document.currentScript;
   var agora = new Date();
+  // data de hoje em Campo Grande (UTC-4), sem horas
+  var cg = new Date(agora.getTime() - 4 * 3600000);
+  var hoje = Date.UTC(cg.getUTCFullYear(), cg.getUTCMonth(), cg.getUTCDate());
+  var DIA = 86400000;
+  function primeiroDomingo(ano, mes) {
+    var d = Date.UTC(ano, mes, 1);
+    return d + ((7 - new Date(d).getUTCDay()) % 7) * DIA;
+  }
+  function textoData(t) {
+    var d = new Date(t), dia = d.getUTCDate();
+    return (dia === 1 ? '1º' : dia) + '/' + (d.getUTCMonth() + 1);
+  }
+  // devolve a data do próximo domingo de coleta, ou null se hoje não está no período
+  function repeticao(regra) {
+    if (regra !== 'domingos-1-2') return null;
+    for (var k = 0; k < 2; k++) {
+      var ano = cg.getUTCFullYear(), mes = cg.getUTCMonth() + k;
+      if (mes > 11) { mes -= 12; ano++; }
+      var d1 = primeiroDomingo(ano, mes), d2 = d1 + 7 * DIA;
+      if (hoje >= d1 - 6 * DIA && hoje <= d1) return d1;
+      if (hoje > d1 && hoje <= d2) return d2;
+    }
+    return null;
+  }
   var ativos = AVISOS.filter(function (a) {
     if (a.de && agora < new Date(a.de + 'T00:00:00-04:00')) return false;
     if (a.ate && agora > new Date(a.ate + 'T23:59:59-04:00')) return false;
+    if (a.repete) {
+      var d = repeticao(a.repete);
+      if (d === null) return false;
+      a._data = textoData(d);
+    }
     return true;
   });
   if (!ativos.length || !script) return;
@@ -105,7 +145,7 @@
     el.style.color = a.texto || '#fff';
     if (i !== 0) el.setAttribute('aria-hidden', 'true');
     el.innerHTML = (a.logo ? '<img class="fa-logo" src="' + esc(a.logo) + '" alt="" height="52">' : '')
-      + '<p class="fa-frase">' + esc(a.frase) + '</p>'
+      + '<p class="fa-frase">' + esc(a.frase).replace('{data}', '<strong style="color:' + esc(a.destaque || 'inherit') + '">' + esc(a._data || '') + '</strong>') + '</p>'
       + (a.botao && a.link ? '<span class="fa-botao" style="background:' + esc(a.destaque || '#fff') + ';color:' + esc(a.textoBotao || '#000') + '">' + esc(a.botao) + SETA + '</span>' : '');
     trilho.appendChild(el);
   });
