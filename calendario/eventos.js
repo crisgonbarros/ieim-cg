@@ -76,6 +76,7 @@ window.IEIM_CALENDARIO = {
       { data: '2026-11-21', titulo: 'Confraternização Ministério Abraço' },
       { data: '2026-11-22', titulo: 'AGO da Igreja de Campo Grande' },
       { data: '2026-11-28', titulo: 'Planejamento 2027' },
+      { data: '2026-11-28', hora: '19h30', titulo: 'Culto de Jovens · feat. Thamilis Campos', local: 'Centro' },
 
       // Dezembro
       { data: '2026-12-04', titulo: 'Vigília' },
