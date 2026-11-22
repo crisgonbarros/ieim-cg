@@ -19,8 +19,11 @@
      textoBotao  cor do texto do botão
 
    LEMBRETES AUTOMÁTICOS DO CALENDÁRIO
-   Todo evento cadastrado em /calendario/eventos.js aparece sozinho nesta faixa na véspera
-   ("Amanhã") e no dia ("Hoje"); evento de vários dias aparece também enquanto acontece.
+   Todo evento cadastrado em /calendario/eventos.js aparece sozinho nesta faixa:
+     - desde a segunda-feira da semana do evento: "Esta semana · quinta, 26/11"
+     - na véspera: "Amanhã" (mesmo que a véspera seja o domingo da semana anterior)
+     - no dia: "Hoje"; evento de vários dias fica como "Acontecendo" até o último dia
+     - depois da data, some sozinho
      - evento sem página própria: botão "Ver no calendário"
      - evento com link (página própria): botão "Saiba mais", que leva à página
      - evento que já tem aviso com arte própria aqui embaixo (mesmo link): o lembrete
@@ -105,6 +108,9 @@
 
   /* ───── Lembretes automáticos a partir do calendário ───── */
   var LUZ = ['#ff5cb0', '#6c9bff', '#ffc93d', '#4fdc8a']; // mesma luz por mês usada no calendário
+  var SEMANA = ['domingo', 'segunda', 'terça', 'quarta', 'quinta', 'sexta', 'sábado'];
+  // domingo que fecha a semana atual (semana de segunda a domingo)
+  var domingo = hoje + ((7 - new Date(hoje).getUTCDay()) % 7) * DIA;
   function diaUTC(txt) { var p = txt.split('-'); return Date.UTC(+p[0], +p[1] - 1, +p[2]); }
   function lembretes() {
     var cal = window.IEIM_CALENDARIO, lista = [];
@@ -115,19 +121,23 @@
       (cal[ano].eventos || []).forEach(function (ev) {
         if (!ev || !ev.data || !ev.titulo) return;
         if (ev.link && comArte[ev.link]) return;
-        var ini = diaUTC(ev.data), fim = ev.ate ? diaUTC(ev.ate) : ini, quando;
-        if (hoje === ini - DIA) quando = 'Amanhã';
-        else if (hoje === ini || (hoje > ini && hoje <= fim && fim === ini)) quando = 'Hoje';
-        else if (hoje > ini && hoje <= fim) quando = 'Acontecendo';
+        var ini = diaUTC(ev.data), fim = ev.ate ? diaUTC(ev.ate) : ini, quando, rotulo;
+        if (hoje > fim) return;
+        if (hoje === ini) quando = 'Hoje';
+        else if (hoje > ini) quando = 'Acontecendo';
+        else if (hoje === ini - DIA) quando = 'Amanhã';
+        else if (ini <= domingo) quando = 'Esta semana';
         else return;
+        rotulo = '<strong style="color:' + LUZ[new Date(ini).getUTCMonth() % 4] + '">' + quando + '</strong>'
+          + (quando === 'Esta semana' ? ' · ' + SEMANA[new Date(ini).getUTCDay()] + ', ' + textoData(ini) : '');
         var cor = LUZ[new Date(ini).getUTCMonth() % 4];
         var extra = [ev.hora, ev.local].filter(Boolean).join(' · ');
         lista.push({
           nome: quando + ': ' + ev.titulo,
           lembrete: true,
-          _ordem: quando === 'Amanhã' ? 1 : 0,
+          _ordem: ini,
           logo: '/img/aviso_lembrete_logo.svg',
-          fraseHtml: '<strong style="color:' + cor + '">' + quando + '</strong> · ' + esc(ev.titulo) + (extra ? ' · <span style="opacity:.75">' + esc(extra) + '</span>' : ''),
+          fraseHtml: rotulo + ' · ' + esc(ev.titulo) + (extra ? ' · <span style="opacity:.75">' + esc(extra) + '</span>' : ''),
           botao: ev.link ? 'Saiba mais' : 'Ver no calendário',
           link: ev.link || '/calendario/',
           fundo: 'radial-gradient(70% 160% at 12% 50%, ' + cor + '40 0%, transparent 70%), linear-gradient(90deg, #08080a, #111114)',
