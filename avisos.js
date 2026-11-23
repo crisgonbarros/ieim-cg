@@ -17,6 +17,12 @@
      texto       cor do texto
      destaque    cor do botão
      textoBotao  cor do texto do botão
+     foto        imagem que entra no canto direito da faixa, só em telas largas (opcional, na pasta /img/)
+     evento      data do evento (AAAA-MM-DD). O aviso aparece e some sozinho como os lembretes
+                 (desde a segunda-feira da semana, "Amanhã" na véspera, "Hoje" no dia, some depois).
+                 Na frase, {quando} vira "Esta semana · sábado, 28/11", "Amanhã" ou "Hoje"
+     substitui   trecho do título do evento no calendário (mesma data de "evento"): o lembrete
+                 automático desse evento não aparece, porque este aviso já cumpre o papel
 
    LEMBRETES AUTOMÁTICOS DO CALENDÁRIO
    Todo evento cadastrado em /calendario/eventos.js aparece sozinho nesta faixa:
@@ -64,6 +70,18 @@
       fundo: 'linear-gradient(90deg, #f4f3f8 0%, #ecebf2 100%)',
       texto: '#151518',
       destaque: '#D7193F'
+    },
+    {
+      nome: 'Culto de Jovens · feat. Thamilis Campos',
+      evento: '2026-11-28',
+      substitui: 'Culto de Jovens',
+      logo: '/img/aviso_culto_jovens_logo.webp',
+      frase: '{quando} · 19h30 · feat. Thamilis Campos · Rua Camapuã, 141',
+      fundo: '#1a1a1a',
+      imagemFundo: '/img/aviso_culto_jovens_fundo.webp',
+      foto: '/img/aviso_culto_jovens_foto.webp',
+      texto: '#E6E6E6',
+      destaque: '#FFFFFF'
     }
   ];
 
@@ -94,6 +112,23 @@
     }
     return null;
   }
+  var SEMANA = ['domingo', 'segunda', 'terça', 'quarta', 'quinta', 'sexta', 'sábado'];
+  // domingo que fecha a semana atual (semana de segunda a domingo)
+  var domingo = hoje + ((7 - new Date(hoje).getUTCDay()) % 7) * DIA;
+  function diaUTC(txt) { var p = txt.split('-'); return Date.UTC(+p[0], +p[1] - 1, +p[2]); }
+  // "Hoje", "Acontecendo", "Amanhã", "Esta semana" ou null (fora do período)
+  function quandoDe(ini, fim) {
+    if (hoje > fim) return null;
+    if (hoje === ini) return 'Hoje';
+    if (hoje > ini) return 'Acontecendo';
+    if (hoje === ini - DIA) return 'Amanhã';
+    if (ini <= domingo) return 'Esta semana';
+    return null;
+  }
+  function rotuloDe(quando, ini, cor) {
+    return '<strong style="color:' + cor + '">' + quando + '</strong>'
+      + (quando === 'Esta semana' ? ' · ' + SEMANA[new Date(ini).getUTCDay()] + ', ' + textoData(ini) : '');
+  }
   var ativos = AVISOS.filter(function (a) {
     if (a.de && agora < new Date(a.de + 'T00:00:00-04:00')) return false;
     if (a.ate && agora > new Date(a.ate + 'T23:59:59-04:00')) return false;
@@ -102,34 +137,35 @@
       if (d === null) return false;
       a._data = textoData(d);
     }
+    if (a.evento) {
+      var ini = diaUTC(a.evento), q = quandoDe(ini, ini);
+      if (!q) return false;
+      a._quando = q; a._ordem = ini;
+    }
     return true;
   });
   if (!script) return;
 
   /* ───── Lembretes automáticos a partir do calendário ───── */
   var LUZ = ['#ff5cb0', '#6c9bff', '#ffc93d', '#4fdc8a']; // mesma luz por mês usada no calendário
-  var SEMANA = ['domingo', 'segunda', 'terça', 'quarta', 'quinta', 'sexta', 'sábado'];
-  // domingo que fecha a semana atual (semana de segunda a domingo)
-  var domingo = hoje + ((7 - new Date(hoje).getUTCDay()) % 7) * DIA;
-  function diaUTC(txt) { var p = txt.split('-'); return Date.UTC(+p[0], +p[1] - 1, +p[2]); }
   function lembretes() {
     var cal = window.IEIM_CALENDARIO, lista = [];
     if (!cal) return lista;
     var comArte = {};
-    AVISOS.forEach(function (a) { if (a.link) comArte[a.link] = true; });
+    var substituidos = [];
+    AVISOS.forEach(function (a) {
+      if (a.link) comArte[a.link] = true;
+      if (a.evento && a.substitui) substituidos.push(a);
+    });
     Object.keys(cal).forEach(function (ano) {
       (cal[ano].eventos || []).forEach(function (ev) {
         if (!ev || !ev.data || !ev.titulo) return;
         if (ev.link && comArte[ev.link]) return;
-        var ini = diaUTC(ev.data), fim = ev.ate ? diaUTC(ev.ate) : ini, quando, rotulo;
-        if (hoje > fim) return;
-        if (hoje === ini) quando = 'Hoje';
-        else if (hoje > ini) quando = 'Acontecendo';
-        else if (hoje === ini - DIA) quando = 'Amanhã';
-        else if (ini <= domingo) quando = 'Esta semana';
-        else return;
-        rotulo = '<strong style="color:' + LUZ[new Date(ini).getUTCMonth() % 4] + '">' + quando + '</strong>'
-          + (quando === 'Esta semana' ? ' · ' + SEMANA[new Date(ini).getUTCDay()] + ', ' + textoData(ini) : '');
+        if (substituidos.some(function (a) { return a.evento === ev.data && ev.titulo.indexOf(a.substitui) !== -1; })) return;
+        var ini = diaUTC(ev.data), fim = ev.ate ? diaUTC(ev.ate) : ini;
+        var quando = quandoDe(ini, fim);
+        if (!quando) return;
+        var rotulo = rotuloDe(quando, ini, LUZ[new Date(ini).getUTCMonth() % 4]);
         var cor = LUZ[new Date(ini).getUTCMonth() % 4];
         var extra = [ev.hora, ev.local].filter(Boolean).join(' · ');
         lista.push({
@@ -157,6 +193,9 @@
     + '.fa-slide.ativo{opacity:1;visibility:visible;transition:opacity .6s ease}'
     + '.fa-slide::after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(110deg,transparent 30%,rgba(255,255,255,.10) 48%,transparent 66%);transform:translateX(-120%);animation:fa-brilho 6s ease-in-out 1.2s infinite}'
     + '@keyframes fa-brilho{0%{transform:translateX(-120%)}35%,100%{transform:translateX(120%)}}'
+    + '.fa-foto{position:absolute;right:0;top:0;height:100%;width:auto;pointer-events:none;display:none}'
+    + '@media (min-width:1100px){.fa-foto{display:block}}'
+    + '.fa-slide>:not(.fa-foto){position:relative;z-index:1}'
     + '.fa-logo{height:52px;width:auto;flex-shrink:0;display:block}'
     + '.fa-frase{font-weight:600;font-size:1rem;line-height:1.35;letter-spacing:.01em}'
     + '.fa-botao{display:inline-flex;align-items:center;gap:8px;min-height:40px;padding:0 20px;border-radius:999px;font-weight:700;font-size:.9rem;white-space:nowrap;flex-shrink:0;transition:transform .25s ease,filter .25s ease}'
@@ -202,8 +241,9 @@
       if (a.imagemFundo) el.style.backgroundImage = 'url(' + a.imagemFundo + ')';
       el.style.color = a.texto || '#fff';
       if (i !== 0) el.setAttribute('aria-hidden', 'true');
-      el.innerHTML = (a.logo ? '<img class="fa-logo" src="' + esc(a.logo) + '" alt="" height="52">' : '')
-        + '<p class="fa-frase">' + (a.fraseHtml ? a.fraseHtml : esc(a.frase).replace('{data}', '<strong style="color:' + esc(a.destaque || 'inherit') + '">' + esc(a._data || '') + '</strong>')) + '</p>'
+      el.innerHTML = (a.foto ? '<img class="fa-foto" src="' + esc(a.foto) + '" alt="" height="80">' : '')
+        + (a.logo ? '<img class="fa-logo" src="' + esc(a.logo) + '" alt="" height="52">' : '')
+        + '<p class="fa-frase">' + (a.fraseHtml ? a.fraseHtml : esc(a.frase).replace('{data}', '<strong style="color:' + esc(a.destaque || 'inherit') + '">' + esc(a._data || '') + '</strong>').replace('{quando}', a._quando ? rotuloDe(a._quando, a._ordem, esc(a.destaque || 'inherit')) : '')) + '</p>'
         + (a.botao && a.link ? '<span class="fa-botao" style="background:' + esc(a.destaque || '#fff') + ';color:' + esc(a.textoBotao || '#000') + '">' + esc(a.botao) + SETA + '</span>' : '');
       trilho.appendChild(el);
     });
@@ -260,12 +300,18 @@
     reiniciar();
   }
 
-  montar(lembretes().concat(ativos));
+  // lembretes e avisos de evento juntos, pela data do evento; depois os demais avisos
+  function juntar(l) {
+    var datados = ativos.filter(function (a) { return a._ordem != null; });
+    var outros = ativos.filter(function (a) { return a._ordem == null; });
+    return l.concat(datados).sort(function (a, b) { return a._ordem - b._ordem; }).concat(outros);
+  }
+  montar(juntar(lembretes()));
   // carrega os eventos do calendário (se a página ainda não carregou) e refaz a faixa com os lembretes
   if (!window.IEIM_CALENDARIO) {
     var cal = document.createElement('script');
     cal.src = '/calendario/eventos.js';
-    cal.onload = function () { var l = lembretes(); if (l.length) montar(l.concat(ativos)); };
+    cal.onload = function () { var l = lembretes(); if (l.length) montar(juntar(l)); };
     document.head.appendChild(cal);
   }
 })();
