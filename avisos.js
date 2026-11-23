@@ -8,7 +8,8 @@
      logo        imagem do logo do evento, na pasta /img/
      frase       a chamada do aviso (obrigatória). Pode usar {data}: vira a data calculada pela repetição
      repete      repetição automática (opcional). 'domingos-1-2' = aparece desde a segunda-feira
-                 antes do 1º domingo do mês até o 2º domingo; {data} mostra o próximo desses domingos
+                 antes do 1º domingo do mês até o 2º domingo; {data} mostra o próximo desses domingos.
+                 A semana vira no domingo às 19h30 (horário de Campo Grande)
      botao       texto do botão (opcional; só quando o aviso leva a uma página)
      link        endereço da página do evento (opcional)
      externo     true quando o link é de fora do site (abre em outra aba)
@@ -19,14 +20,16 @@
      textoBotao  cor do texto do botão
      foto        imagem que entra no canto direito da faixa, só em telas largas (opcional, na pasta /img/)
      evento      data do evento (AAAA-MM-DD). O aviso aparece e some sozinho como os lembretes
-                 (desde a segunda-feira da semana, "Amanhã" na véspera, "Hoje" no dia, some depois).
-                 Na frase, {quando} vira "Esta semana · sábado, 28/11", "Amanhã" ou "Hoje"
+                 (desde o domingo anterior às 19h30, "Amanhã" na véspera, "Hoje" no dia, some depois).
+                 Na frase, {quando} vira "Próxima semana · sábado, 28/11" (domingo à noite),
+                 "Esta semana · sábado, 28/11", "Amanhã" ou "Hoje"
      substitui   trecho do título do evento no calendário (mesma data de "evento"): o lembrete
                  automático desse evento não aparece, porque este aviso já cumpre o papel
 
    LEMBRETES AUTOMÁTICOS DO CALENDÁRIO
    Todo evento cadastrado em /calendario/eventos.js aparece sozinho nesta faixa:
-     - desde a segunda-feira da semana do evento: "Esta semana · quinta, 26/11"
+     - desde o domingo anterior às 19h30 (horário de Campo Grande, depois dos avisos no culto):
+       "Próxima semana · quinta, 26/11"; a partir de segunda: "Esta semana · quinta, 26/11"
      - na véspera: "Amanhã" (mesmo que a véspera seja o domingo da semana anterior)
      - no dia: "Hoje"; evento de vários dias fica como "Acontecendo" até o último dia
      - depois da data, some sozinho
@@ -92,6 +95,11 @@
   var cg = new Date(agora.getTime() - 4 * 3600000);
   var hoje = Date.UTC(cg.getUTCFullYear(), cg.getUTCMonth(), cg.getUTCDate());
   var DIA = 86400000;
+  // virada da semana: domingo às 19h30 (horário de Campo Grande), quando os avisos são dados no culto.
+  // A partir daí a faixa já mostra a semana seguinte. Vale igual para quem acessa de qualquer fuso.
+  var virada = cg.getUTCDay() === 0 && cg.getUTCHours() * 60 + cg.getUTCMinutes() >= 19 * 60 + 30;
+  // dia usado pela repetição: depois da virada, conta como se já fosse segunda-feira
+  var hojeSemana = virada ? hoje + DIA : hoje;
   function primeiroDomingo(ano, mes) {
     var d = Date.UTC(ano, mes, 1);
     return d + ((7 - new Date(d).getUTCDay()) % 7) * DIA;
@@ -107,27 +115,27 @@
       var ano = cg.getUTCFullYear(), mes = cg.getUTCMonth() + k;
       if (mes > 11) { mes -= 12; ano++; }
       var d1 = primeiroDomingo(ano, mes), d2 = d1 + 7 * DIA;
-      if (hoje >= d1 - 6 * DIA && hoje <= d1) return d1;
-      if (hoje > d1 && hoje <= d2) return d2;
+      if (hojeSemana >= d1 - 6 * DIA && hojeSemana <= d1) return d1;
+      if (hojeSemana > d1 && hojeSemana <= d2) return d2;
     }
     return null;
   }
   var SEMANA = ['domingo', 'segunda', 'terça', 'quarta', 'quinta', 'sexta', 'sábado'];
-  // domingo que fecha a semana atual (semana de segunda a domingo)
-  var domingo = hoje + ((7 - new Date(hoje).getUTCDay()) % 7) * DIA;
+  // domingo que fecha a semana mostrada (segunda a domingo; depois da virada, a semana seguinte)
+  var domingo = virada ? hoje + 7 * DIA : hoje + ((7 - new Date(hoje).getUTCDay()) % 7) * DIA;
   function diaUTC(txt) { var p = txt.split('-'); return Date.UTC(+p[0], +p[1] - 1, +p[2]); }
-  // "Hoje", "Acontecendo", "Amanhã", "Esta semana" ou null (fora do período)
+  // "Hoje", "Acontecendo", "Amanhã", "Esta semana", "Próxima semana" (domingo depois da virada) ou null
   function quandoDe(ini, fim) {
     if (hoje > fim) return null;
     if (hoje === ini) return 'Hoje';
     if (hoje > ini) return 'Acontecendo';
     if (hoje === ini - DIA) return 'Amanhã';
-    if (ini <= domingo) return 'Esta semana';
+    if (ini <= domingo) return virada ? 'Próxima semana' : 'Esta semana';
     return null;
   }
   function rotuloDe(quando, ini, cor) {
     return '<strong style="color:' + cor + '">' + quando + '</strong>'
-      + (quando === 'Esta semana' ? ' · ' + SEMANA[new Date(ini).getUTCDay()] + ', ' + textoData(ini) : '');
+      + (quando === 'Esta semana' || quando === 'Próxima semana' ? ' · ' + SEMANA[new Date(ini).getUTCDay()] + ', ' + textoData(ini) : '');
   }
   var ativos = AVISOS.filter(function (a) {
     if (a.de && agora < new Date(a.de + 'T00:00:00-04:00')) return false;
